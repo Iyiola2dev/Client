@@ -1,9 +1,9 @@
 import React from 'react'
 
-const SideBar = () => {
+const AdminSideBar = () => {
   return (
-    <div>SideBar</div>
+    <div>Admin</div>
   )
 }
 
-export default SideBar
+export default AdminSideBar
