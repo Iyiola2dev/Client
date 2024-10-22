@@ -1,29 +1,58 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Dashboard from './pages/Dashboard'
-import Auth from './auth/Auth'
-import Admin from './pages/admin-view/Admin'
-import Shopping from './pages/shopping-view/Shopping'
-import NotFound from './pages/not-found'
-
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Auth from "./auth/Auth";
+import Admin from "./pages/admin-view/Admin";
+import Shopping from "./pages/shopping-view/Shopping";
+import NotFound from "./pages/not-found";
+import CheckAuth from "./components/checkAuth/check-auth";
 
 const App = () => {
+  const isAuthenticated = false;
+  const user = null;
   return (
-    <div className='flex flex-col overflow-hidden bg-red-500'>
+    <div className="flex flex-col overflow-hidden bg-red-500">
+      {/* This is the main route for the application */}
+      <Routes>
+        {/* I will be wrapper the check auth for each of the page */}
+        <Route
+          path="/*"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <Dashboard />
+            </CheckAuth>
+          }
+        />
+        <Route
+          path="/auth/*"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <Auth />
+            </CheckAuth>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <Admin />
+            </CheckAuth>
+          }
+        />
+        <Route
+          path="/shop/*"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <Shopping />
+            </CheckAuth>
+          }
+        />
 
-
-
-<Routes>
-<Route path='/*' element={<Dashboard/>}/>
-<Route path='/auth/*' element={<Auth/>}/>
-<Route path='/admin/*' element={<Admin/>}/> 
-<Route path="/shop/*" element={<Shopping/>}/>
-
-{/* this is too handle other routes */}
-<Route path="*" element={<NotFound/>}/>
-</Routes>
+        {/* this is too handle other routes */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
