@@ -5,11 +5,12 @@ import Auth from "./auth/Auth";
 import Admin from "./pages/admin-view/Admin";
 import Shopping from "./pages/shopping-view/Shopping";
 import NotFound from "./pages/not-found";
-import CheckAuth from "./components/checkAuth/check-auth";
+import CheckAuth from "./components/common/check-auth";
+import UnauthPage from "./pages/unauth-page";
 
 const App = () => {
   const isAuthenticated = false;
-  const user = null;
+  const user = null
   return (
     <div className="flex flex-col overflow-hidden bg-red-500">
       {/* This is the main route for the application */}
@@ -48,7 +49,8 @@ const App = () => {
           }
         />
 
-        {/* this is too handle other routes */}
+        {/* this is to handle other routes */}
+        <Route path="/unauth-page" element={<UnauthPage/>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
