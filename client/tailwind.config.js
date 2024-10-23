@@ -7,6 +7,7 @@ export default {
   ],
   theme: {
   	extend: {
+
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -53,7 +54,11 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		  backgroundImage:{
+			"shadowTherapy": 'url("https://res.cloudinary.com/dtlejpoxq/image/upload/v1729655397/Mern-Ecommerce/shadow_therapy_ysp7ex.png")',
+			
+		  }
   	}
   },
   plugins: [require("tailwindcss-animate")],
