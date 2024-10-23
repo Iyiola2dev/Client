@@ -10,26 +10,19 @@ import UnauthPage from "./pages/unauth-page";
 
 const App = () => {
   const isAuthenticated = false;
-  const user = null
+  const user = null;
   return (
     <div className="flex flex-col overflow-hidden bg-red-500">
       {/* This is the main route for the application */}
       <Routes>
         {/* I will be wrapper the check auth for each of the page */}
-        <Route
-          path="/*"
-          element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-              <Dashboard />
-            </CheckAuth>
-          }
-        />
+        <Route path="/*" element={<Dashboard />} />
         <Route
           path="/auth/*"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            
               <Auth />
-            </CheckAuth>
+           
           }
         />
         <Route
@@ -50,7 +43,7 @@ const App = () => {
         />
 
         {/* this is to handle other routes */}
-        <Route path="/unauth-page" element={<UnauthPage/>} />
+        <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
