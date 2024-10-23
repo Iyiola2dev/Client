@@ -1,9 +1,59 @@
-import React from 'react'
+import CommonForm from "@/components/common/Form";
+import { registerFormControls } from "@/config/Index";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-const Register = () => {
-  return (
-    <div>Register</div>
-  )
+const initialState = {
+  userName: "",
+  email: "",
+  password: "",
+};
+const handleSubmit = (e) => {
+  e.preventDefault();
+  console.log("Form submitted");
 }
+const Register = () => {
+  //the local state i'm not using redux for it
+  const [formData, setFormData] = useState(initialState);
+  return (
+    <div className="bg-shadowTherapy bg-cover bg-center h-screen">
+      <div className="mx-auto w-full max-w-md space-y-6 flex justify-center px-7 py-10 lg:py-[10rem] items-center">
+        <div className="text-center text-white bg-gray-500/20 shadow-lg backdrop-blur-lg rounded-xl py-7  flex flex-col ">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground text-white mx-10">
+            Create new account!
+          </h1>
+          {/* This is my form component */}
+          <div className="text-left px-7">
+          <CommonForm
+        formControls={registerFormControls}
+        formData={formData}
+        setFormData={setFormData}
+        onSubmit={handleSubmit}
+        buttonText="Sign Up"
+      />
+          </div>
+         
+          <div>
+            <p className="mt-2">
+              Already have an account?
+              <Link
+                className="font-medium text-primary text-blue-600 ml-2"
+                to="/auth/login"
+              >
+                Login
+              </Link>
+            </p>
+            <p className="mx-2 text-sm">
+              <span>Note:</span> Lorem ipsum dolor sit amet consectetur.
+              Fermentum nisl netus pulvinar aliquam hendrerit nunc. Tristique
+              pretium ipsum faucibus potenti massa.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  );
+};
 
-export default Register
+export default Register;
