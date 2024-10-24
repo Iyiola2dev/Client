@@ -14,7 +14,7 @@ const App = () => {
     role: "user",
   };
   return (
-    <div className="flex flex-col overflow-hidden bg-red-500">
+    <div className="flex flex-col overflow-hidden ">
       {/* This is the main route for the application */}
       <Routes>
         {/* I will be wrapper the check auth for each of the page */}
