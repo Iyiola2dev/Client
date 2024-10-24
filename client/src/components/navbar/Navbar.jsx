@@ -157,14 +157,14 @@ const Navbar = () => {
               </Link>
             </nav>
 
-            <div className="flex flex-col gap-4 mt-10">
+            <div className="flex  gap-4 mt-10">
               <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full text-white">
-                <Link to="/signup" onClick={toggleMenu}>
+                <Link to="/auth/register" onClick={toggleMenu}>
                   Sign Up
                 </Link>
               </Button>
               <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full text-white">
-                <Link to="/login" onClick={toggleMenu}>
+                <Link to="/auth/login" onClick={toggleMenu}>
                   Login
                 </Link>
               </Button>
