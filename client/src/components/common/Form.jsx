@@ -25,7 +25,7 @@ const CommonForm = ({
     switch (getControlItem.component) {
       case "input":
         element = (
-          <Input
+          <Input 
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
@@ -118,7 +118,7 @@ const CommonForm = ({
           </div>
         ))}
       </div>
-      <Button type="submit" className="mt-2 w-full">
+      <Button  type="submit" className="mt-2 w-full bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded-full">
         {buttonText || "Submit"}
       </Button>
     </form>
