@@ -1,5 +1,6 @@
 import CommonForm from "@/components/common/Form";
 import { registerFormControls } from "@/config/Index";
+import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,28 +12,36 @@ const initialState = {
 const handleSubmit = (e) => {
   e.preventDefault();
   console.log("Form submitted");
-}
+};
 const Register = () => {
   //the local state i'm not using redux for it
   const [formData, setFormData] = useState(initialState);
   return (
-    <div className="bg-shadowTherapy bg-cover bg-center h-screen">
+    <div className="bg-shadowTherapy bg-cover bg-center h-screen flex justify-center items-center ">
+      <div className="shadow-lg backdrop-blur-lg bg-white/15 rounded-2xl  lg:h-[70%] flex justify-center items-center ">
       <div className="mx-auto w-full max-w-md space-y-6 flex justify-center px-7 py-10 lg:py-[10rem] items-center">
-        <div className="text-center text-white bg-gray-500/20 shadow-lg backdrop-blur-lg rounded-xl py-7  flex flex-col ">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground text-white mx-10">
+        <div className="text-center text-white  rounded-xl py-7  flex flex-col ">
+          <div>
+            <Link to="/" className="flex justify-start items-center ml-5 gap-1 text-xs">
+            
+              <ArrowLeft  className="text-xs "/>
+              <h2 className="border-b">Home</h2>
+            </Link>
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground text-white mx-10 mt-5">
             Create new account!
           </h1>
           {/* This is my form component */}
           <div className="text-left px-7">
-          <CommonForm
-        formControls={registerFormControls}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleSubmit}
-        buttonText="Sign Up"
-      />
+            <CommonForm
+              formControls={registerFormControls}
+              formData={formData}
+              setFormData={setFormData}
+              onSubmit={handleSubmit}
+              buttonText="Sign Up"
+            />
           </div>
-         
+
           <div>
             <p className="mt-2">
               Already have an account?
@@ -51,7 +60,7 @@ const Register = () => {
           </div>
         </div>
       </div>
-      
+      </div>
     </div>
   );
 };
