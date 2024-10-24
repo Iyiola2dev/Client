@@ -9,10 +9,8 @@ import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
 
 const App = () => {
-  const isAuthenticated = true;
-  const user = {
-    role: "user",
-  };
+  const isAuthenticated = false;
+  const user = null;
   return (
     <div className="flex flex-col overflow-hidden ">
       {/* This is the main route for the application */}
@@ -22,7 +20,7 @@ const App = () => {
         <Route
           path="/auth/*"
           element={
-            <CheckAuth> <Auth /></CheckAuth>
+             <Auth />
              
            
           }
