@@ -28,7 +28,7 @@ const Navbar = () => {
         {/* The navigation sessions to each pages on the website */}
         <div className="bg-black w-full  ">
           <nav className="pl-[4rem] w-full pr-10 py-3 flex items-center justify-between">
-            <ul className="flex gap-5 w-fit p-3">
+            <ul className="flex gap-5 w-full p-3">
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/">Home</Link>
               </li>
@@ -52,7 +52,7 @@ const Navbar = () => {
               </li>
             </ul>
 
-            <div className="flex gap-4 ">
+            <div className="flex gap-4 w-[35%]">
               {/* The button component is from shacdn */}
               <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
                 <Link>Sign Up</Link>
