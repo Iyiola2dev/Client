@@ -3,6 +3,8 @@ import dbConnection from "./db/conn.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import userRouter from "./routes/auth/auth-routes.js";
+
 
 dotenv.config();
 // this is where we connect to the database
@@ -30,6 +32,7 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+app.use("/api/auth", userRouter)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
