@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 
 import { IoStarSharp } from "react-icons/io5";
+import LandingQuestion from "./LandingQuestion";
 // import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
@@ -220,7 +221,7 @@ const LandingPage = () => {
       </section>
 
       {/* fifth section */}
-      <div className="flex flex-col md:flex-row gap-4 justify-center items-center mt-5 p-5">
+      <section className="flex flex-col md:flex-row gap-4 justify-center items-center mt-5 p-5">
         <div className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto p-4">
           <img
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729790293/Mern-Ecommerce/unsplash_5CoDz0mCcXU_ez7aiu.png"
@@ -256,7 +257,12 @@ const LandingPage = () => {
             <IoStarSharp />
           </span>
         </div>
-      </div>
+      </section>
+
+      {/* last section */}
+      <section>
+        <LandingQuestion/>
+      </section>
     </div>
   );
 };
