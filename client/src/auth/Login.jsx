@@ -1,5 +1,5 @@
 import CommonForm from "@/components/common/Form";
-import { registerFormControls} from "@/config/Index"; // Create a login form configuration
+import { loginFormControls} from "@/config/Index"; // Create a login form configuration
 import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -35,7 +35,7 @@ const Login = () => {
             {/* Login Form Component */}
             <div className="text-left px-7">
               <CommonForm
-                formControls={registerFormControls}
+                formControls={loginFormControls}
                 formData={formData}
                 setFormData={setFormData}
                 onSubmit={handleLogin}
