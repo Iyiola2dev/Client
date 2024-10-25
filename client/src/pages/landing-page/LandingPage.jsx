@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+
+import { IoStarSharp } from "react-icons/io5";
 // import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
@@ -157,7 +158,7 @@ const LandingPage = () => {
             <h2 className="font-bold text-xl lg:text-3xl text-center">
               Are you a teen feeling sad and confused about life?
             </h2>
-            <p className="text-center text-xl">
+            <p className="text-center  lg:text-xl">
               It’s okay to feel overwhelmed sometimes. Life can get tough,
               especially when you’re dealing with school, friends, family, and
               figuring out who you are. If you’re feeling lost or like no one
@@ -187,7 +188,7 @@ const LandingPage = () => {
               Are you feeling overwhelmed by life’s challenges and struggling to
               find clarity?
             </h2>
-            <p className="text-center text-xl">
+            <p className="text-center  lg:text-xl">
               Life can sometimes feel confusing, and even exhausting. Whether
               it’s career stress, relationship struggles, or simply navigating
               the uncertainty of everyday life, it’s normal to feel stuck or
@@ -203,7 +204,59 @@ const LandingPage = () => {
             />
           </span>
         </div>
+
+        {/* fourth div */}
+        <div className="flex flex-col justify-center items-center mt-5 p-5 max-w-xl text-center gap-5">
+          <h3 className="font-bold text-2xl md:text-3xl">Disclaimer!</h3>
+          <p className="text-center  lg:text-xl">
+            No live chat for assistance on the site Fill out questionnaire
+            *Religion *Gender *Relationship status * What are you seeking help
+            for ? Options available Your sex life, differences with your spouse,
+            divorce, adoption, infertility, infidelity, pregnancy, postpartum
+            depression,others (allow a client to put in the reason)
+          </p>
+        </div>
+        <Button className="mt-5">Meet some of our THERAPIST</Button>
       </section>
+
+      {/* fifth section */}
+      <div className="flex flex-col md:flex-row gap-4 justify-center items-center mt-5 p-5">
+        <div className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto p-4">
+          <img
+            src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729790293/Mern-Ecommerce/unsplash_5CoDz0mCcXU_ez7aiu.png"
+            alt=""
+          />
+
+          <span className="text-white">
+            <p>Theo sangodele</p>
+            <p>Licensed professional for sexual health</p>
+          </span>
+          <span className="flex gap-2 items-center text-[gold]">
+            <IoStarSharp />
+            <IoStarSharp />
+            <IoStarSharp />
+            <IoStarSharp />
+            <IoStarSharp />
+          </span>
+        </div>
+        <div className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto  p-4">
+          <img
+            src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729840845/Mern-Ecommerce/unsplash_5CoDz0mCcXU_c8wstq.png"
+            alt=""
+          />
+          <span className="text-white">
+            <p>Theo sangodele</p>
+            <p>Licensed professional for sexual health</p>
+          </span>
+          <span className="flex gap-2 items-center text-[gold]">
+            <IoStarSharp />
+            <IoStarSharp />
+            <IoStarSharp />
+            <IoStarSharp />
+            <IoStarSharp />
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
