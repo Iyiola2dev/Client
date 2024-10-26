@@ -19,7 +19,6 @@ const CommonForm = ({
 }) => {
   function renderInputsByComponentType(getControlItem) {
     let element = null;
-    //This is the value of the form data which will consist of all the key values that this form control will have
     const value = formData[getControlItem.name || ""];
 
     switch (getControlItem.component) {
@@ -31,27 +30,26 @@ const CommonForm = ({
             id={getControlItem.name}
             type={getControlItem.type}
             value={value}
-           
-            onChange={(e) =>
+            onChange={(e) => {
               setFormData({
                 ...formData,
                 [getControlItem.name]: e.target.value,
-              })
-            }
+              });
+              console.log(formData);
+            }}
           />
         );
         break;
       case "select":
         element = (
-          //The select component is from shacdn-ui the selectTrigger, SelectValue, SelectContent, SelectItem are all components from shacdn-ui which have their own functionality...
           <Select
-          //This is to handle the change of the select value
-            onValueChange={(value) =>
+            onValueChange={(value) => {
               setFormData({
                 ...formData,
                 [getControlItem.name]: value,
-              })
-            }
+              });
+              console.log(formData);
+            }}
             value={value}
           >
             <SelectTrigger className="w-full">
@@ -60,7 +58,7 @@ const CommonForm = ({
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
                 ? getControlItem.options.map((option) => (
-                    <SelectItem key={optionItem.id} value={optionItem.id}>
+                    <SelectItem key={option.id} value={option.id}>
                       {option.label}
                     </SelectItem>
                   ))
@@ -71,18 +69,18 @@ const CommonForm = ({
         break;
       case "textarea":
         element = (
-          //The input component is from shacdn-ui
           <Textarea
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.id}
             value={value}
-            onChange={(e) =>
+            onChange={(e) => {
               setFormData({
                 ...formData,
                 [getControlItem.name]: e.target.value,
-              })
-            }
+              });
+              console.log(formData);
+            }}
           />
         );
         break;
@@ -94,18 +92,19 @@ const CommonForm = ({
             id={getControlItem.name}
             type={getControlItem.type}
             value={value}
-            //if you ever wonder where the setFormData is coming from, it is from the parent component and I'm using redux toolkit to manage the state
-            onChange={(e) =>
+            onChange={(e) => {
               setFormData({
                 ...formData,
                 [getControlItem.name]: e.target.value,
-              })
-            }
+              });
+              console.log(formData);
+            }}
           />
         );
     }
     return element;
   }
+
   return (
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-3">
@@ -118,7 +117,10 @@ const CommonForm = ({
           </div>
         ))}
       </div>
-      <Button  type="submit" className="mt-2 w-full bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded-full">
+      <Button
+        type="submit"
+        className="mt-2 w-full bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded-full"
+      >
         {buttonText || "Submit"}
       </Button>
     </form>
