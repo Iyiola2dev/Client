@@ -114,7 +114,7 @@ const LandingPage = () => {
                   Personalized therapy for self-growth. Support myself.
                 </p>
                 <Button className="rounded-full bg-white border-2 text-black mt-2">
-                  Book Appointment
+                  <a href="/appointment">Book Appointment</a>
                 </Button>
               </div>
             </div>
@@ -261,7 +261,7 @@ const LandingPage = () => {
 
       {/* last section */}
       <section>
-        <LandingQuestion/>
+        <LandingQuestion />
       </section>
     </div>
   );
