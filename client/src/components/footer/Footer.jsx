@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <div className="bg-gray-900 text-gray-200">
       {/* frst part */}
-      <div className="p-[15px] mb-[50px] lg:px-[60px]">
+      <div className="px-[15px] py-[30px] mb-[50px] lg:pl-[8rem] ">
         {/* logo */}
         <div className="mb-6">
           <img

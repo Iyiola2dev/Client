@@ -19,7 +19,7 @@ const questions = [
   },
   {
     id: 4,
-    question: "What sif i don't feel comfortable with my therapist?",
+    question: "What if i don't feel comfortable with my therapist?",
     answer: "We source our nuts from trusted suppliers worldwide.",
   },
 ];
