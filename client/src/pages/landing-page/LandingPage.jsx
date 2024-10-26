@@ -92,7 +92,7 @@ const LandingPage = () => {
                   to grow our relationship.
                 </p>
                 <Button className="rounded-full bg-white border-2 text-black mt-2">
-                  Book Appointment
+                  <a href="/appointment">Book Appointment</a>
                 </Button>
               </div>
             </div>

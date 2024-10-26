@@ -11,11 +11,13 @@ const Dashboard = () => {
       <div>
         <Navbar />
       </div>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/appointment" element={<Therapy />} />
-        <Route />
-      </Routes>
+      <div className="mt-[5rem] lg:mt-[8rem]">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/appointment" element={<Therapy />} />
+          <Route />
+        </Routes>
+      </div>
 
       <div>
         <Footer />
