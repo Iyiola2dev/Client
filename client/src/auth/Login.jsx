@@ -1,30 +1,53 @@
 import CommonForm from "@/components/common/Form";
-import { loginFormControls} from "@/config/Index"; // Create a login form configuration
+import { loginFormControls } from "@/config/Index"; // Create a login form configuration
+import { useToast } from "@/hooks/use-toast";
+import { loginUser } from "@/store/auth-slice";
 import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
   email: "",
   password: "",
 };
 
-const handleLogin = (e) => {
-  e.preventDefault();
-  console.log("Login form submitted");
-};
-
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+
+  const { toast } = useToast();
+
+  function onSumbit(e) {
+    e.preventDefault();
+
+    dispatch(loginUser(formData)).then((data) => {
+      console.log(data);
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message,
+        });
+      } else {
+        // console.error("Registration failed:", data.payload); // Log any error details
+        toast({
+          title: data?.payload?.message || " Incorrect email or password",  
+          variant: "destructive", // This is a variant of the toast notification
+        });
+      }
+    });
+    console.log(formData);
+  }
 
   return (
     <div className="bg-shadowTherapy bg-cover bg-center h-screen flex justify-center items-center">
-     
-      <div className="shadow-lg backdrop-blur-lg bg-white/30 rounded-2xl lg:h-[70%] flex justify-center items-center">
+      <div className="shadow-lg backdrop-blur-lg bg-white/30 rounded-2xl lg:max-w-xl lg:h-[70%] flex justify-center items-center">
         <div className="mx-auto w-full max-w-md space-y-6 flex justify-center px-7 py-10 lg:py-[10rem] items-center">
           <div className="text-center text-white rounded-xl py-7 flex flex-col">
             <div>
-              <Link to="/" className="flex justify-start items-center ml-5 gap-1 text-xs">
+              <Link
+                to="/"
+                className="flex justify-start items-center ml-5 gap-1 text-xs"
+              >
                 <ArrowLeft className="text-xs" />
                 <h2 className="border-b">Home</h2>
               </Link>
@@ -38,7 +61,7 @@ const Login = () => {
                 formControls={loginFormControls}
                 formData={formData}
                 setFormData={setFormData}
-                onSubmit={handleLogin}
+                onSubmit={onSumbit}
                 buttonText="Login"
               />
             </div>
@@ -54,14 +77,17 @@ const Login = () => {
                 </Link>
               </p>
               <p className="mx-2 text-sm">
-                <span>Forgot your password?</span> <Link className="text-blue-600 ml-2" to="/auth/forgot-password">Reset it</Link>.
+                <span>Forgot your password?</span>{" "}
+                <Link className="text-blue-600 ml-2" to="/auth/forgot-password">
+                  Reset it
+                </Link>
+                .
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
   );
 };
 
