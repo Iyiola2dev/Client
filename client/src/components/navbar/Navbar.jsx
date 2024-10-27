@@ -55,10 +55,10 @@ const Navbar = () => {
             <div className="flex gap-4 w-[35%]">
               {/* The button component is from shacdn */}
               <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
-                <Link>Sign Up</Link>
+                <Link to="/auth/register">Sign Up</Link>
               </Button>
               <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
-                <Link>Login</Link>
+                <Link to="/auth/login">Login</Link>
               </Button>
             </div>
           </nav>

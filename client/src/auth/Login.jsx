@@ -1,11 +1,13 @@
 // Login.jsx
 import CommonForm from "@/components/common/Form";
-import { registerFormControls } from "@/config/Index"; // Create a login form configuration
+import { loginFormControls } from "@/config/Index";
+// Create a login form configuration
+import { useToast } from "@/hooks/use-toast";
+import { loginUser } from "@/store/auth-slice";
 import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "@/store/auth-slice"; // Update with your actual path
 
 const initialState = {
   email: "",
@@ -15,35 +17,32 @@ const initialState = {
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const intendedRoute = useSelector((state) => state.auth.intendedRoute);
 
-  const handleLogin = (e) => {
+  const { toast } = useToast();
+
+  function onSumbit(e) {
     e.preventDefault();
 
-    // Mock authentication logic (replace with actual API call)
-    const { email, password } = formData;
-    if (email === "user@example.com" && password === "password123") {
-      const userDetails = { name: "John Doe", email };
-      const token = "sampleToken";
-
-      // Dispatch user and token to Redux store
-      dispatch(setUser({ user: userDetails, token }));
-
-      // Redirect to the intended route or dashboard
-      if (intendedRoute) {
-        navigate(intendedRoute);
+    dispatch(loginUser(formData)).then((data) => {
+      console.log(data);
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message,
+        });
       } else {
-        navigate("/dashboard");
+        // console.error("Registration failed:", data.payload); // Log any error details
+        toast({
+          title: data?.payload?.message || " Incorrect email or password",
+          variant: "destructive", // This is a variant of the toast notification
+        });
       }
-    } else {
-      console.log("Invalid email or password");
-    }
-  };
+    });
+    console.log(formData);
+  }
 
   return (
     <div className="bg-shadowTherapy bg-cover bg-center h-screen flex justify-center items-center">
-      <div className="shadow-lg backdrop-blur-lg bg-white/30 rounded-2xl lg:h-[70%] flex justify-center items-center">
+      <div className="shadow-lg backdrop-blur-lg bg-white/30 rounded-2xl lg:max-w-xl lg:h-[70%] flex justify-center items-center">
         <div className="mx-auto w-full max-w-md space-y-6 flex justify-center px-7 py-10 lg:py-[10rem] items-center">
           <div className="text-center text-white rounded-xl py-7 flex flex-col">
             <div>
@@ -61,11 +60,12 @@ const Login = () => {
             {/* Login Form Component */}
             <div className="text-left px-7">
               <CommonForm
-                formControls={registerFormControls}
+                formControls={loginFormControls}
                 formData={formData}
                 setFormData={setFormData}
-                onSubmit={handleLogin}
+                onSubmit={onSumbit}
                 buttonText="Login"
+                borderRadius="rounded-full"
               />
             </div>
 
@@ -80,7 +80,7 @@ const Login = () => {
                 </Link>
               </p>
               <p className="mx-2 text-sm">
-                <span>Forgot your password?</span>
+                <span>Forgot your password?</span>{" "}
                 <Link className="text-blue-600 ml-2" to="/auth/forgot-password">
                   Reset it
                 </Link>

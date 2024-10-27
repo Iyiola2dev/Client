@@ -1,5 +1,4 @@
-// App.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./auth/Auth";
@@ -8,11 +7,27 @@ import Shopping from "./pages/shopping-view/Shopping";
 import NotFound from "./pages/not-found";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
-import TherapyDashboard from "./pages/TherapyDashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const App = () => {
-  const isAuthenticated = false; // Replace with your actual authentication state
-  const user = null; // Replace with your actual user state
+  //This is coming from the redux store
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    //This is to check if the user is authenticated
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  //This is to check if the user is still loading and 
+  if (isLoading) {
+    return <Skeleton className="max-w-md h-auto rounded-full" />;
+  }
+  console.log(isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden ">
@@ -20,11 +35,15 @@ const App = () => {
       <Routes>
         {/* Main Dashboard Route */}
         <Route path="/*" element={<Dashboard />} />
-
-        {/* Authentication Route */}
-        <Route path="/auth/*" element={<Auth />} />
-
-        {/* Admin Route */}
+        <Route
+          path="/auth/*"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <Auth />
+            </CheckAuth>
+            // <Auth />
+          }
+        />
         <Route
           path="/admin/*"
           element={

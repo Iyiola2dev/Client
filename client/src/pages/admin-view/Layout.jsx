@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
 import AdminSideBar from "./SideBar";
 import AdminHeader from "./Header";
 
-const AdminLayout = () => {
+const AdminLayout = ({ children }) => {
   //this is the admin dashboard sidebar
+  const [openSidebar, setOpenSidebar] = useState(false);
   return (
-    <div className="flex min-h-screen w-full">
-      {/* admin sidebar */}
-      <AdminSideBar />
-      <div className="flex flex-1 flex-col">
-        {/* admin header */}
-        <AdminHeader />
-        <div></div>
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <AdminSideBar open={openSidebar} setOpen={setOpenSidebar} />
+
+      {/* Main content area */}
+      <div className="flex flex-col flex-grow">
+        {/* Header */}
+        <AdminHeader setOpen={setOpenSidebar} />
+
+        {/* Dynamic content */}
+        <main className="flex-grow p-4 overflow-auto">{children}</main>
       </div>
-      <div></div>
     </div>
   );
 };
