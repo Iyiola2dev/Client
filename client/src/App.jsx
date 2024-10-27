@@ -1,3 +1,4 @@
+// App.jsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
@@ -7,24 +8,23 @@ import Shopping from "./pages/shopping-view/Shopping";
 import NotFound from "./pages/not-found";
 import CheckAuth from "./components/common/check-auth";
 import UnauthPage from "./pages/unauth-page";
+import TherapyDashboard from "./pages/TherapyDashboard";
 
 const App = () => {
-  const isAuthenticated = false;
-  const user = null;
+  const isAuthenticated = false; // Replace with your actual authentication state
+  const user = null; // Replace with your actual user state
+
   return (
     <div className="flex flex-col overflow-hidden ">
       {/* This is the main route for the application */}
       <Routes>
-        {/* I will be wrapper the check auth for each of the page */}
+        {/* Main Dashboard Route */}
         <Route path="/*" element={<Dashboard />} />
-        <Route
-          path="/auth/*"
-          element={
-             <Auth />
-             
-           
-          }
-        />
+
+        {/* Authentication Route */}
+        <Route path="/auth/*" element={<Auth />} />
+
+        {/* Admin Route */}
         <Route
           path="/admin/*"
           element={
@@ -33,6 +33,8 @@ const App = () => {
             </CheckAuth>
           }
         />
+
+        {/* Shopping Route */}
         <Route
           path="/shop/*"
           element={
@@ -42,8 +44,20 @@ const App = () => {
           }
         />
 
-        {/* this is to handle other routes */}
+        {/* Therapy Route */}
+        <Route
+          path="/therapy/*"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <TherapyDashboard /> {/* Render Therapy Dashboard Component */}
+            </CheckAuth>
+          }
+        />
+
+        {/* Unauthenticated Access Route */}
         <Route path="/unauth-page" element={<UnauthPage />} />
+
+        {/* Handle Other Routes */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

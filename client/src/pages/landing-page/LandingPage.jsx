@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
-
 import { IoStarSharp } from "react-icons/io5";
 import LandingQuestion from "./LandingQuestion";
-// import { Link } from 'react-router-dom'
+import AppointmentButton from "@/components/ui/appointmentButton";
+
+
 
 const LandingPage = () => {
   return (
@@ -91,9 +92,9 @@ const LandingPage = () => {
                   Couples strengthening bonds & resolving conflicts. Support us
                   to grow our relationship.
                 </p>
-                <Button className="rounded-full bg-white border-2 text-black mt-2">
+                <AppointmentButton className="rounded-full bg-white border-2 text-black mt-2">
                   <a href="/appointment">Book Appointment</a>
-                </Button>
+                </AppointmentButton>
               </div>
             </div>
           </div>
@@ -113,9 +114,9 @@ const LandingPage = () => {
                 <p className="min-h-[80px] max-w-[300px]">
                   Personalized therapy for self-growth. Support myself.
                 </p>
-                <Button className="rounded-full bg-white border-2 text-black mt-2">
+                <AppointmentButton className="rounded-full bg-white border-2 text-black mt-2">
                   <a href="/appointment">Book Appointment</a>
-                </Button>
+                </AppointmentButton>
               </div>
             </div>
           </div>
