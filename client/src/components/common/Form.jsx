@@ -16,15 +16,21 @@ const CommonForm = ({
   setFormData,
   onSubmit,
   buttonText,
+  borderRadius, // New prop for controlling border radius
 }) => {
   function renderInputsByComponentType(getControlItem) {
     let element = null;
     const value = formData[getControlItem.name || ""];
 
-    switch (getControlItem.component) {
+    // Determine the border radius class based on the prop
+    const borderRadiusClass =
+      borderRadius === "rounded-full" ? "rounded-full" : "rounded-md";
+
+    switch (getControlItem.componentType) {
       case "input":
         element = (
-          <Input 
+          <Input
+            className={borderRadiusClass} // Apply border radius class
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
@@ -42,6 +48,7 @@ const CommonForm = ({
         break;
       case "select":
         element = (
+          // this is the shacdn select component
           <Select
             onValueChange={(value) => {
               setFormData({
@@ -58,7 +65,7 @@ const CommonForm = ({
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
                 ? getControlItem.options.map((option) => (
-                    <SelectItem key={option.id} value={option.id}>
+                    <SelectItem key={option.id} value={option.value}>
                       {option.label}
                     </SelectItem>
                   ))
@@ -81,12 +88,14 @@ const CommonForm = ({
               });
               console.log(formData);
             }}
+            className="resize-none h-32" // Adjust height and disable resizing
           />
         );
         break;
       default:
         element = (
           <Input
+            className={borderRadiusClass} // Apply border radius class
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
