@@ -1,5 +1,6 @@
 import CommonForm from "@/components/common/Form";
-import { loginFormControls } from "@/config/Index"; // Create a login form configuration
+import { loginFormControls } from "@/config/Index";
+// Create a login form configuration
 import { useToast } from "@/hooks/use-toast";
 import { loginUser } from "@/store/auth-slice";
 import { ArrowLeft } from "lucide-react";
@@ -30,7 +31,7 @@ const Login = () => {
       } else {
         // console.error("Registration failed:", data.payload); // Log any error details
         toast({
-          title: data?.payload?.message || " Incorrect email or password",  
+          title: data?.payload?.message || " Incorrect email or password",
           variant: "destructive", // This is a variant of the toast notification
         });
       }
@@ -63,6 +64,7 @@ const Login = () => {
                 setFormData={setFormData}
                 onSubmit={onSumbit}
                 buttonText="Login"
+                borderRadius="rounded-full"
               />
             </div>
 

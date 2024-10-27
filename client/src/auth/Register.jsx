@@ -66,6 +66,7 @@ const Register = () => {
                 setFormData={setFormData}
                 onSubmit={onSumbit}
                 buttonText="Sign Up"
+                borderRadius="rounded-full"
               />
             </div>
 
