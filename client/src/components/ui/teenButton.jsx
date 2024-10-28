@@ -1,4 +1,5 @@
 
+
 // This component is a button that will navigate the user to the appointment page if they are authenticated. If they are not authenticated, it will save the intended route and navigate the user to the login page.
 
 import React from "react";
@@ -7,16 +8,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIntendedRoute } from "@/store/auth-slice";
 
 
-const AppointmentButton = () => {
+const TeenButton = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate("/therapy/appointment");
+      navigate("/therapy/teen/appointment");
     } else {
-      dispatch(setIntendedRoute("/therapy/appointment")); // Save the intended route
+      dispatch(setIntendedRoute("/auth/login")); // Save the intended route
       navigate("/auth/login");
     }
   };
@@ -39,4 +40,4 @@ const AppointmentButton = () => {
   );
 };
 
-export default AppointmentButton;
+export default TeenButton;

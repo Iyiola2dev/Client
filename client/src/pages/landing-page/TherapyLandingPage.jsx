@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { IoStarSharp } from "react-icons/io5";
-import LandingQuestion from "./LandingQuestion";
+import LandingQuestion from "./TherapyLandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
+import TeenButton from "@/components/ui/teenButton";
 
 const LandingPage = () => {
   return (
-    <div>
+    <div style={{ backgroundColor: "#FAF1DC" }}>
       <main className="flex items-center justify-center min-h-full flex-wrap">
         <div className="flex-1 flex justify-center ">
           <img
@@ -71,72 +72,94 @@ const LandingPage = () => {
 
       {/* Third section  on the landing page*/}
       <section className="p-4 md:p-7 mt-5 flex flex-col justify-center items-center text-center">
-        <h2 className="font-bold text-lg md:text-xl">Therapy category</h2>
+        <h2 className="font-bold text-xl md:text-xl lg:text-4xl">
+          THERAPY CATEGORY
+        </h2>
 
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full lg:text-lg p-2">
           {/* Couples Therapy */}
-          <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-2">
-            <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-2 w-full">
+          <div
+            className="flex flex-col justify-center items-center p-4 lg:p-6 border-l-2 border-r-2 shadow-lg rounded-sm lg:border-l-0 lg:border-r-0 lg:shadow-none"
+            style={{
+              borderLeftColor: "purple", // Set left border color
+              borderRightColor: "purple", // Set right border color
+              boxShadow:
+                "0 4px 6px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(255, 182, 193, 0.7)", // Darker black and pink shadow
+            }}
+          >
+            <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-none w-full">
               <img
-                className="w-full h-auto max-w-[300px]"
+                className="w-[280px] lg:w-full lg:h-auto max-w-[500px] object-contain rounded-lg"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729782989/Mern-Ecommerce/Rectangle_25_xqygev.png"
                 alt="Couple-image"
               />
-              <div className="text-center">
-                <h3 className="text-base lg:text-lg font-semibold">
+              <div className="mt-8">
+                <h3 className=" lg:text-lg lg:font-semibold font-bold lg:text-start text-lg ">
                   Couples Therapy
                 </h3>
-                <p className="min-h-[80px] max-w-[300px]">
+                <p className="min-h-[80px] max-w-[350px] text-[15px] lg:text-start">
                   Couples strengthening bonds & resolving conflicts. Support us
                   to grow our relationship.
                 </p>
-                <AppointmentButton className="rounded-full bg-white border-2 text-black mt-2">
-                  <a href="/therapy">Book Appointment</a>
-                </AppointmentButton>
+                <AppointmentButton />
               </div>
             </div>
           </div>
 
           {/* Individual Therapy */}
-          <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-2">
-            <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-2 w-full">
+          <div
+            className="flex flex-col justify-center items-center p-4 lg:p-6 border-l-2 border-r-2 shadow-lg rounded-sm lg:border-l-0 lg:border-r-0 lg:shadow-none"
+            style={{
+              borderLeftColor: "purple", // Set left border color
+              borderRightColor: "purple", // Set right border color
+              boxShadow:
+                "0 4px 6px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(255, 182, 193, 0.7)", // Darker black and pink shadow
+            }}
+          >
+            <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-none w-full">
               <img
-                className="w-full h-auto max-w-[300px]"
+                className="w-[280px] lg:w-full lg:h-auto max-w-[500px] object-contain rounded-lg"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729782980/Mern-Ecommerce/sex_consultations_u1utm2.png"
                 alt="Sex consultation-image"
               />
-              <div className="text-center">
-                <h3 className="text-base lg:text-lg font-semibold">
+              <div className="mt-8">
+                <h3 className="lg:text-lg lg:font-semibold font-bold lg:text-start text-lg">
                   Individual Therapy
                 </h3>
-                <p className="min-h-[80px] max-w-[300px]">
+                <p className="min-h-[80px] max-w-[350px] text-[15px] lg:text-start">
                   Personalized therapy for self-growth. Support myself.
                 </p>
-                <AppointmentButton className="rounded-full bg-white border-2 text-black mt-2">
-                  <a href="/therapy/appointment">Book Appointment</a>
-                </AppointmentButton>
+                <AppointmentButton />
               </div>
             </div>
           </div>
 
           {/* Teens Therapy */}
-          <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-2">
-            <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-2 w-full">
+          <div
+            className="flex flex-col justify-center items-center p-4 lg:p-6 border-l-2 border-r-2 shadow-lg rounded-sm lg:border-l-0 lg:border-r-0 lg:shadow-none"
+            style={{
+              borderLeftColor: "purple", // Set left border color
+              borderRightColor: "purple", // Set right border color
+              boxShadow:
+                "0 4px 6px rgba(0, 0, 0, 0.3), 0 10px 15px -3px rgba(255, 182, 193, 0.7)", // Darker black and pink shadow
+            }}
+          >
+            <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-none w-full">
               <img
-                className="w-full h-auto max-w-[300px]"
+                className="w-[280px] lg:w-full  lg:h-auto max-w-[500px] object-contain rounded-lg"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729782973/Mern-Ecommerce/teen_theraphy_cdakj2.png"
                 alt="Teen therapy image"
+                width={500}
+                height={500}
               />
-              <div className="text-center">
-                <h3 className="text-base lg:text-lg font-semibold">
+              <div className="mt-8">
+                <h3 className="lg:text-lg lg:font-semibold font-bold lg:text-start text-lg">
                   Teens Therapy
                 </h3>
-                <p className="min-h-[80px] max-w-[300px]">
+                <p className="min-h-[80px] max-w-[350px] text-[15px] lg:text-start">
                   Guidance for adolescent challenges. Supporting your child.
                 </p>
-                <Button className="rounded-full bg-white border-2 text-black mt-2">
-                  Book Appointment
-                </Button>
+                <TeenButton />
               </div>
             </div>
           </div>
@@ -208,7 +231,7 @@ const LandingPage = () => {
         {/* fourth div */}
         <div className="flex flex-col justify-center items-center mt-5 p-5 max-w-xl text-center gap-5">
           <h3 className="font-bold text-2xl md:text-3xl">Disclaimer!</h3>
-          <p className="text-center  lg:text-xl">
+          <p className="text-center text-xl lg:text-xl">
             No live chat for assistance on the site Fill out questionnaire
             *Religion *Gender *Relationship status * What are you seeking help
             for ? Options available Your sex life, differences with your spouse,
@@ -216,7 +239,9 @@ const LandingPage = () => {
             depression,others (allow a client to put in the reason)
           </p>
         </div>
-        <Button className="mt-5">Meet some of our THERAPIST</Button>
+        <Button className="mt-5">
+          Meet some of our<span className="lg:text-blue-700">THERAPIST</span>
+        </Button>
       </section>
 
       {/* fifth section */}

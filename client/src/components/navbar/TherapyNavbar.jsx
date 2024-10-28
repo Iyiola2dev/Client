@@ -32,14 +32,31 @@ const Navbar = () => {
       {/* This is the navigation bar desktop view */}
       {/* This is the gradient colour for the page ( bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] )*/}
       <div className="fixed top-0 left-0 right-0 z-50 hidden lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full ">
-        <div className=" flex w-full items-center gap-[5rem] px-10 py-3">
+        <div className=" flex w-full items-center gap-[15rem] px-10 py-3">
           <img
             className="h-[4rem]"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729737624/Mern-Ecommerce/ALLSEXTOYS_PNG_WHITE_1_meard7.png"
             alt="App-logo"
           />
 
-          <Input className="w-[500px] bg-black text-white" />
+          <div className="relative flex items-center ">
+            <Input className="w-[500px] bg-black text-white" />
+            {/* Magnifying Glass Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute right-1 h-9 w-9 text-white bg-blue-500 p-2 font-bold"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+              />
+            </svg>
+          </div>
         </div>
         {/* The navigation sessions to each pages on the website */}
         <div className="bg-black w-full  ">
@@ -194,7 +211,7 @@ const Navbar = () => {
                 </Link>
 
                 {isDropdownOpen && (
-                  <div className="ml-6 mt-2 flex flex-col">
+                  <div className="ml-6 mt-2 text-sm flex flex-col">
                     <Link
                       to="/courses/course1"
                       className="hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"

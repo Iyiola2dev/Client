@@ -34,7 +34,7 @@ const LandingQuestion = () => {
     <div className="flex flex-col justify-center items-center mt-5 gap-5 p-5">
         <div className="flex flex-col justify-center items-center text-center text-2xl font-bold">
             <h2>We’re Here to Answer All your </h2>
-            <h2>Questions</h2>
+            <h2 className="lg:text-blue-700"> Questions</h2>
         </div>
       <div className="h-auto max-w-lg ">
         <div>
