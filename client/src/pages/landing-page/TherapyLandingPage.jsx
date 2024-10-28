@@ -3,8 +3,6 @@ import { IoStarSharp } from "react-icons/io5";
 import LandingQuestion from "./LandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
 
-
-
 const LandingPage = () => {
   return (
     <div>

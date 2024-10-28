@@ -5,6 +5,7 @@ const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
+  intendedRoute: "/",
 };
 
 // my Async thunk... this setup allows for a structured, reactive way to handle authentication in your application using Redux Toolkit.
@@ -76,6 +77,9 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.isAuthenticated = action.payload.isAuthenticated;
     },
+    setIntendedRoute: (state, action) => {
+      state.intendedRoute = action.payload; // Update intendedRoute state with the payload
+    },
   },
 
   // The slice uses extraReducers to handle different states of the registerUser async action (pending, fulfilled, and rejected).
@@ -132,5 +136,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setIntendedRoute } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import TherapyDashboard from "./pages/TherapyDashboard";
 import Auth from "./auth/Auth";
 import Admin from "./pages/admin-view/Admin";
 import Shopping from "./pages/shopping-view/Shopping";

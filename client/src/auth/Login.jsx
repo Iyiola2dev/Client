@@ -1,6 +1,6 @@
 // Login.jsx
 import CommonForm from "@/components/common/Form";
-import { loginFormControls } from "@/config/Index";
+import { loginFormControls } from "@/config/index";
 // Create a login form configuration
 import { useToast } from "@/hooks/use-toast";
 import { loginUser } from "@/store/auth-slice";
