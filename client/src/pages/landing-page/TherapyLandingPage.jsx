@@ -3,24 +3,46 @@ import { IoStarSharp } from "react-icons/io5";
 import LandingQuestion from "./TherapyLandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
 import TeenButton from "@/components/ui/teenButton";
+import "../../index.css";
 
 const LandingPage = () => {
   return (
     <div style={{ backgroundColor: "#FAF1DC" }}>
       <main className="flex items-center justify-center min-h-full flex-wrap">
-        <div className="flex-1 flex justify-center ">
+        <div className="flex-1 flex justify-center relative">
           <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
             alt="Smiley Doctor"
           />
+
+          {/* Overlay Container for Text and Button */}
+          <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
+            {/* First Text with Transparent Background */}
+            <p className="lg:text-blue-700 md:text-xl lg:text-3xl text-black text-[12px] font-bold mb-2 bg-white bg-opacity-40 p-2 w-full">
+              TRANSFORM YOUR LIFE WITH TAILORED THERAPY
+            </p>
+
+            {/* Button with Gradient Background */}
+            <button className="w-full lg:mt-3 lg:py-4 md:py-3 bg-gradient-to-r from-pink-500 via-blue-500 to-pink-600 text-white p-1 rounded-tr-md rounded-tl-md text-sm md:text-md lg:text-lg font-bold">
+              Book Session
+            </button>
+          </div>
         </div>
-        <div className="flex-1 flex justify-center ">
+
+        <div className="flex-1 flex justify-center relative">
           <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
             alt="Animated Image"
+            width={500}
+            height={700}
           />
+          <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
+            <p className="w-full lg:mt-3 lg:py-4 md:py-3 bg-black text-white text-sm md:text-md lg:text-lg font-bold rounded-tr-md rounded-tl-md">
+              Make Your X Life More Enjoyable
+            </p>
+          </div>
         </div>
       </main>
 
@@ -101,7 +123,7 @@ const LandingPage = () => {
                   Couples strengthening bonds & resolving conflicts. Support us
                   to grow our relationship.
                 </p>
-                <AppointmentButton />
+                <AppointmentButton text="Book Appointment" />
               </div>
             </div>
           </div>
@@ -129,7 +151,7 @@ const LandingPage = () => {
                 <p className="min-h-[80px] max-w-[350px] text-[15px] lg:text-start">
                   Personalized therapy for self-growth. Support myself.
                 </p>
-                <AppointmentButton />
+                <AppointmentButton text="Book Appointment" />
               </div>
             </div>
           </div>
@@ -239,9 +261,12 @@ const LandingPage = () => {
             depression,others (allow a client to put in the reason)
           </p>
         </div>
-        <Button className="mt-5">
-          Meet some of our<span className="lg:text-blue-700">THERAPIST</span>
-        </Button>
+        <div>
+          <Button className="mt-5">
+            Meet some of our
+            <span className="lg:text-blue-700">THERAPIST</span>
+          </Button>
+        </div>
       </section>
 
       {/* fifth section */}

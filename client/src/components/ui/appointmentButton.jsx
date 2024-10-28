@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIntendedRoute } from "@/store/auth-slice";
 
 
-const AppointmentButton = () => {
+const AppointmentButton = ({ text }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const AppointmentButton = () => {
       }}
       onClick={handleBookingClick}
     >
-      Book Appointment
+      {text}
     </button>
   );
 };
