@@ -4,33 +4,55 @@ import LandingQuestion from "./TherapyLandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
 import TeenButton from "@/components/ui/teenButton";
 import "../../index.css";
+import React, { useState } from "react";
+import RestrictionModal from "./RestrictionModal";
+
 
 const LandingPage = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Function to open the modal
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+
+     const handleCloseModal = () => {
+       setIsModalOpen(false);
+     };
+
   return (
     <div style={{ backgroundColor: "#FAF1DC" }}>
       <main className="flex items-center justify-center min-h-full flex-wrap">
         <div className="flex-1 flex justify-center relative">
-          <img
-            className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
-            src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
-            alt="Smiley Doctor"
-          />
+          <a href="#category">
+            <img
+              className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
+              src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
+              alt="Smiley Doctor"
+            />
 
-          {/* Overlay Container for Text and Button */}
-          <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
-            {/* First Text with Transparent Background */}
-            <p className="lg:text-blue-700 md:text-xl lg:text-3xl text-black text-[12px] font-bold mb-2 bg-white bg-opacity-40 p-2 w-full">
-              TRANSFORM YOUR LIFE WITH TAILORED THERAPY
-            </p>
+            {/* Overlay Container for Text and Button */}
+            <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
+              {/* First Text with Transparent Background */}
+              <p className="lg:text-blue-700 md:text-xl lg:text-3xl text-black text-[12px] font-bold mb-2 bg-white bg-opacity-40 p-2 w-full">
+                TRANSFORM YOUR LIFE WITH TAILORED THERAPY
+              </p>
 
-            {/* Button with Gradient Background */}
-            <button className="w-full lg:mt-3 lg:py-4 md:py-3 bg-gradient-to-r from-pink-500 via-blue-500 to-pink-600 text-white p-1 rounded-tr-md rounded-tl-md text-sm md:text-md lg:text-lg font-bold">
-              Book Session
-            </button>
-          </div>
+              {/* Button with Gradient Background */}
+              <a className="w-full">
+                <button className="w-full lg:mt-3 lg:py-4 md:py-3 bg-gradient-to-r from-pink-500 via-blue-500 to-pink-600 text-white p-1 rounded-tr-md rounded-tl-md text-sm md:text-md lg:text-lg font-bold">
+                  Book Session
+                </button>
+              </a>
+            </div>
+          </a>
         </div>
 
-        <div className="flex-1 flex justify-center relative">
+        {/* Image and text container with click event to open modal */}
+        <div
+          className="flex-1 flex justify-center relative"
+          onClick={handleOpenModal}
+        >
           <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
@@ -44,6 +66,13 @@ const LandingPage = () => {
             </p>
           </div>
         </div>
+
+        {/* Render the modal if isModalOpen is true */}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <RestrictionModal onClose={handleCloseModal} />
+          </div>
+        )}
       </main>
 
       {/* second section on the landing page */}
@@ -93,7 +122,10 @@ const LandingPage = () => {
       </section>
 
       {/* Third section  on the landing page*/}
-      <section className="p-4 md:p-7 mt-5 flex flex-col justify-center items-center text-center">
+      <section
+        id="category"
+        className="p-4 md:p-7 mt-5 flex flex-col justify-center items-center text-center"
+      >
         <h2 className="font-bold text-xl md:text-xl lg:text-4xl">
           THERAPY CATEGORY
         </h2>
