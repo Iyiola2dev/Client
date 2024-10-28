@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config/Index";
 import React, { useState } from "react";
-import ProductImageUpload from "./Image-upload";
+import ProductImageUpload from "./image-upload/Image-upload";
 const initialFormData = {
   image: null,
   name: "",
@@ -24,8 +24,11 @@ const AdminProducts = () => {
   const [openCreateProduct, setOpenCreateProduct] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageURL, setuploadedImageURL] = useState("");
+  const [uploadedImageURL, setUploadedImageURL] = useState("");
 
+  //this is a loading state
+const [imageLoadingState, setImageLoadingState] = useState(false);
+  
   function onSumbit() {
     console.log(formData);
   }
@@ -51,7 +54,8 @@ const AdminProducts = () => {
             imageFile={imageFile}
             setImageFile={setImageFile}
             uploadedImageURL={uploadedImageURL}
-            setuploadedImageURL={setuploadedImageURL}
+            setuploadedImageURL={setUploadedImageURL}
+            setImageLoadingState={setImageLoadingState}
           />
 
           {/* This is the commonform component */}
