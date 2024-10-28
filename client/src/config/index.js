@@ -102,9 +102,9 @@ export const registerFormControls = [
       type: "number",
     },
     {
-      id: "product-type",
-      name: "productType",
-      label: "Product Type",
+      id: "category",
+      name: "category",
+      label: "Category",
       componentType: "select",
       options: [
         { id: "type-man", value: "man", label: "Man" },
