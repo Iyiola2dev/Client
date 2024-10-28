@@ -2,13 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
-import React, { useRef } from "react";
+import { useEffect, useRef } from "react";
+import axios from "axios";
 
 const ProductImageUpload = ({
   imageFile, // Prop for the selected image file
   setImageFile, // Function to update the selected image file state
   uploadedImageURL, // Prop for the uploaded image URL
-  setuploadedImageURL, // Function to update the uploaded image URL state
+  setUploadedImageURL, // Function to update the uploaded image URL state
+  setImageLoadingState, // Function to update the loading state
 }) => {
   // Creating a reference for the file input element
   const inputRef = useRef(null);
@@ -27,7 +29,6 @@ const ProductImageUpload = ({
   // Function to handle drag over events
   const handleDragOver = (e) => {
     e.preventDefault();
-    
   };
 
   // Function to handle drop events
@@ -41,12 +42,50 @@ const ProductImageUpload = ({
 
   // Function to remove the selected image file
   const handleRemoveImage = () => {
-    setImageFile(null)
+    setImageFile(null);
     //this is to clear the input field if there is something inside the inpur field
-    if(inputRef.current){
+    if (inputRef.current) {
       inputRef.current.value = "";
     }
   };
+
+  // This is the  Function to upload the image to Cloudinary
+  const uploadImageToCloudinary = async () => {
+    // Set the loading state to true
+    setImageLoadingState(true);
+    // Create a new FormData object
+    const dataImage = new FormData();
+    // Append the image file to the FormData object
+    dataImage.append("my_file", imageFile);
+    // Send a POST request to the server to upload the image
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/products/upload-image",
+      dataImage,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (response?.data?.success) {
+      console.log(response.data);
+      setUploadedImageURL(response.data.result.url);
+
+      // Set the loading state to false
+      setImageLoadingState(false);
+    }
+    // // Parse the JSON response
+    // const data = await response.json();
+    // // Update the uploaded image URL state with the URL of the uploaded image
+    // setUploadedImageURL(data.result.secure_url);
+  };
+
+  useEffect(() => {
+    if (imageFile !== null) {
+      uploadImageToCloudinary();
+    }
+  }, [imageFile]);
 
   // Return the image upload component
   return (
@@ -84,9 +123,14 @@ const ProductImageUpload = ({
             <p className="text-sm font-medium">{imageFile.name}</p>
 
             {/* This is to remove the file */}
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={handleRemoveImage}>
-                <XIcon className="w-4 h-4"  />
-                    <span className="sr-only">Remove File</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-foreground"
+              onClick={handleRemoveImage}
+            >
+              <XIcon className="w-4 h-4" />
+              <span className="sr-only">Remove File</span>
             </Button>
           </div>
         )}
