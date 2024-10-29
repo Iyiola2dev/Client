@@ -75,13 +75,13 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-// Async thunk to get all pharmacists
-export const getAllPharmacists = createAsyncThunk(
-  "/pharmacists/getAll",
+// Async thunk to get all therapists
+export const getAllTherapists = createAsyncThunk(
+  "/therapists/getAll",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/pharmacists",
+        "http://localhost:5000/api/therapists",
         {
           withCredentials: true,
         }

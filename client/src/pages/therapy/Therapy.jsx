@@ -1,9 +1,9 @@
 import React from "react";
 import Selecton from "./Category";
-import { TherapyCards } from "./TherapyCards";
 import PaginationButtons from "@/components/ui/pagnationButton";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import Therapists from "./Therapists";
 
 const Therapy = () => {
   const navigate = useNavigate();
@@ -29,16 +29,13 @@ const Therapy = () => {
         </div>
 
         {/* after dropdown */}
-        <div className="text-center py-2 px-4 font-semibold text-[14px] mt-4 bg-white mx-2 border rounded-md">
+        <div className="text-center py-2 px-4 font-semibold text-[14px] lg:mx-8 mt-4 bg-white mx-2 border rounded-md">
           <p>4 Providers Found for Individual Therapy </p>
         </div>
 
         {/* therapy cards */}
         <div>
-          <TherapyCards />
-          <TherapyCards />
-          <TherapyCards />
-          <TherapyCards />
+          <Therapists />
         </div>
 
         {/* next buttons */}

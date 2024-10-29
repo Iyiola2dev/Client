@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const therapistSchema = new mongoose.Schema(
   {
+    imageUrl: {
+      type: String,
+      default: "https://via.placeholder.com/150", // Default image
+    },
     name: {
       type: String,
       required: true,
@@ -18,9 +22,22 @@ const therapistSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    openings: {
-      type: [String],
-      default: [], // Array of available openings 
+    openings: [
+      {
+        day: String, // e.g., 'Tuesday'
+        times: [String], // e.g., ['10 AM', '12 PM']
+      },
+    ],
+    therapyType: {
+      type: String,
+    },
+    clientAge: {
+      type: String,
+      enum: ["18-28", "28-38", "38-48", "48-58", "59+"], // Predefined options
+    },
+    isOnline: {
+      type: Boolean,
+      default: false,
     },
     maritalStatus: {
       type: String,

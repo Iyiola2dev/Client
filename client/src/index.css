@@ -85,9 +85,20 @@
 }
 
 
-.playfair-display-select p {
+.playfair-display-select p, button {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+/* Highlight available dates in green */
+.highlight-available {
+  background-color: #d1fae5; /* Light green background */
+  color: #065f46; /* Dark green text color */
+  border-radius: 50%; /* Make the date rounded */
+}
+
+.highlight-available:hover {
+  background-color: #a7f3d0; /* Slightly darker green on hover */
 }

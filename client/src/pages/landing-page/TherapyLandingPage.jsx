@@ -22,7 +22,7 @@ const LandingPage = () => {
      };
 
   return (
-    <div style={{ backgroundColor: "#FAF1DC" }}>
+    <div style={{ backgroundColor: "#F5F5DC" }}>
       <main className="flex items-center justify-center min-h-full flex-wrap">
         <div className="flex-1 flex justify-center relative">
           <a href="#category">

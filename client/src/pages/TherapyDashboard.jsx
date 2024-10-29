@@ -14,7 +14,7 @@ const Dashboard = () => {
       <div>
         <Navbar />
       </div>
-      <div className="mt-[4rem] lg:mt-[10rem]">
+      <div className="mt-[3rem] lg:mt-[10rem]">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route
