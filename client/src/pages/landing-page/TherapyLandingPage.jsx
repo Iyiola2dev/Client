@@ -6,6 +6,7 @@ import TeenButton from "@/components/ui/teenButton";
 import "../../index.css";
 import React, { useState } from "react";
 import RestrictionModal from "./RestrictionModal";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 const LandingPage = () => {
@@ -26,7 +27,7 @@ const LandingPage = () => {
         <div className="flex-1 flex justify-center relative">
           <a href="#category">
             <img
-              className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
+              className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
               alt="Smiley Doctor"
             />
@@ -40,39 +41,47 @@ const LandingPage = () => {
 
               {/* Button with Gradient Background */}
               <a className="w-full">
-                <button className="w-full lg:mt-3 lg:py-4 md:py-3 bg-gradient-to-r from-pink-500 via-blue-500 to-pink-600 text-white p-1 rounded-tr-md rounded-tl-md text-sm md:text-md lg:text-lg font-bold">
+                <button className="w-full lg:mt-3 lg:py-4 md:py-3 bg-gradient-to-r from-pink-500 via-blue-500 to-pink-600 text-white p-1 rounded-tr-md rounded-tl-md text-[10px] md:text-[12px] lg:text-lg font-bold">
                   Book Session
                 </button>
               </a>
             </div>
           </a>
         </div>
-
         {/* Image and text container with click event to open modal */}
         <div
-          className="flex-1 flex justify-center relative"
+          className="flex-1 flex justify-center relative cursor-pointer" // Add cursor-pointer for better UX
           onClick={handleOpenModal}
         >
           <img
-            className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
+            className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
             alt="Animated Image"
             width={500}
             height={700}
           />
           <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
-            <p className="w-full lg:mt-3 lg:py-4 md:py-3 bg-black text-white text-sm md:text-md lg:text-lg font-bold rounded-tr-md rounded-tl-md">
+            <p className="w-full lg:mt-3 p-1 lg:py-4 md:py-3 bg-black text-white text-[10px] md:text-[12px] lg:text-lg rounded-tr-md rounded-tl-md">
               Make Your X Life More Enjoyable
             </p>
           </div>
         </div>
-
         {/* Render the modal if isModalOpen is true */}
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <RestrictionModal onClose={handleCloseModal} />
-          </div>
-        )}
+        <AnimatePresence>
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }} // Start slightly below and invisible
+                animate={{ opacity: 1, y: 0 }} // Fade in and slide up to the center
+                exit={{ opacity: 0, x: "-100%" }} // Slide out to the left
+                transition={{ duration: 0.5, ease: "easeOut" }} // Transition settings
+                className="relative"
+              >
+                <RestrictionModal onClose={handleCloseModal} />
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* second section on the landing page */}
@@ -143,7 +152,7 @@ const LandingPage = () => {
           >
             <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-none w-full">
               <img
-                className="w-[280px] lg:w-full lg:h-auto max-w-[500px] object-contain rounded-lg"
+                className="w-full md:w-[280px] lg:w-full lg:h-auto max-w-[500px] object-contain rounded-lg"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729782989/Mern-Ecommerce/Rectangle_25_xqygev.png"
                 alt="Couple-image"
               />
@@ -172,7 +181,7 @@ const LandingPage = () => {
           >
             <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-none w-full">
               <img
-                className="w-[280px] lg:w-full lg:h-auto max-w-[500px] object-contain rounded-lg"
+                className="w-full md:w-[280px] lg:w-full lg:h-auto max-w-[500px] object-contain rounded-lg"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729782980/Mern-Ecommerce/sex_consultations_u1utm2.png"
                 alt="Sex consultation-image"
               />
@@ -200,7 +209,7 @@ const LandingPage = () => {
           >
             <div className="flex flex-col justify-center items-center p-4 lg:p-6 border-none w-full">
               <img
-                className="w-[280px] lg:w-full  lg:h-auto max-w-[500px] object-contain rounded-lg"
+                className="w-full md:w-[280px] lg:w-full  lg:h-auto max-w-[500px] object-contain rounded-lg"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729782973/Mern-Ecommerce/teen_theraphy_cdakj2.png"
                 alt="Teen therapy image"
                 width={500}

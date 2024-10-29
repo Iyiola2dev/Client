@@ -80,8 +80,11 @@ const authSlice = createSlice({
     setIntendedRoute: (state, action) => {
       state.intendedRoute = action.payload; // Update intendedRoute state with the payload
     },
+    clearIntendedRoute: (state) => {
+      state.intendedRoute = "/"; // Reset to default route or as needed
+    },
   },
-
+  
   // The slice uses extraReducers to handle different states of the registerUser async action (pending, fulfilled, and rejected).
   extraReducers: (builder) => {
     builder
@@ -136,5 +139,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, setIntendedRoute } = authSlice.actions;
+export const { setUser, setIntendedRoute, clearIntendedRoute } =
+  authSlice.actions;
+
 export default authSlice.reducer;
