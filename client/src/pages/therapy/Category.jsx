@@ -1,67 +1,58 @@
+import React, { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
+import { IoChevronUpOutline } from "react-icons/io5";
+import "../../index.css";
 
-import React, { useState } from 'react'
-import { FaChevronDown } from 'react-icons/fa';
-import { IoChevronUpOutline } from 'react-icons/io5';
-
-const category = [
+const selecton = [
   {
     id: 1,
-    category: "CLINICAL THERAPY",
+    selecton: "CLINICAL GENDER",
   },
   {
     id: 2,
-    category: "SERVICE TYPE",
+    selecton: "SERVICE TYPE",
   },
   {
     id: 3,
-    category: "CLIENT AGE",
+    selecton: "CLIENT AGE",
   },
   {
     id: 4,
-    category: "LANGUAGE",
+    selecton: "LANGUAGE",
   },
 ];
 
+const Selecton = () => {
+  const [isOpen, setIsOpen] = useState(null);
 
-const Category = () => {
-     const [isOpen, setIsOpen] = useState(false);
-     const handleToggle = (id) => {
-       setIsOpen((prevId) => (prevId === id ? null : id));
-     };
+  const handleToggle = (id) => {
+    setIsOpen((prevId) => (prevId === id ? null : id));
+  };
 
   return (
     <div>
-      <div className="h-auto max-w-lg ">
-        <div>
-          {category.map((category) => (
-            <div
-              key={category.id}
-              className="flex flex-col items-center justify-center "
+      <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-2 mx-16 ">
+        {selecton.map((item) => (
+          <div
+            key={item.id}
+            className="playfair-display-select flex items-center justify-between border-2 border-slate-300 rounded-full px-6 py-4 mb-4 lg:mb-0 lg:mr-4 bg-white transition-shadow duration-200 hover:shadow-md"
+          >
+            <p className=" font-semibold text-[15px] ">{item.selecton}</p>
+            <button
+              onClick={() => handleToggle(item.id)}
+              className="text-lg text-gray-400"
             >
-              <div className="flex items-center justify-center gap-4 border-2 border-slate-300 rounded-3xl py-2 px-4 mb-2 bg-white font-semibold ">
-                <h1 className="font-b">{category.category}</h1>
-                <span>
-                  <button
-                    onClick={() => handleToggle(category.id)}
-                    className="text-blue-500"
-                  >
-                    {isOpen === category.id ? (
-                      <IoChevronUpOutline className="text-black" />
-                    ) : (
-                      <FaChevronDown className="text-black" />
-                    )}
-                  </button>
-                </span>
-              </div>
-              {isOpen === category.id && (
-                <p className="py-4">{category.answer}</p>
+              {isOpen === item.id ? (
+                <IoChevronUpOutline className="ml-2 w-4 h-4 text-black" />
+              ) : (
+                <FaChevronDown className="ml-2 w-4 h-4 text-black" />
               )}
-            </div>
-          ))}
-        </div>
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
-export default Category
+export default Selecton;

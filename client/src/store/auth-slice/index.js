@@ -52,22 +52,51 @@ export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
 // });
 
 // Frontend: Async thunk to check if the user is authenticated
-export const checkAuth = createAsyncThunk("/auth/checkauth", async (_, { rejectWithValue }) => {
-  try {
-    const response = await axios.get("http://localhost:5000/api/auth/check-auth", {
-      withCredentials: true, // Ensures the token cookie is sent with the request
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate, proxy-revalidate",
-        Expires: 0,
-      },
-    });
-    return response.data; // Should contain user data if authenticated
-  } catch (error) {
-    console.log(error);
-    return rejectWithValue("Unauthorized"); // Handle any errors or unauthorized responses
+export const checkAuth = createAsyncThunk(
+  "/auth/checkauth",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/auth/check-auth",
+        {
+          withCredentials: true, // Ensures the token cookie is sent with the request
+          headers: {
+            "Cache-Control":
+              "no-cache, no-store, must-revalidate, proxy-revalidate",
+            Expires: 0,
+          },
+        }
+      );
+      return response.data; // Should contain user data if authenticated
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue("Unauthorized"); // Handle any errors or unauthorized responses
+    }
   }
-});
+);
 
+// Async thunk to get all pharmacists
+export const getAllPharmacists = createAsyncThunk(
+  "/pharmacists/getAll",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/pharmacists",
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      // Handle the error and pass a custom message or the error object
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred"
+      );
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -84,7 +113,7 @@ const authSlice = createSlice({
       state.intendedRoute = "/"; // Reset to default route or as needed
     },
   },
-  
+
   // The slice uses extraReducers to handle different states of the registerUser async action (pending, fulfilled, and rejected).
   extraReducers: (builder) => {
     builder

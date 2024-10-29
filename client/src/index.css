@@ -83,3 +83,11 @@
     @apply col-span-full place-self-center;
   }
 }
+
+
+.playfair-display-select p {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
