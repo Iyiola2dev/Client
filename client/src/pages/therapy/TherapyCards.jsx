@@ -70,18 +70,27 @@ export const TherapyCards = ({ therapist }) => {
               </a>
               {/* Online Indicator */}
               <span
-                className={`absolute top-2 right-16 md:right-16 md:mr-6 lg:right-10 w-6 h-6 rounded-full border border-white ${
+                className={`absolute top-2 right-16 md:right-16 md:mr-6 lg:right-2 w-6 h-6 rounded-full border border-white ${
                   therapist.isOnline ? "bg-green-500" : "bg-gray-400"
                 }`}
               ></span>
             </div>
 
             <div className="">
-              <div className="text-left ml-5 mb-4">
-                <h2 className="text-2xl font-semibold text-gray-900">
-                  {therapist.name}
-                </h2>
-                <p className="text-md text-black">{therapist.specialty}</p>
+              {/* name and client age */}
+              <div className="lg:flex gap-12">
+                <div className="text-left ml-5 mb-4">
+                  <h2 className="text-2xl font-semibold text-gray-900">
+                    {therapist.name}
+                  </h2>
+                  <p className="text-md text-black">{therapist.specialty}</p>
+                </div>
+
+                <div className="hidden lg:block md:block md:mb-2 w-fit">
+                  <p className="border p-2 border-black rounded-3xl ">
+                    Client age: {therapist.clientAge}
+                  </p>
+                </div>
               </div>
 
               <div className="text-sm mb-4 space-y-2 lg:space-y-4 lg:ml-5">
@@ -120,9 +129,11 @@ export const TherapyCards = ({ therapist }) => {
               </div>
 
               <div className="flex justify-center md:justify-start mb-4">
-                <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white lg:text-[16px] lg:w-60 lg:ml-16 lg:mt-4 lg:px-2 lg:h-8 text-sm rounded-full px-6 py-1">
-                  Book Now
-                </button>
+                <a href="/therapyDetails">
+                  <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white lg:text-[16px] lg:w-60 lg:ml-16 lg:mt-4 lg:px-2 lg:h-8 text-sm rounded-full px-6 py-1">
+                    Book Now
+                  </button>
+                </a>
               </div>
 
               <div className="text-center md:text-left block md:hidden lg:hidden">

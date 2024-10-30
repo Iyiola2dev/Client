@@ -24,8 +24,22 @@ const therapistSchema = new mongoose.Schema(
     },
     openings: [
       {
-        day: String, // e.g., 'Tuesday'
-        times: [String], // e.g., ['10 AM', '12 PM']
+        day: {
+          type: String,
+          required: true,
+          match: /^\d{4}-\d{2}-\d{2}$/, // Validates format "YYYY-MM-DD"
+        },
+        times: {
+          type: [String],
+          validate: {
+            validator: function (times) {
+              return times.every((time) =>
+                /^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$/i.test(time)
+              );
+            },
+            message: "Time must be in format 'hh:mm AM/PM'",
+          },
+        },
       },
     ],
     therapyType: {

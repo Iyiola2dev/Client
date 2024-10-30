@@ -4,6 +4,8 @@ import PaginationButtons from "@/components/ui/pagnationButton";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import Therapists from "./Therapists";
+import Calendar from "./Calender";
+
 
 const Therapy = () => {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ const Therapy = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#F5F5DC" }} className="">
+    <div style={{ backgroundColor: "#F5F5DC" }}>
       {" "}
       <div className="pt-6">
         {/* arrow to go back */}
@@ -29,8 +31,8 @@ const Therapy = () => {
         </div>
 
         {/* after dropdown */}
-        <div className="text-center py-2 px-4 font-semibold text-[14px] lg:mx-8 mt-4 bg-white mx-2 border rounded-md">
-          <p>4 Providers Found for Individual Therapy </p>
+        <div>
+          <Calendar />
         </div>
 
         {/* therapy cards */}
@@ -40,12 +42,12 @@ const Therapy = () => {
 
         {/* next buttons */}
         <div className="flex items-center justify-between p-4">
-          <div className=" mb-2">
+          <div className=" mb-24">
             <PaginationButtons />
           </div>
 
           {/* dropdown */}
-          <div className="flex items-center justify-center gap-2 font-semibold text-md">
+          <div className="flex items-center justify-center gap-2 font-semibold text-md mb-24">
             <select className="py-2 px-4 border-2 border-blue-400 rounded-md">
               <option>4</option>
             </select>

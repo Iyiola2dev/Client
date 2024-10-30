@@ -85,7 +85,7 @@
 }
 
 
-.playfair-display-select p, button {
+.playfair-display-select p, button, span {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 400;
