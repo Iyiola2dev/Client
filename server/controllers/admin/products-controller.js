@@ -1,5 +1,5 @@
 import { imageUploadUtil } from "../../helpers/cloudinary.js";
-
+import Product from "../../models/productModel.js";
 export const handleImageUpload = async (req, res) => {
   try {
     //This is to check if there is no file uploaded
@@ -63,7 +63,7 @@ export const addProduct = async (req, res) => {
 export const fetchAllProduct = async (req, res) => {
   try {
     const listOfProducts = await Product.find({}); //This is to fetch all products from the database
-    res.status.json({
+    res.status(200).json({
       success: true,
       data: listOfProducts,
     });
@@ -84,7 +84,8 @@ export const editProduct = async (req, res) => {
     const { image, name, description, category, price, stock, sales } =
       req.body;
 
-    const findProduct = await Product.findById(id); //This is to find the product by id
+      //I used let instead of const because I will be updating the product
+   let findProduct = await Product.findById(id); //This is to find the product by id
     if (!findProduct) {
       res.status(404).json({
         success: false,
@@ -96,10 +97,12 @@ export const editProduct = async (req, res) => {
     findProduct.name = name || findProduct.name;
     findProduct.description = description || findProduct.description;
     findProduct.category = category || findProduct.category;
-    findProduct.price = price || findProduct.price;
+
+    //This is to check if the price and sales is empty, if it is empty, it will be set to 0 and if not it change it to the new value
+    findProduct.price = price === ''? 0 : price || findProduct.price;
     findProduct.image = image || findProduct.image;
     findProduct.stock = stock || findProduct.stock;
-    findProduct.sales = sales || findProduct.sales;
+    findProduct.sales = sales === ''? 0 : sales || findProduct.sales;
 
     await findProduct.save(); //This is to save the updated product
     res.status(200).json({
@@ -130,7 +133,7 @@ export const deleteProduct = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Product deleted successfully",
-    })
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
