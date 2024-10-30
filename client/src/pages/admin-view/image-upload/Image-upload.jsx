@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
 import axios from "axios";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductImageUpload = ({
   imageFile, // Prop for the selected image file
@@ -11,6 +12,8 @@ const ProductImageUpload = ({
   uploadedImageURL, // Prop for the uploaded image URL
   setUploadedImageURL, // Function to update the uploaded image URL state
   setImageLoadingState, // Function to update the loading state
+  imageLoadingState, // Prop for the loading state
+  isEditMode, // This prop is used to determine if the component is in edit mode
 }) => {
   // Creating a reference for the file input element
   const inputRef = useRef(null);
@@ -97,7 +100,9 @@ const ProductImageUpload = ({
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className="border-2 border-dashed rounded-md p-4 mt-4"
+        className={` ${
+          isEditMode ? "opacity-60" : ""
+        }border-2 border-dashed rounded-md p-4 mt-4`}
       >
         <Input
           id="image-upload" // Unique identifier for the input element
@@ -105,15 +110,21 @@ const ProductImageUpload = ({
           className="hidden" //  this to hide the input element visually
           ref={inputRef} // Reference to the file input element
           onChange={handleImageFileChange} // Event handler for file selection changes
+          disabled={isEditMode} // Disables the input element if the component is in edit mode
         />
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className="flex flex-col justify-center items-center h-32 cursor-pointer"
+            className={` ${
+              // this action is activated when it's on edit mode and the cursor is not allowed
+              isEditMode ? "cursor-not-allowed" : ""
+            } flex flex-col justify-center items-center h-32 cursor-pointer`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2 " />
             <span>Drag and drop or click to upload image</span>
           </Label>
+        ) : imageLoadingState ? (
+          <Skeleton className="h-10 bg-gray-100" />
         ) : (
           <div className="flex items-center justify-between">
             <div className="flex items-center ">
