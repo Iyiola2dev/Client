@@ -61,7 +61,7 @@ export const TherapyCards = ({ therapist }) => {
         <div className="md:w-1/2 lg:w-1/2 lg:flex-row lg:mt-8">
           <div className="flex lg:flex-row flex-col justify-center md:justify-start mb-4">
             <div className="relative">
-              <a href="/therapyDetails">
+              <a href="/therapist/:id">
                 <img
                   src={therapist.imageUrl || "/path-to-your-image.jpg"}
                   alt="therapist"
@@ -86,8 +86,8 @@ export const TherapyCards = ({ therapist }) => {
                   <p className="text-md text-black">{therapist.specialty}</p>
                 </div>
 
-                <div className="hidden lg:block md:block md:mb-2 w-fit">
-                  <p className="border p-2 border-black rounded-3xl ">
+                <div className="hidden lg:block md:block md:mb-2 w-fit ml-5">
+                  <p className="border p-2 border-black rounded-3xl md:text-sm ">
                     Client age: {therapist.clientAge}
                   </p>
                 </div>
@@ -129,7 +129,7 @@ export const TherapyCards = ({ therapist }) => {
               </div>
 
               <div className="flex justify-center md:justify-start mb-4">
-                <a href="/therapyDetails">
+                <a href="/therapist/:id">
                   <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white lg:text-[16px] lg:w-60 lg:ml-16 lg:mt-4 lg:px-2 lg:h-8 text-sm rounded-full px-6 py-1">
                     Book Now
                   </button>
@@ -149,7 +149,7 @@ export const TherapyCards = ({ therapist }) => {
         </div>
 
         {/* Right Column: Availability Calendar */}
-        <div className="hidden md:flex md:flex-col md:w-1/2 items-center">
+        <div className="hidden md:flex md:flex-col md:w-1/2 items-center mt-8">
           {/* Calendar */}
           <Calendar
             onChange={handleDateChange}
@@ -208,16 +208,16 @@ export const TherapyCards = ({ therapist }) => {
           )}
 
           {/* "More" Button */}
-          <div className="playfair-display-select">
+          <div className="playfair-display-select md:mt-12">
             <button className="mt-4 text-black border py-2 px-4 rounded-lg border-slate-300 ">
               More
             </button>
           </div>
 
           {/* "View Availability" Link */}
-          <div className="text-center md:text-left hidden lg:mt-6 md:block lg:block">
+          <div className="text-center md:text-left md:mt-8 hidden lg:mt-6 md:block lg:block">
             <a
-              href="/therapyDetails"
+              href="/therapist/:id"
               className="text-sm lg:text-md text-blue-600 underline"
             >
               View Availability

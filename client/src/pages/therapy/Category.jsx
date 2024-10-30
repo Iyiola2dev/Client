@@ -31,13 +31,13 @@ const Selecton = () => {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-2 mx-16 ">
+      <div className="flex flex-col lg:flex-row md:flex-row md:gap-3 md:mx-4 items-center justify-between px-4 py-2 mx-16">
         {selecton.map((item) => (
           <div
             key={item.id}
-            className="playfair-display-select flex items-center justify-between border-2 border-slate-300 rounded-full px-6 py-4 mb-4 lg:mb-0 lg:mr-4 bg-white transition-shadow duration-200 hover:shadow-md"
+            className="playfair-display-select flex items-center justify-between border-2 border-slate-300 rounded-full mb-4 lg:py-4 lg:px-6 lg:mb-0 lg:mr-4 bg-white transition-shadow duration-200 hover:shadow-md whitespace-nowrap py-2 px-4"
           >
-            <p className=" font-semibold text-[15px] ">{item.selecton}</p>
+            <p className="text-[15px]">{item.selecton}</p>
             <button
               onClick={() => handleToggle(item.id)}
               className="text-lg text-gray-400"

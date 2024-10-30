@@ -6,6 +6,7 @@ import Therapy from "./therapy/Therapy";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/TherapyNavbar";
 import ProtectedRoute from "@/auth/ProtectedRoute";
+import TherapistDetails from './therapy/TherapistDetails';
 
 
 const Dashboard = () => {
@@ -21,11 +22,19 @@ const Dashboard = () => {
             path="/appointment"
             element={
               <ProtectedRoute>
-                <Therapy /> {/* Render Therapy component if authenticated */}
+                {/* Render components if authenticated */}
+                <Therapy />
               </ProtectedRoute>
             }
           />
-          <Route />
+          <Route
+            path="/therapist/:id"
+            element={
+              <ProtectedRoute>
+                <TherapistDetails />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
 
