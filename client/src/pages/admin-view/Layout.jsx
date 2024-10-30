@@ -7,7 +7,7 @@ const AdminLayout = ({ children }) => {
   //this is the admin dashboard sidebar
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
-    <div className="flex h-screen">
+    <div className="flex h-full ">
       {/* Sidebar */}
       <AdminSideBar open={openSidebar} setOpen={setOpenSidebar} />
 
@@ -17,7 +17,7 @@ const AdminLayout = ({ children }) => {
         <AdminHeader setOpen={setOpenSidebar} />
 
         {/* Dynamic content */}
-        <main className="flex-grow p-4 overflow-auto">{children}</main>
+        <main className="flex flex-col flex-1  p-4">{children}</main>
       </div>
     </div>
   );
