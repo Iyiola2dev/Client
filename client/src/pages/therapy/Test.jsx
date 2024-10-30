@@ -1,44 +1,15 @@
-import React, { useEffect } from "react";
+
+import React from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getTherapistById } from "@/store/therapist-slice";
+import { useNavigate } from "react-router-dom";
 
-const TherapistDetails = () => {
+const TherapistInfo = ({ therapist }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const dispatch = useDispatch();
-
-  // Selectors to get therapist data, loading status, and error message
-  const therapist = useSelector((state) => state.therapists.therapist);
-  const loading = useSelector((state) => state.therapists.loading);
-  const error = useSelector((state) => state.therapists.error);
 
   // Function to go back to the previous page
   const goBack = () => {
     navigate(-1);
   };
-
-  // Effect to fetch therapist data when the component mounts or ID changes
-  useEffect(() => {
-    console.log("Therapist ID from URL:", id); // Debugging: log the therapist ID
-    if (id) {
-      dispatch(getTherapistById(id));
-    }
-  }, [dispatch, id]);
-
-  // Debugging: log loading state and error message
-  console.log("Loading state:", loading);
-  console.log("Error state:", error);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    console.log("Error message:", error.message); // Debugging: log the error message
-    return <p>{error.message || "An error occurred"}</p>; // Display error message safely
-  }
-
-  // Debugging: log the therapist data received from the API
-  console.log("Therapist data:", therapist);
 
   return (
     <div>
@@ -94,4 +65,4 @@ const TherapistDetails = () => {
   );
 };
 
-export default TherapistDetails;
+export default TherapistInfo;

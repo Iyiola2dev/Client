@@ -1,7 +1,8 @@
-import { getAllTherapists } from "@/store/auth-slice";
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TherapyCards } from "./TherapyCards";
+import { getAllTherapists } from "@/store/therapist-slice";
 
 const Therapists = () => {
   const dispatch = useDispatch();

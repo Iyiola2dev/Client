@@ -6,8 +6,8 @@ import Therapy from "./therapy/Therapy";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/TherapyNavbar";
 import ProtectedRoute from "@/auth/ProtectedRoute";
-import TherapistDetails from './therapy/TherapistDetails';
-
+import TherapistDetails from "./therapy/TherapistDetails";
+import TherapistInfo from "./therapy/Test";
 
 const Dashboard = () => {
   return (
@@ -15,7 +15,7 @@ const Dashboard = () => {
       <div>
         <Navbar />
       </div>
-      <div className="mt-[3rem] lg:mt-[10rem]">
+      <div className="mt-[3rem] lg:mt-[10rem] md:mt-[5rem]">
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route
@@ -27,14 +27,8 @@ const Dashboard = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/therapist/:id"
-            element={
-              <ProtectedRoute>
-                <TherapistDetails />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/therapist-details/:id" element={<TherapistDetails />} />
+          <Route path="/testpage" element={<TherapistInfo />} />
         </Routes>
       </div>
 

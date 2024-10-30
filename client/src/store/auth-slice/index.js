@@ -75,28 +75,6 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-// Async thunk to get all therapists
-export const getAllTherapists = createAsyncThunk(
-  "/therapists/getAll",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/api/therapists",
-        {
-          withCredentials: true,
-        }
-      );
-      return response.data;
-    } catch (error) {
-      // Handle the error and pass a custom message or the error object
-      return rejectWithValue(
-        error.response && error.response.data
-          ? error.response.data
-          : "An error occurred"
-      );
-    }
-  }
-);
 
 const authSlice = createSlice({
   name: "auth",
