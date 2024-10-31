@@ -19,7 +19,7 @@ const AppointmentButton = ({ text }) => {
 
   return (
     <button
-      className="relative rounded-full bg-white text-black mt-2 sm:text-xs py-1 px-6 lg:px-4 font-semibold text-center overflow-hidden"
+      className="relative rounded-full bg-white text-black mt-2 sm:text-xs py-1 px-6 lg:px-4 font-semibold text-center overflow-hidden lg:text-lg"
       style={{
         border: "2px solid transparent",
         backgroundImage:

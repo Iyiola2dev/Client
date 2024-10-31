@@ -100,10 +100,7 @@ const Navbar = () => {
 
       {/* Mobile Navbar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 ">
-        <div
-          className="flex items-center justify-between p-4"
-          style={{ backgroundColor: "#F5F5DC" }}
-        >
+        <div className="flex items-center justify-between p-4 bg-[#F5F5DC]">
           <button onClick={toggleMenu} className="text-black">
             {/* Hamburger Icon */}
             <svg

@@ -9,6 +9,7 @@ import { BiCoinStack } from "react-icons/bi";
 import { BsChatDots } from "react-icons/bs";
 import { GiTripleYin } from "react-icons/gi";
 import { TfiCreditCard } from "react-icons/tfi";
+import { IoIosSchool } from "react-icons/io";
 
 const TherapistDetails = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const TherapistDetails = () => {
   console.log("Therapist data:", therapist);
 
   return (
-    <div className="block lg:flex lg:justify-between lg:items-center px-4">
+    <div className="block lg:flex lg:justify-between lg:items-center px-4 bg-[#F5F5DC] ">
       {/* first part */}
       <div className="pt-8">
         {/* arrow */}
@@ -157,12 +158,12 @@ const TherapistDetails = () => {
           </div>
         </div>
         {/* about */}
-        <div className="w-[40vw]">
+        <div className="lg:w-[40vw]">
           <div className="mt-12 flex items-center gap-2">
             <img
               src={therapist?.imageUrl || "/path-to-your-image.jpg"}
               alt="therapist"
-              className="w-30 h-30 rounded-full lg:10 lg:h-10"
+              className="w-12 h-12 rounded-full lg:10 lg:h-10"
             />
             <h2 className="text-xl font-semibold text-gray-900">
               About {therapist?.firstName || "Name not available"}
@@ -186,8 +187,8 @@ const TherapistDetails = () => {
           </div>
         </div>
         {/* how to get coins */}
-        <div className="w-[40vw] mt-8">
-          <p className="flex items-center gap-1 lg-text-xl font-semibold">
+        <div className="lg:w-[40vw] mt-10">
+          <p className="flex items-center gap-2 lg-text-xl font-semibold">
             <BiCoinStack className="w-6 h-6" />
             How To Get Coins To Pay For Sessions
           </p>
@@ -228,15 +229,98 @@ const TherapistDetails = () => {
           </ol>
         </div>
         {/* coins audio */}
-        <div>
-          <p>
-            <TfiCreditCard />
+        <div className="lg:w-[40vw] mt-10">
+          <p className="flex items-center gap-2 lg-text-xl font-semibold  md:text-md">
+            <TfiCreditCard className="w-6 h-6" />
+            Coin Costs Per Audio Call / Messages Sessions
           </p>
+          <hr className="w-50 h-[2px] bg-black mt-2" />
+          <div className="flex flex-col lg:flex-row  gap-8 justify-start mt-6">
+            <div className="space-y-3">
+              <p>
+                5 Coins / 1 Minute = <strong>₦1,000</strong>{" "}
+              </p>
+              <p>
+                25 Coins / 5 Minutes = <strong>₦5,000</strong>{" "}
+              </p>
+              <p>
+                50 Coins / 1= Minutes = <strong>₦10,000</strong>{" "}
+              </p>
+              <p>
+                150 Coins / 30 Minutes = <strong>₦15,000</strong>{" "}
+              </p>
+              <p>
+                300 Coins / 60 Minutes = <strong>₦20,000</strong>{" "}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p>
+                5 Coins / 1 Message = <strong>₦100</strong>{" "}
+              </p>
+              <p>
+                25 Coins / 5 Messages = <strong>₦500</strong>{" "}
+              </p>
+              <p>
+                50 Coins / 10 Messages = <strong>₦1,000</strong>{" "}
+              </p>
+              <p>
+                150 Coins / 30 Messages = <strong>₦1,500</strong>{" "}
+              </p>
+              <p>
+                300 Coins / 60 Messages = <strong>₦2,000</strong>{" "}
+              </p>
+            </div>
+          </div>
         </div>
         {/* education */}
-        <div></div>
+        <div className="lg:w-[40vw] mt-10">
+          <p className="flex items-center gap-2 md:text-md lg-text-xl font-semibold">
+            <IoIosSchool className="w-6 h-6" />
+            Education And Training
+          </p>
+          <hr className="w-50 h-[2px] bg-black mt-2" />
+          <p className="mt-4 font-semibold">Years In Practice</p>
+          <p>{therapist?.yearsOfPractice} Years</p>
+          <p className="mt-4 font-semibold">Graduating Institute</p>
+          <p>{therapist?.institute}</p>
+          <p className="mt-4 font-semibold">Graduating Degree</p>
+          <p>{therapist?.degree}</p>
+        </div>
         {/* additional details */}
-        <div></div>
+        <div className="lg:w-[40vw] mt-10 ">
+          <p className="flex items-center gap-1 md:text-md lg-text-xl font-semibold">
+            <img
+              src="https://t3.ftcdn.net/jpg/01/31/45/90/360_F_131459045_VJAQH4VTAz3Gb1yK9eFtJXKWhmr5XgHt.jpg"
+              alt="therapist"
+              className="w-10 h-10"
+            />
+            Additional Details
+          </p>
+          <hr className="w-50 h-[2px] bg-black mt-2" />
+          <p className="mt-4 font-semibold">
+            Languages Spoken By This Provider
+          </p>
+          {/* <p>{therapist?.languages.split(/(?=[A-Z])/).join("\n")}</p> 
+          this works if the language value is a string */}
+          {/* split the langauges in the array */}
+          <p>
+            {therapist?.languages?.map((lang, index) => (
+              <React.Fragment key={index}>
+                {lang}
+                <br />
+              </React.Fragment>
+            ))}
+          </p>
+
+          <p
+            className="mt-4 font-semibold
+            "
+          >
+            State of Practice
+          </p>
+          <p className="pb-40">{therapist?.stateOfPractice}</p>
+        </div>
       </div>
 
       {/* second part */}
