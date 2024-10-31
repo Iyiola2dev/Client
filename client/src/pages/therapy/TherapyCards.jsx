@@ -72,7 +72,7 @@ export const TherapyCards = ({ therapist }) => {
             </div>
 
             <div>
-              <div className="lg:flex gap-12">
+              <div className="lg:flex gap-8">
                 <div className="text-left ml-5 mb-4">
                   <h2 className="text-2xl font-semibold text-gray-900">
                     {therapist.name}
@@ -81,7 +81,7 @@ export const TherapyCards = ({ therapist }) => {
                 </div>
 
                 <div className="hidden lg:block md:block md:mb-2 w-fit ml-5">
-                  <p className="border p-2 border-black rounded-3xl md:text-sm ">
+                  <p className="border p-2 border-black rounded-3xl md:text-sm lg:text-sm">
                     Client age: {therapist.clientAge}
                   </p>
                 </div>
@@ -108,11 +108,11 @@ export const TherapyCards = ({ therapist }) => {
                 </div>
               </div>
 
-              <div className="flex justify-center md:justify-start gap-2 mb-4">
-                <button className="text-xs lg:text-[16px] border border-blue-600 rounded-full px-4 py-1 lg:px-6 text-blue-600">
+              <div className="flex justify-center md:justify-start gap-1 mb-4">
+                <button className="text-xs lg:text-[16px] border border-blue-600 rounded-full px-2 py-1 lg:px-6 text-blue-600">
                   {therapist.maritalStatus}
                 </button>
-                <button className="flex items-center lg:text-[16px] text-xs bg-blue-600 text-white rounded-full px-3 py-1 gap-1">
+                <button className="flex items-center lg:text-[16px] text-xs bg-blue-600 text-white rounded-full px-2 py-1 gap- ">
                   <MdOutlinePhoneInTalk className="w-3 h-3 lg:w-6 lg:h-6" />
                   Call Now
                 </button>

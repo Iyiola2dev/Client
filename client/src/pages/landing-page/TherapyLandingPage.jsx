@@ -27,7 +27,7 @@ const LandingPage = () => {
         <div className="flex-1 flex justify-center relative">
           <a href="#category">
             <img
-              className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto md:w-[400px] md:h-[250px] aspect-square object-cover"
+              className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
               alt="Smiley Doctor"
             />

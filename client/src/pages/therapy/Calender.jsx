@@ -53,7 +53,7 @@ const Calendar = () => {
       </p>
 
       <div className="hidden md:flex lg:flex justify-between items-center gap-12 px-8 py-2 ">
-        <p className="lg:text-md lg:font-medium md:text-[13px] md:font-medium mb-2">
+        <p className="lg:text-lg lg:font-medium md:text-[13px] md:font-medium mb-2">
           5 Providers Found For Individual Therapy
         </p>
 
@@ -67,7 +67,7 @@ const Calendar = () => {
           </button>
 
           {/* Calendar Days */}
-          <div className="flex justify-between playfair-display-select px-4 text-xs md:text-xs gap-2">
+          <div className="flex justify-between playfair-display-select px-4 text-xs md:text-xs gap-2 lg:text-md">
             {weekDates.map((date, index) => (
               <div
                 key={index}
