@@ -31,7 +31,7 @@ const Selecton = () => {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row md:flex-row md:gap-3 md:mx-4 items-center justify-between px-4 py-2 mx-16">
+      <div className="flex flex-col lg:flex-row md:flex-row md:gap-3 lg:px-16 md:mx-4 items-center justify-between px-4 py-2 mx-16">
         {selecton.map((item) => (
           <div
             key={item.id}

@@ -10,6 +10,7 @@ import { BsChatDots } from "react-icons/bs";
 import { GiTripleYin } from "react-icons/gi";
 import { TfiCreditCard } from "react-icons/tfi";
 import { IoIosSchool } from "react-icons/io";
+import TherapistProfile from "./OpenDisplay";
 
 const TherapistDetails = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const TherapistDetails = () => {
   console.log("Therapist data:", therapist);
 
   return (
-    <div className="block lg:flex lg:justify-between lg:items-center px-4 bg-[#F5F5DC] ">
+    <div className="block lg:flex lg:justify-between lg:items-center px-10 bg-[#F5F5DC] ">
       {/* first part */}
       <div className="pt-8">
         {/* arrow */}
@@ -141,13 +142,18 @@ const TherapistDetails = () => {
             </button>
 
             {/* show only on small screen */}
-            <div className="playfair-display-select block lg:hidden md:hidden md:mb-2 w-fit">
-              <p className="border p-2 border-slate-300 rounded-3xl md:text-sm mb-4 ">
+            <div className="playfair-display-select block lg:hidden md:hidden md:mb-2 ">
+              <p className="border py-2 px-6 border-slate-300 rounded-3xl md:text-sm mb-4 w-fit ">
                 {therapist?.yearsOfPractice} Years in Practice
               </p>
-              <p className="border p-2 border-slate-300 rounded-3xl md:text-sm ">
+              <p className="border py-2 px-6 border-slate-300 rounded-3xl md:text-sm w-fit ">
                 Client age: {therapist?.clientAge}
               </p>
+              <a href="#bookings">
+                <button className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white">
+                  Book Appointment
+                </button>
+              </a>
             </div>
             {/* show on large and medium screen */}
             <div className="playfair-display-select hidden lg:block md:block  w-fit lg:ml-0 ml-5">
@@ -302,7 +308,7 @@ const TherapistDetails = () => {
             Languages Spoken By This Provider
           </p>
           {/* <p>{therapist?.languages.split(/(?=[A-Z])/).join("\n")}</p> 
-          this works if the language value is a string */}
+          this works if the language value is a string. it will display in block form */}
           {/* split the langauges in the array */}
           <p>
             {therapist?.languages?.map((lang, index) => (
@@ -324,7 +330,21 @@ const TherapistDetails = () => {
       </div>
 
       {/* second part */}
-      <div className="hidden lg:block"></div>
+      <div
+        id="bookings"
+        className="hidden lg:flex lg:flex-col rounded-lg lg:w-[40vw] lg:border border-slate-700 playfair-display-select"
+      >
+        <p className="bg-blue-500 lg:text-2xl text-white w-full text-center font-bold p-6 fint">
+          Book An Appointment
+        </p>
+        <div className="flex flex-col items-start p-4">
+          <p className="fint">{therapist?.therapyType?.join(" / ")}</p>
+          <p>{therapist?.firstName} Is Available For On-Site Audio Calls</p>
+          <div className="mt-8">
+            <TherapistProfile />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

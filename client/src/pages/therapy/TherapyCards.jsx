@@ -103,7 +103,9 @@ export const TherapyCards = ({ therapist }) => {
                 <div className="flex items-center justify-start gap-2">
                   <IoBedOutline className="text-blue-600" />
                   <span className="text-[15px] lg:text-[16px]">
-                    {therapist.therapyType}
+                    {therapist?.therapyType
+                      ?.join(", ")
+                      .replace(/, ([^,]*)$/, " and $1")} Therapy
                   </span>
                 </div>
               </div>

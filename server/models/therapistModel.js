@@ -52,7 +52,7 @@ const therapistSchema = new mongoose.Schema(
       },
     ],
     therapyType: {
-      type: String,
+      type: [String],
     },
     clientAge: {
       type: String,

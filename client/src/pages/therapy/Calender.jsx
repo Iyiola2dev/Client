@@ -52,7 +52,7 @@ const Calendar = () => {
         3 Providers Found For Individual Therapy
       </p>
 
-      <div className="hidden md:flex lg:flex justify-between items-center gap-12 px-8 py-2 ">
+      <div className="hidden md:flex lg:flex justify-between items-center gap-12 px-8 py-2 playfair-display-select">
         <p className="lg:text-lg lg:font-medium md:text-[13px] md:font-medium mb-2">
           5 Providers Found For Individual Therapy
         </p>

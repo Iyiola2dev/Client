@@ -85,12 +85,17 @@
 }
 
 
-.playfair-display-select p, button, span {
+.playfair-display-select p, button, span, h2 {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-}
+  }
+
+  .playfair-display-select .fint {
+    font-weight: 700;
+  }
+
 
 /* Highlight available dates in green */
 .highlight-available {
