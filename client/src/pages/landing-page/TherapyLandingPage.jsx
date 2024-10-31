@@ -350,7 +350,7 @@ const LandingPage = () => {
       </section>
 
       {/* last section */}
-      <section>
+      <section className="pb-24">
         <LandingQuestion />
       </section>
     </div>

@@ -41,13 +41,13 @@ const Therapy = () => {
         </div>
 
         {/* next buttons */}
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between p-4 pb-24">
           <div className=" mb-24">
             <PaginationButtons />
           </div>
 
           {/* dropdown */}
-          <div className="flex items-center justify-center gap-2 font-semibold text-md mb-24">
+          <div className="flex items-center justify-center gap-2 font-semibold text-md mb-20">
             <select className="py-2 px-4 border-2 border-blue-400 rounded-md">
               <option>4</option>
             </select>
