@@ -57,7 +57,8 @@ export const authorizeAdmin = (req, res, next) => {
  * Middleware to validate therapist input data.
  */
 export const validateTherapist = [
-  body("name").notEmpty().withMessage("Name is required"),
+  body("firstName").notEmpty().withMessage("firstName is required"),
+  body("lastName").notEmpty().withMessage("lastName is required"),
   body("email").isEmail().withMessage("Valid email is required"),
   body("password")
     .isLength({ min: 6 })

@@ -7,6 +7,8 @@ import { CiCalendar } from "react-icons/ci";
 import { MdOutlineChair, MdOutlinePhoneInTalk } from "react-icons/md";
 import { BiCoinStack } from "react-icons/bi";
 import { BsChatDots } from "react-icons/bs";
+import { GiTripleYin } from "react-icons/gi";
+import { TfiCreditCard } from "react-icons/tfi";
 
 const TherapistDetails = () => {
   const navigate = useNavigate();
@@ -79,25 +81,25 @@ const TherapistDetails = () => {
               <img
                 src={therapist?.imageUrl || "/path-to-your-image.jpg"}
                 alt="therapist"
-                className="w-50 h-50 rounded-full"
+                className="w-50 h-50 rounded-full lg:w-64 lg:h-64"
               />
             </div>
 
             <div>
               <div className="mt-4">
-                <h2 className="text-3xl font-semibold text-gray-900">
+                <h2 className="text-3xl font-semibold text-gray-900 lg:text-4xl">
                   {therapist?.name || "Name not available"}
                 </h2>
               </div>
 
               <div className="">
-                <p className="text-md text-black">
+                <p className="text-md text-black lg:text-lg">
                   {therapist?.specialty || "Specialty not available"}
                 </p>
               </div>
 
               <div className="">
-                <p className="text-md text-blue-700">
+                <p className="text-md text-blue-700 lg:text-lg">
                   E-mail: {therapist?.email || "Email not available"}
                 </p>
               </div>
@@ -105,7 +107,7 @@ const TherapistDetails = () => {
           </div>
 
           <div className="mt-4">
-            <p className="flex items-center gap-2 text-[15px]">
+            <p className="flex items-center gap-2 text-[15px] lg:text-lg">
               <CiCalendar className="text-lg font-bold" />
               {therapist?.openings.length > 0
                 ? `${numberToWords(therapist.openings.length)} (${
@@ -113,11 +115,11 @@ const TherapistDetails = () => {
                   }) Openings This Week`
                 : "No Openings This Week"}
             </p>
-            <p className="flex items-center gap-2 text-[15px]">
+            <p className="flex items-center gap-2 text-[15px] lg:text-lg">
               <BiCoinStack className="text-lg font-bold" />5 Coins per Minute
               Audio Call Session
             </p>
-            <p className="flex items-center gap-2 text-[15px]">
+            <p className="flex items-center gap-2 text-[15px] lg:text-lg">
               <MdOutlineChair className="text-lg font-bold" />
               {therapist?.therapyType || "Therapy type not available"}
             </p>
@@ -155,11 +157,82 @@ const TherapistDetails = () => {
           </div>
         </div>
         {/* about */}
-        <div></div>
+        <div className="w-[40vw]">
+          <div className="mt-12 flex items-center gap-2">
+            <img
+              src={therapist?.imageUrl || "/path-to-your-image.jpg"}
+              alt="therapist"
+              className="w-30 h-30 rounded-full lg:10 lg:h-10"
+            />
+            <h2 className="text-xl font-semibold text-gray-900">
+              About {therapist?.firstName || "Name not available"}
+            </h2>
+          </div>
+          <hr className="w-50 h-[2px] bg-black mt-2" />
+          <div>
+            <p className="text-md text-black mt-4">
+              Gender: {therapist?.gender || "Institute not available"}
+            </p>
+            <p className="text-md text-black mt-4">
+              Age Range: {therapist?.ageRange}
+            </p>
+            <p className="text-md text-black mt-4 flex gap-1 items-center">
+              Zodiac Sign: {therapist?.zodiacSign}{" "}
+              <GiTripleYin className="text-blue-600" />
+            </p>
+            <p className="text-md text-black mt-4">
+              {therapist?.summary || "Summary not available"}{" "}
+            </p>
+          </div>
+        </div>
         {/* how to get coins */}
-        <div></div>
+        <div className="w-[40vw] mt-8">
+          <p className="flex items-center gap-1 lg-text-xl font-semibold">
+            <BiCoinStack className="w-6 h-6" />
+            How To Get Coins To Pay For Sessions
+          </p>
+          <hr className="w-50 h-[2px] bg-black mt-2" />
+          <p className="text-md mt-2">How It Works</p>
+          <ol className="list-decimal pl-6 font-medium">
+            <li className="text-md mt-2">
+              <strong>Select a Coin Package:</strong>
+              <span className="font-normal list-item-text">
+                {" "}
+                Choose From A Variety Of Packages That Fit Your Needs And
+                Budget.
+              </span>
+            </li>
+            <li className="text-md mt-2">
+              <strong>Make A Secure Payment:</strong>
+              <span className="font-normal list-item-text">
+                {" "}
+                Pay Using Your Preferred Payment Method Through Our Secure
+                Checkout.
+              </span>
+            </li>
+            <li className="text-md mt-2">
+              <strong>Instant Top-up:</strong>
+              <span className="font-normal list-item-text">
+                {" "}
+                Once Payment Is Complete, Your Account Will Be Instantly
+                Credited With Your Talk Time Coins.
+              </span>
+            </li>
+            <li className="text-md mt-2">
+              <strong>Start Talking:</strong>
+              <span className="font-normal list-item-text">
+                {" "}
+                Use Your Coins To Chat Or Call Without Interruptions.
+              </span>
+            </li>
+          </ol>
+        </div>
         {/* coins audio */}
-        <div></div>
+        <div>
+          <p>
+            <TfiCreditCard />
+          </p>
+        </div>
         {/* education */}
         <div></div>
         {/* additional details */}

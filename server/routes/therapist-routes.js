@@ -24,6 +24,6 @@ router.put(
   validateTherapist,
   updateTherapist
 ); // Update a therapist by ID
-router.delete("/:id", deleteTherapist); // Delete a therapist by ID
+router.delete("/:id", validateTherapist, deleteTherapist); // Delete a therapist by ID
 
 export default router;

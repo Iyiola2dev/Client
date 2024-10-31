@@ -65,6 +65,7 @@ export const updateTherapist = async (req, res) => {
         message: "Therapist updated successfully",
         therapist,
       });
+      console.log(therapist);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

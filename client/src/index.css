@@ -102,3 +102,7 @@
 .highlight-available:hover {
   background-color: #a7f3d0; /* Slightly darker green on hover */
 }
+
+.list-item-text {
+  font-family: inherit; /* Inherit the default or parent font, bypassing the global style in therapistDetail component*/
+}

@@ -24,7 +24,7 @@ const TeenButton = () => {
 
   return (
     <button
-      className="relative rounded-full bg-white text-black mt-2 py-2 px-10 lg:px-4 font-semibold text-center overflow-hidden"
+      className="relative rounded-full bg-white text-black mt-2 py-1 px-6 lg:px-4 font-semibold text-center overflow-hidden"
       style={{
         border: "2px solid transparent",
         backgroundImage:

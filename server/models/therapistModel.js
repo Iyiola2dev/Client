@@ -6,10 +6,19 @@ const therapistSchema = new mongoose.Schema(
       type: String,
       default: "https://via.placeholder.com/150", // Default image
     },
-    name: {
+    firstName: {
       type: String,
       required: true,
       trim: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    summary: {
+      type: String,
+      trim: true
     },
     specialty: {
       type: String,
