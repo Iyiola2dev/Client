@@ -56,7 +56,7 @@ const therapistSchema = new mongoose.Schema(
     },
     clientAge: {
       type: String,
-      enum: ["18-28", "28-38", "38-48", "48-58", "59+"], // Predefined options
+      enum: ["18-28", "28-38", "38-48", "48-58", "59+"], 
     },
     isOnline: {
       type: Boolean,

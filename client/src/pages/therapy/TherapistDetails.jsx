@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,23 @@ const TherapistDetails = () => {
   const loading = useSelector((state) => state.therapists.loading);
   const error = useSelector((state) => state.therapists.error);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    console.log("Opening modal, isModalOpen:", isModalOpen);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    console.log("Closing modal, isModalOpen:", isModalOpen);
+  };
+
+  // Check that the component mounts properly
+  useEffect(() => {
+    console.log("Component Mounted");
+  }, []);
+
   // Function to go back to the previous page
   const goBack = () => {
     navigate(-1);
@@ -40,43 +57,34 @@ const TherapistDetails = () => {
       "Eight",
       "Nine",
       "Ten",
-      // Add more as needed for larger numbers
     ];
     return words[num] || num.toString(); // Fallback to number if out of bounds
   };
 
   // Effect to fetch therapist data when the component mounts or ID changes
   useEffect(() => {
-    console.log("Therapist ID from URL:", id); // Debugging: log the therapist ID
     if (id) {
       dispatch(getTherapistById(id));
     }
-  }, [dispatch, id]);
-
-  // Debugging: log loading state and error message
-  console.log("Loading state:", loading);
-  console.log("Error state:", error);
+  }, [id]);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
-    console.log("Error message:", error.message); // Debugging: log the error message
-    return <p>{error.message || "An error occurred"}</p>; // Display error message safely
+    console.log("Error message:", error.message);
+    return <p>{error.message || "An error occurred"}</p>;
   }
 
-  // Debugging: log the therapist data received from the API
   console.log("Therapist data:", therapist);
 
   return (
-    <div className="block lg:flex lg:justify-between lg:items-center px-10 bg-[#F5F5DC] ">
+    <div className="block lg:flex lg:justify-between px-10 bg-[#F5F5DC] ">
       {/* first part */}
       <div className="pt-8">
-        {/* arrow */}
-        <div className=" block lg:hidden md:hidden">
-          <button onClick={goBack}>
+        <div className="block lg:hidden md:hidden">
+          <button onClick={goBack} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
         </div>
-        {/* image and deets */}
         <div className="">
           <div className="lg:flex justify-start gap-3">
             <div>
@@ -111,7 +119,7 @@ const TherapistDetails = () => {
           <div className="mt-4">
             <p className="flex items-center gap-2 text-[15px] lg:text-lg">
               <CiCalendar className="text-lg font-bold" />
-              {therapist?.openings.length > 0
+              {therapist?.openings && therapist.openings.length > 0
                 ? `${numberToWords(therapist.openings.length)} (${
                     therapist.openings.length
                   }) Openings This Week`
@@ -129,19 +137,27 @@ const TherapistDetails = () => {
 
           {/* buttons */}
           <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:gap-2 lg:items-center mb-6">
-            <button className="text-sm lg:text-[16px] border border-blue-600 rounded-full px-4 py-1 lg:px-6 text-blue-600 w-fit">
+            <button
+              type="button"
+              className="text-sm lg:text-[16px] border border-blue-600 rounded-full px-4 py-1 lg:px-6 text-blue-600 w-fit"
+            >
               {therapist?.maritalStatus}
             </button>
-            <button className="flex items-center lg:text-[16px] text-md bg-blue-600 text-white rounded-full px-3 py-1 gap-1 w-fit">
+            <button
+              type="button"
+              className="flex items-center lg:text-[16px] text-md bg-blue-600 text-white rounded-full px-3 py-1 gap-1 w-fit"
+            >
               <MdOutlinePhoneInTalk className="w-5 h-5 lg:w-6 lg:h-6" />
               Call Now
             </button>
-            <button className="w-fit flex items-center lg:text-[16px] text-md bg-green-500 text-white rounded-full px-3 py-1 gap-1">
+            <button
+              type="button"
+              className="w-fit flex items-center lg:text-[16px] text-md bg-green-500 text-white rounded-full px-3 py-1 gap-1"
+            >
               <BsChatDots className="w-5 h-5 lg:w-6 lg:h-6" />
               Chat Now
             </button>
 
-            {/* show only on small screen */}
             <div className="playfair-display-select block lg:hidden md:hidden md:mb-2 ">
               <p className="border py-2 px-6 border-slate-300 rounded-3xl md:text-sm mb-4 w-fit ">
                 {therapist?.yearsOfPractice} Years in Practice
@@ -149,31 +165,34 @@ const TherapistDetails = () => {
               <p className="border py-2 px-6 border-slate-300 rounded-3xl md:text-sm w-fit ">
                 Client age: {therapist?.clientAge}
               </p>
-              <a href="#bookings">
-                <button className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white">
+              <div>
+                <button
+                  type="button"
+                  className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white"
+                  onClick={openModal}
+                >
                   Book Appointment
                 </button>
-              </a>
+              </div>
             </div>
-            {/* show on large and medium screen */}
-            <div className="playfair-display-select hidden lg:block md:block  w-fit lg:ml-0 ml-5">
+            <div className="playfair-display-select hidden lg:block md:block w-fit lg:ml-0 ml-5">
               <p className="border p-2 border-slate-300 rounded-3xl lg:py-1 text-md ">
                 Client age: {therapist?.clientAge}
               </p>
             </div>
           </div>
         </div>
-        {/* about */}
+        {/* About Section and Other Sections */}
         <div className="lg:w-[40vw]">
           <div className="mt-12 flex items-center gap-2">
             <img
               src={therapist?.imageUrl || "/path-to-your-image.jpg"}
               alt="therapist"
-              className="w-12 h-12 rounded-full lg:10 lg:h-10"
+              className="w-12 h-12 rounded-full lg:12 lg:h-12"
             />
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h3 className="text-xl font-semibold text-gray-900">
               About {therapist?.firstName || "Name not available"}
-            </h2>
+            </h3>
           </div>
           <hr className="w-50 h-[2px] bg-black mt-2" />
           <div>
@@ -192,158 +211,41 @@ const TherapistDetails = () => {
             </p>
           </div>
         </div>
-        {/* how to get coins */}
-        <div className="lg:w-[40vw] mt-10">
-          <p className="flex items-center gap-2 lg-text-xl font-semibold">
-            <BiCoinStack className="w-6 h-6" />
-            How To Get Coins To Pay For Sessions
-          </p>
-          <hr className="w-50 h-[2px] bg-black mt-2" />
-          <p className="text-md mt-2">How It Works</p>
-          <ol className="list-decimal pl-6 font-medium">
-            <li className="text-md mt-2">
-              <strong>Select a Coin Package:</strong>
-              <span className="font-normal list-item-text">
-                {" "}
-                Choose From A Variety Of Packages That Fit Your Needs And
-                Budget.
-              </span>
-            </li>
-            <li className="text-md mt-2">
-              <strong>Make A Secure Payment:</strong>
-              <span className="font-normal list-item-text">
-                {" "}
-                Pay Using Your Preferred Payment Method Through Our Secure
-                Checkout.
-              </span>
-            </li>
-            <li className="text-md mt-2">
-              <strong>Instant Top-up:</strong>
-              <span className="font-normal list-item-text">
-                {" "}
-                Once Payment Is Complete, Your Account Will Be Instantly
-                Credited With Your Talk Time Coins.
-              </span>
-            </li>
-            <li className="text-md mt-2">
-              <strong>Start Talking:</strong>
-              <span className="font-normal list-item-text">
-                {" "}
-                Use Your Coins To Chat Or Call Without Interruptions.
-              </span>
-            </li>
-          </ol>
-        </div>
-        {/* coins audio */}
-        <div className="lg:w-[40vw] mt-10">
-          <p className="flex items-center gap-2 lg-text-xl font-semibold  md:text-md">
-            <TfiCreditCard className="w-6 h-6" />
-            Coin Costs Per Audio Call / Messages Sessions
-          </p>
-          <hr className="w-50 h-[2px] bg-black mt-2" />
-          <div className="flex flex-col lg:flex-row  gap-8 justify-start mt-6">
-            <div className="space-y-3">
-              <p>
-                5 Coins / 1 Minute = <strong>₦1,000</strong>{" "}
-              </p>
-              <p>
-                25 Coins / 5 Minutes = <strong>₦5,000</strong>{" "}
-              </p>
-              <p>
-                50 Coins / 1= Minutes = <strong>₦10,000</strong>{" "}
-              </p>
-              <p>
-                150 Coins / 30 Minutes = <strong>₦15,000</strong>{" "}
-              </p>
-              <p>
-                300 Coins / 60 Minutes = <strong>₦20,000</strong>{" "}
-              </p>
-            </div>
 
-            <div className="space-y-3">
-              <p>
-                5 Coins / 1 Message = <strong>₦100</strong>{" "}
-              </p>
-              <p>
-                25 Coins / 5 Messages = <strong>₦500</strong>{" "}
-              </p>
-              <p>
-                50 Coins / 10 Messages = <strong>₦1,000</strong>{" "}
-              </p>
-              <p>
-                150 Coins / 30 Messages = <strong>₦1,500</strong>{" "}
-              </p>
-              <p>
-                300 Coins / 60 Messages = <strong>₦2,000</strong>{" "}
-              </p>
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white rounded-2xl w-[90%] max-w-md p-6 relative">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              >
+                ✕
+              </button>
+              <div className="text-center bg-blue-500 text-2xl text-white w-full font-bold p-6 rounded-t-3xl">
+                Book An Appointment
+              </div>
+              <div className="flex flex-col items-start p-4 bg-white rounded-b-2xl">
+                <p className="font-bold">
+                  {therapist?.therapyType?.join(" / ")}
+                </p>
+                <p>
+                  {therapist?.firstName} Is Available For On-Site Audio Calls
+                </p>
+                <div className="mt-8">
+                  <TherapistProfile therapistId={therapist?._id} />
+                </div>
+                <div className="flex items-center justify-center gap-2 w-full mt-4 mb-8 text-lg">
+                  <h3>Want Help Booking?</h3>
+                  <h3 className="text-blue-600">
+                    Call Us At (+234) 809 388 2468
+                  </h3>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        {/* education */}
-        <div className="lg:w-[40vw] mt-10">
-          <p className="flex items-center gap-2 md:text-md lg-text-xl font-semibold">
-            <IoIosSchool className="w-6 h-6" />
-            Education And Training
-          </p>
-          <hr className="w-50 h-[2px] bg-black mt-2" />
-          <p className="mt-4 font-semibold">Years In Practice</p>
-          <p>{therapist?.yearsOfPractice} Years</p>
-          <p className="mt-4 font-semibold">Graduating Institute</p>
-          <p>{therapist?.institute}</p>
-          <p className="mt-4 font-semibold">Graduating Degree</p>
-          <p>{therapist?.degree}</p>
-        </div>
-        {/* additional details */}
-        <div className="lg:w-[40vw] mt-10 ">
-          <p className="flex items-center gap-1 md:text-md lg-text-xl font-semibold">
-            <img
-              src="https://t3.ftcdn.net/jpg/01/31/45/90/360_F_131459045_VJAQH4VTAz3Gb1yK9eFtJXKWhmr5XgHt.jpg"
-              alt="therapist"
-              className="w-10 h-10"
-            />
-            Additional Details
-          </p>
-          <hr className="w-50 h-[2px] bg-black mt-2" />
-          <p className="mt-4 font-semibold">
-            Languages Spoken By This Provider
-          </p>
-          {/* <p>{therapist?.languages.split(/(?=[A-Z])/).join("\n")}</p> 
-          this works if the language value is a string. it will display in block form */}
-          {/* split the langauges in the array */}
-          <p>
-            {therapist?.languages?.map((lang, index) => (
-              <React.Fragment key={index}>
-                {lang}
-                <br />
-              </React.Fragment>
-            ))}
-          </p>
-
-          <p
-            className="mt-4 font-semibold
-            "
-          >
-            State of Practice
-          </p>
-          <p className="pb-40">{therapist?.stateOfPractice}</p>
-        </div>
-      </div>
-
-      {/* second part */}
-      <div
-        id="bookings"
-        className="hidden lg:flex lg:flex-col rounded-lg lg:w-[40vw] lg:border border-slate-700 playfair-display-select"
-      >
-        <p className="bg-blue-500 lg:text-2xl text-white w-full text-center font-bold p-6 fint">
-          Book An Appointment
-        </p>
-        <div className="flex flex-col items-start p-4">
-          <p className="fint">{therapist?.therapyType?.join(" / ")}</p>
-          <p>{therapist?.firstName} Is Available For On-Site Audio Calls</p>
-          <div className="mt-8">
-            <TherapistProfile />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
