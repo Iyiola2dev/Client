@@ -60,9 +60,31 @@ export const addProduct = async (req, res) => {
 };
 
 //fetch all products from the database
+// export const fetchAllProduct = async (req, res) => {
+//   try {
+//     const listOfProducts = await Product.find({}); //This is to fetch all products from the database
+//     res.status(200).json({
+//       success: true,
+//       data: listOfProducts,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({
+//       success: false,
+//       message: "Error occured",
+//     });
+//   }
+// };
+
 export const fetchAllProduct = async (req, res) => {
   try {
-    const listOfProducts = await Product.find({}); //This is to fetch all products from the database
+    // Check if a category query parameter is provided
+    const { category } = req.query;
+    
+    // Use the category filter if it's present, otherwise return all products
+    const filter = category ? { category } : {};
+    const listOfProducts = await Product.find(filter);
+
     res.status(200).json({
       success: true,
       data: listOfProducts,
@@ -71,10 +93,11 @@ export const fetchAllProduct = async (req, res) => {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: "Error occured",
+      message: "An error occurred while fetching products",
     });
   }
 };
+
 
 //edit a product
 export const editProduct = async (req, res) => {
@@ -122,14 +145,17 @@ export const editProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findByAndDelete(id); //This is to find the product by id and delete it
+    console.log("Product ID:", id);
+
+    const product = await Product.findByIdAndDelete(id); // Find the product by id and delete it
 
     if (!product) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: "Product not found",
       });
     }
+
     res.status(200).json({
       success: true,
       message: "Product deleted successfully",
@@ -138,7 +164,8 @@ export const deleteProduct = async (req, res) => {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: "Error occured",
+      message: "Error occurred",
     });
   }
 };
+

@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from "./routes/auth/auth-routes.js";
 import adminProductRouter from "./routes/admin/products-routes.js";
+import shopProductsRouter from "./routes/shop/products-route.js"
 
 dotenv.config();
 // this is where we connect to the database
@@ -37,6 +38,10 @@ app.use("/api/auth", userRouter);
 
 // this is where we use the adminProductRouter
 app.use("/api/admin/products", adminProductRouter);
+
+// this is where we use the shopProductsRouter
+app.use("/api/shop/products", shopProductsRouter);
+
 
 // this is where we start the server
 app.listen(PORT, () => {
