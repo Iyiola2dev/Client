@@ -3,27 +3,27 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { FaRegHeart } from "react-icons/fa";
+import { IoLogoWhatsapp } from "react-icons/io5";
 
-const Navbar = () => {
+const Nav2 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
- 
- 
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
     <div>
-      {/* This is the navigation bar desktop view */}
-      {/* This is the gradient colour for the page ( bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] )*/}
-      <div className="hidden lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full ">
-        <div className=" flex w-full items-center gap-[5rem] px-10 py-3">
+      {/* Desktop View */}
+      <div className="hidden lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full">
+        <div className="flex w-full items-center justify-between gap-[5rem] px-10 py-3">
           <img
             className="h-[4rem]"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729737624/Mern-Ecommerce/ALLSEXTOYS_PNG_WHITE_1_meard7.png"
@@ -31,9 +31,16 @@ const Navbar = () => {
           />
 
           <Input className="w-[500px] bg-black text-white" />
+
+          <div className="flex justify-end items-center gap-3 text-2xl text-white">
+            <IoLogoWhatsapp />
+            <FaRegHeart />
+            <MdOutlineShoppingCart />
+          </div>
         </div>
-        {/* The navigation sessions to each pages on the website */}
-        <div className="bg-black w-full  ">
+
+        {/* Navigation Links */}
+        <div className="bg-black w-full">
           <nav className="pl-[4rem] w-full pr-10 py-3 flex items-center justify-between">
             <ul className="flex gap-5 w-full p-3">
               <li className="text-white hover:text-[#C42571]">
@@ -42,8 +49,9 @@ const Navbar = () => {
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/about">About Us</Link>
               </li>
-             {/* Products Dropdown */}
-             <li className="relative text-white hover:text-[#C42571]">
+              
+              {/* Products Dropdown */}
+              <li className="relative text-white hover:text-[#C42571]">
                 <button onClick={toggleDropdown} className="focus:outline-none">
                   Our Products (+18 only)
                 </button>
@@ -87,13 +95,9 @@ const Navbar = () => {
               </li>
             </ul>
 
-            <div className="flex gap-4 w-[35%]">
-              {/* The button component is from shacdn */}
-              <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
-                <Link to="/auth/register">Sign Up</Link>
-              </Button>
-              <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
-                <Link to="/auth/login">Login</Link>
+            <div className="flex gap-4 w-[20%]">
+              <Button className="bg-[#006CFF] w-full text-white text-lg font-semibold">
+                <Link>Sell</Link>
               </Button>
             </div>
           </nav>
@@ -101,10 +105,9 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="lg:hidden">
-        <div className=" flex items-center justify-between bg-black p-4">
+      <div className="lg:hidden ">
+        <div className="flex items-center justify-between bg-black p-4">
           <button onClick={toggleMenu} className="text-white">
-            {/* Hamburger Icon */}
             <svg
               className="w-6 h-6"
               fill="none"
@@ -130,33 +133,25 @@ const Navbar = () => {
 
         {/* Sidebar Navigation */}
         <div
-          className={`fixed top-0 left-0 h-full w-64 bg-black text-white transition-transform duration-300 ease-in-out ${
+          className={`fixed top-0 left-0 h-full w-64 z-30 bg-black text-white transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div className="flex flex-col h-full p-5">
             <button onClick={toggleMenu} className="text-white self-end mb-5">
-              {/* Close Icon */}
               <IoCloseSharp />
             </button>
 
             <nav className="flex flex-col gap-4">
-              <Link
-                to="/"
-                className="hover:text-[#C42571]"
-                onClick={toggleMenu}
-              >
+              <Link to="/" className="hover:text-[#C42571]" onClick={toggleMenu}>
                 Home
               </Link>
-              <Link
-                to="/about"
-                className="hover:text-[#C42571]"
-                onClick={toggleMenu}
-              >
+              <Link to="/about" className="hover:text-[#C42571]" onClick={toggleMenu}>
                 About Us
               </Link>
-                {/* Dropdown in Mobile View */}
-                <div className="relative">
+              
+              {/* Dropdown in Mobile View */}
+              <div className="relative">
                 <button onClick={toggleDropdown} className="text-left w-full hover:text-[#C42571]">
                   Our Products (+18 only)
                 </button>
@@ -186,46 +181,23 @@ const Navbar = () => {
                 )}
               </div>
 
-              <Link
-                to="/courses"
-                className="hover:text-[#C42571]"
-                onClick={toggleMenu}
-              >
+              <Link to="/courses" className="hover:text-[#C42571]" onClick={toggleMenu}>
                 Courses
               </Link>
-              <Link
-                to="/therapy"
-                className="hover:text-[#C42571]"
-                onClick={toggleMenu}
-              >
+              <Link to="/therapy" className="hover:text-[#C42571]" onClick={toggleMenu}>
                 Therapy
               </Link>
-              <Link
-                to="/blog"
-                className="hover:text-[#C42571]"
-                onClick={toggleMenu}
-              >
+              <Link to="/blog" className="hover:text-[#C42571]" onClick={toggleMenu}>
                 Blog
               </Link>
-              <Link
-                to="/contact"
-                className="hover:text-[#C42571]"
-                onClick={toggleMenu}
-              >
+              <Link to="/contact" className="hover:text-[#C42571]" onClick={toggleMenu}>
                 Contact Us
               </Link>
             </nav>
 
-            <div className="flex  gap-4 mt-10">
+            <div className="flex gap-4 mt-10">
               <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full text-white">
-                <Link to="/auth/register" onClick={toggleMenu}>
-                  Sign Up
-                </Link>
-              </Button>
-              <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full text-white">
-                <Link to="/auth/login" onClick={toggleMenu}>
-                  Login
-                </Link>
+                <Link>Sell</Link>
               </Button>
             </div>
           </div>
@@ -235,4 +207,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Nav2;

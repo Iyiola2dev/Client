@@ -128,7 +128,7 @@ const CommonForm = ({
         ))}
       </div>
       <Button
-        disabled={isBtnDisable}
+        // disabled={isBtnDisable}
         type="submit"
         className="mt-2 w-full bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded-full"
       >
