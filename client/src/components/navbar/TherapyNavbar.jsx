@@ -3,9 +3,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import {  IoCloseSharp, IoHome, IoPerson } from "react-icons/io5";
-import {  MdConnectWithoutContact, MdOutlineChair, MdOutlineMenuBook } from "react-icons/md";
+import {  MdOutlineMenuBook } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { FaRegQuestionCircle } from "react-icons/fa";
+import { FaBlog, FaInfoCircle, FaRegQuestionCircle, FaShoppingCart, FaWallet } from "react-icons/fa";
+import { FiMessageSquare } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
 
 const Navbar = () => {
@@ -134,7 +135,7 @@ const Navbar = () => {
         >
           <div className="flex flex-col h-full p-3">
             {/* App logo */}
-            <div className="flex justify-between gap-2 items-center mb-12">
+            <div className="flex justify-between gap-2 items-center mb-6">
               <img
                 className="h-[3rem]"
                 src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729737624/Mern-Ecommerce/ALLSEXTOYS_PNG_WHITE_1_meard7.png"
@@ -174,23 +175,14 @@ const Navbar = () => {
               </button>
             </div>
 
-            <nav className="flex flex-col gap-4 pl-4 text-md">
+            <nav className="flex flex-col gap-1 pl-4 text-md">
               <Link
-                to="/"
-                className="flex items-center space-x-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
-                onClick={toggleMenu}
-              >
-                <IoHome className="w-6 h-6" />
-                <span>Home</span>
-              </Link>
-
-              <Link
-                to="/therapy/appointment"
+                to="/profile"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
               >
-                <MdOutlineChair className="w-6 h-6" />
-                Book Appointment
+                <IoPerson className="w-6 h-6" />
+                Profile
               </Link>
               <div>
                 <Link
@@ -233,25 +225,50 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+
               <Link
-                to="/profile"
+                to="/wallet"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
               >
-                <IoPerson className="w-6 h-6" />
-                Profile
+                <FaWallet className="w-6 h-6" />
+                Wallet
               </Link>
               <Link
-                to="/contact"
+                to="/cart"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
               >
-                <MdConnectWithoutContact className="w-6 h-6" />
-                Contact Us
+                <FaShoppingCart className="w-6 h-6" />
+                Cart
+              </Link>
+              <Link
+                to="/messages"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+                onClick={toggleMenu}
+              >
+                <FiMessageSquare className="w-6 h-6" />
+                Messages
+              </Link>
+              <Link
+                to="/blog"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+                onClick={toggleMenu}
+              >
+                <FaBlog className="w-6 h-6" />
+                Blog
+              </Link>
+              <Link
+                to="/about"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+                onClick={toggleMenu}
+              >
+                <FaInfoCircle className="w-6 h-6" />
+                About Us
               </Link>
             </nav>
 
-            <div className="flex flex-col pl-4 gap-4 text-sm mt-[50px]">
+            <div className="flex flex-col pl-4 gap-2 text-sm mt-[50px]">
               <Link
                 to="/help"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
@@ -265,7 +282,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
               >
-                <CiLogout className="w-5 h-5" />
+                <CiLogout className="w-5 h-5 font-bold" />
                 Log out
               </Link>
             </div>

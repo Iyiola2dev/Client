@@ -111,3 +111,8 @@
 .list-item-text {
   font-family: inherit; /* Inherit the default or parent font, bypassing the global style in therapistDetail component*/
 }
+
+.list-item-text-2 {
+  font-family: inherit; 
+  font-weight: bold;
+}

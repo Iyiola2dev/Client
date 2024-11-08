@@ -8,6 +8,7 @@ import Navbar from "@/components/navbar/TherapyNavbar";
 import ProtectedRoute from "@/auth/ProtectedRoute";
 import TherapistDetails from "./therapy/TherapistDetails";
 import TherapistInfo from "./therapy/Test";
+import TeenPage from "./therapy/teen/TeenPage";
 
 const Dashboard = () => {
   return (
@@ -24,6 +25,15 @@ const Dashboard = () => {
               <ProtectedRoute>
                 {/* Render components if authenticated */}
                 <Therapy />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/appointment/teen"
+            element={
+              <ProtectedRoute>
+                {/* Render components if authenticated */}
+                <TeenPage />
               </ProtectedRoute>
             }
           />

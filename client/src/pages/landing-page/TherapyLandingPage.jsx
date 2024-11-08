@@ -222,7 +222,7 @@ const LandingPage = () => {
                 <p className="min-h-[80px] max-w-[350px] text-[15px] lg:text-start">
                   Guidance for adolescent challenges. Supporting your child.
                 </p>
-                <TeenButton />
+                <TeenButton text="Book Appointment" />
               </div>
             </div>
           </div>
