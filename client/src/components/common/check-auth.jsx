@@ -22,17 +22,6 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
     return <Navigate to="/auth/login" />;
   }
 
-  //This is when the user is authenticated but must have a role of admin to access the admin page and if it just a user it will be redirected to the shopping page
-  // if (
-  //   (isAuthenticated && location.pathname.includes("/login")) ||
-  //   location.pathname.includes("/register")
-  // ) {
-  //  if(user?.role === 'admin'){
-  //    return <Navigate to="/admin/dashboard" />;
-  //  }else{
-  //   return <Navigate to="/shop/home"/>
-  //  }
-  // }
 
   if (isAuthenticated) {
     if (
@@ -41,9 +30,10 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
     ) {
       if (user?.role === "admin") {
         return <Navigate to="/admin/dashboard" />;
-      } else {
-        return <Navigate to="/shop/home" />;
-      }
+      } 
+      // else {
+      //   return <Navigate to="/shop/home" />;
+      // }
     }
   }
 

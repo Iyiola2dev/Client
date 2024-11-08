@@ -33,6 +33,16 @@ export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
   );
   return response.data;
 });
+export const logoutUser = createAsyncThunk("/auth/logout", async () => {
+  const response = await axios.post(
+    "http://localhost:5000/api/auth/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+});
 
 //checkAuth
 // export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
@@ -51,22 +61,28 @@ export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
 // });
 
 // Frontend: Async thunk to check if the user is authenticated
-export const checkAuth = createAsyncThunk("/auth/checkauth", async (_, { rejectWithValue }) => {
-  try {
-    const response = await axios.get("http://localhost:5000/api/auth/check-auth", {
-      withCredentials: true, // Ensures the token cookie is sent with the request
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate, proxy-revalidate",
-        Expires: 0,
-      },
-    });
-    return response.data; // Should contain user data if authenticated
-  } catch (error) {
-    console.log(error);
-    return rejectWithValue("Unauthorized"); // Handle any errors or unauthorized responses
+export const checkAuth = createAsyncThunk(
+  "/auth/checkauth",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/auth/check-auth",
+        {
+          withCredentials: true, // Ensures the token cookie is sent with the request
+          headers: {
+            "Cache-Control":
+              "no-cache, no-store, must-revalidate, proxy-revalidate",
+            Expires: 0,
+          },
+        }
+      );
+      return response.data; // Should contain user data if authenticated
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue("Unauthorized"); // Handle any errors or unauthorized responses
+    }
   }
-});
-
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -124,10 +140,19 @@ const authSlice = createSlice({
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success; //if the user is authenticated it will be true
       })
+
       .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      //This is for the logout user
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+
+        // Updates user with the data returned from the server (in action.payload).
+        state.user = null;
+        state.isAuthenticated = false; //if the user is authenticated it will be true
       });
   },
 });
