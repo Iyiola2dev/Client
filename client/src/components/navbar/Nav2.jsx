@@ -41,7 +41,7 @@ const Nav2 = () => {
 
         {/* Navigation Links */}
         <div className="bg-black w-full">
-          <nav className="pl-[4rem] w-full pr-10 py-3 flex items-center justify-between">
+          <nav className="pl-[4rem] w-full pr-10 py-3 flex items-center shadow-custom justify-between">
             <ul className="flex gap-5 w-full p-3">
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/">Home</Link>
@@ -106,7 +106,7 @@ const Nav2 = () => {
 
       {/* Mobile Navbar */}
       <div className="lg:hidden ">
-        <div className="flex items-center justify-between bg-black p-4">
+        <div className="flex items-center justify-between bg-black shadow-2xl p-4">
           <button onClick={toggleMenu} className="text-white">
             <svg
               className="w-6 h-6"
