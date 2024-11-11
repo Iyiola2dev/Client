@@ -21,7 +21,6 @@ router.get("/",  getAllTherapists); // Get all therapists
 router.get("/:id", getTherapistById); // Get a therapist by ID
 router.put(
   "/:id",
-  validateTherapist,
   updateTherapist
 ); // Update a therapist by ID
 router.delete("/:id", validateTherapist, deleteTherapist); // Delete a therapist by ID

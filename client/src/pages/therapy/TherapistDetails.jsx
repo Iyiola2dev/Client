@@ -107,7 +107,7 @@ const TherapistDetails = () => {
 
           <div className="mt-4">
             <p className="flex items-center gap-2 text-[15px] lg:text-lg">
-              <CiCalendar className="text-lg font-bold" />
+              <CiCalendar className="w-6 h-6" />
               {therapist?.openings && therapist.openings.length > 0
                 ? `${numberToWords(therapist.openings.length)} (${
                     therapist.openings.length
@@ -115,14 +115,14 @@ const TherapistDetails = () => {
                 : "No Openings This Week"}
             </p>
             <p className="flex items-center gap-2 text-[15px] lg:text-lg">
-              <BiCoinStack className="text-lg font-bold" />5 Coins per Minute
-              Audio Call Session
+              <BiCoinStack className="w-6 h-6" />5 Coins per Minute Audio Call
+              Session
             </p>
             <p className="flex items-center gap-2 text-[15px] lg:text-lg">
-              <MdOutlineChair className="text-lg font-bold" />
+              <MdOutlineChair className="w-6 h-6" />
               {therapist?.therapyType
                 ?.join(", ")
-                .replace(/, ([^,]*)$/, " and $1") + " Counseling"||
+                .replace(/, ([^,]*)$/, " and $1") + " Counseling" ||
                 "Therapy type not available"}
             </p>
           </div>
@@ -417,9 +417,7 @@ const TherapistDetails = () => {
               <h3 className="text-blue-600">Call Us At (+234) 809 388 2468</h3>
 
               {/* test link to therapist upload */}
-              <Link to="/therapy/upload">
-              THERAPIST UPLOAD
-              </Link>
+              <Link to="/therapy/upload">THERAPIST UPLOAD</Link>
             </div>
           </div>
         </div>

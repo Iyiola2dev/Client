@@ -65,7 +65,7 @@ export const TherapyCards = ({ therapist }) => {
                 />
               </Link>
               <span
-                className={`absolute top-2 right-16 md:right-16 md:mr-6 lg:right-2 w-6 h-6 rounded-full border border-white ${
+                className={`absolute top-2 right-14 md:right-16 md:mr-6 lg:right-2 w-6 h-6 rounded-full border border-white ${
                   therapist.isOnline ? "bg-green-500" : "bg-gray-400"
                 }`}
               ></span>

@@ -49,6 +49,29 @@ export const getTherapistById = createAsyncThunk(
   }
 );
 
+// Async thunk to update a therapist
+export const updateTherapist = createAsyncThunk(
+  "/therapists/update",
+  async (therapist, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/therapists/${therapist._id}`,
+        therapist,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred"
+      );
+    }
+  }
+);
+
 const therapistsSlice = createSlice({
   name: "therapists",
   initialState,
@@ -77,7 +100,20 @@ const therapistsSlice = createSlice({
       .addCase(getTherapistById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(updateTherapist.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateTherapist.fulfilled, (state, action) => {
+        state.loading = false;
+        state.therapist = action.payload.therapist; // Store the single therapist details
+      })
+      .addCase(updateTherapist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+
   },
 });
 

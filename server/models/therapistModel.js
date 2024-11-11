@@ -18,11 +18,21 @@ const therapistSchema = new mongoose.Schema(
     },
     summary: {
       type: String,
-      trim: true
+      trim: true,
     },
     specialty: {
       type: String,
       required: true,
+    },
+    dob: {
+      type: String,
+      required: true,
+      match: /^\d{4}-\d{2}-\d{2}$/,
+    },
+    mobile: {
+      type: String,
+      required: true,
+      trim: true
     },
     email: {
       type: String,
@@ -56,7 +66,7 @@ const therapistSchema = new mongoose.Schema(
     },
     clientAge: {
       type: String,
-      enum: ["18-28", "28-38", "38-48", "48-58", "59+"], 
+      enum: ["18-28", "28-38", "38-48", "48-58", "59+"],
     },
     isOnline: {
       type: Boolean,

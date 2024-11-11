@@ -24,17 +24,35 @@ export const registerUser = createAsyncThunk(
 );
 
 //This is for the login user
-export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(
-    "http://localhost:5000/api/auth/login",
-    formData,
-    {
-      withCredentials: true,
-    }
-  );
-  return response.data;
-});
+export const loginUser = createAsyncThunk(
+  "/auth/login",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
 
+      // Assuming the token is in `response.data.token`
+      const { token } = response.data;
+      if (token) {
+        // Save token to localStorage
+        localStorage.setItem("authToken", token);
+      }
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred during login"
+      );
+    }
+  }
+);
 //checkAuth
 // export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
 //   const response = await axios.get(
