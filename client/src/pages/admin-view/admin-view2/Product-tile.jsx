@@ -7,6 +7,7 @@ const AdminProductTile = ({
   setFormData,
   setCurrentEditedId,
   setOpenCreateProduct,
+  handleDelete,
 }) => {
   console.log("AdminProductTile product:", product);
   return (
@@ -31,7 +32,7 @@ const AdminProductTile = ({
                   product?.sales > 0 ? "line-through" : ""
                 } text-lg font-semibold text-primary`}
               >
-                ₦{product?.price}
+                ₦{product?.price.toLocaleString()}
               </span>
 
               {/* Show sale price only if product.sale is available and greater than 0 */}
@@ -51,7 +52,7 @@ const AdminProductTile = ({
             >
               Edit
             </Button>
-            <Button >Delete</Button>
+            <Button onClick={()=>handleDelete(product._id)} >Delete</Button>
           </CardFooter>
         </div>
       </Card>
