@@ -58,7 +58,10 @@ export default {
 		  backgroundImage:{
 			"shadowTherapy": 'url("https://res.cloudinary.com/dtlejpoxq/image/upload/v1729655397/Mern-Ecommerce/shadow_therapy_ysp7ex.png")',
 			
-		  }
+		  },
+		  boxShadow: {
+			'custom': '3px 3px 5px rgba(0, 0, 0, 0.1)',
+		  },
   	}
   },
   plugins: [require("tailwindcss-animate")],
