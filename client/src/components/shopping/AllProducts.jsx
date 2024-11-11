@@ -33,11 +33,11 @@ const AllProducts = () => {
 
   //fetch list of product
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts());
+    dispatch(fetchAllFilteredProducts(""));
   }, [dispatch]);
 
   return (
-    <div className="bg-black h-auto mt-4 flex flex-col justify-center  w-full">
+    <div className="bg-black h-auto  flex flex-col justify-center  w-full">
       <div className="p-7 flex justify-center items-center">
         <h1 className="text-3xl font-bold text-white">All Products</h1>
       </div>
