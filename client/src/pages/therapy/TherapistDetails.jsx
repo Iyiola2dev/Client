@@ -26,6 +26,7 @@ const TherapistDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
+    console.log("modal is to open...");
     setIsModalOpen(true);
   };
 
@@ -55,7 +56,7 @@ const TherapistDetails = () => {
     if (id) {
       dispatch(getTherapistById(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -158,8 +159,10 @@ const TherapistDetails = () => {
                 Client age: {therapist?.clientAge}
               </p>
               {/* Book Appointment Button */}
+              {/* Book Appointment Button */}
               <div className="mt-4">
                 <button
+                  id="bookings"
                   type="button"
                   onClick={openModal}
                   className="lg:mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white"
@@ -171,18 +174,19 @@ const TherapistDetails = () => {
               {/* Modal */}
               <AnimatePresence>
                 {isModalOpen && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative bg-white rounded-lg shadow-lg max-w-lg w-full"
-                    >
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                  >
+                    {/* Modal Content */}
+                    <div className="relative bg-white rounded-lg shadow-lg max-w-lg w-[90vw] max-h-[90vh] overflow-y-auto">
                       <button
                         type="button"
                         onClick={closeModal}
-                        className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                        className="absolute top-2 right-2 text-white hover:text-gray-700"
                       >
                         ✕
                       </button>
@@ -197,18 +201,27 @@ const TherapistDetails = () => {
                           {therapist?.firstName} is available for on-site audio
                           calls.
                         </p>
+                        {/* Insert any other modal content */}
                         <div className="mt-8">
-                          <TherapistProfile therapistId={therapist?._id} />
+                          <TherapistProfile />
                         </div>
+                        <div className="flex items-center justify-center m-auto mt-12">
+                          <a href="#bookings" className="lg:text-lg">
+                            <button className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white lg:text-lg ">
+                              Book Appointment
+                            </button>
+                          </a>
+                        </div>
+                        <hr className="w-[100%] h-[2px] bg-slate-300 mx-0 mt-2" />
                         <div className="flex items-center justify-center gap-2 w-full mt-4 mb-8 text-lg">
-                          <h3>Need help booking?</h3>
+                          <h3>Want Help Booking</h3>
                           <h3 className="text-blue-600">
-                            Call us at (+234) 809 388 2468
+                            Call Us At (+234) 809 388 2468
                           </h3>
                         </div>
                       </div>
-                    </motion.div>
-                  </div>
+                    </div>
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>
@@ -417,7 +430,7 @@ const TherapistDetails = () => {
               <h3 className="text-blue-600">Call Us At (+234) 809 388 2468</h3>
 
               {/* test link to therapist upload */}
-              <Link to="/therapy/upload">THERAPIST UPLOAD</Link>
+              {/* <Link to="/therapy/upload">THERAPIST UPLOAD</Link> */}
             </div>
           </div>
         </div>

@@ -4,14 +4,16 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTherapistById, updateTherapist } from "@/store/therapist-slice"; // Assuming these actions exist
 import { MdEdit } from "react-icons/md";
+import { useToast } from "@/hooks/use-toast";
 
 const TherapistCreation = () => {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false); // New state for save button loading
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    mobileNumber: "",
+    phoneNumber: "",
     dob: "",
     gender: "",
     maritalStatus: "",
@@ -29,11 +31,10 @@ const TherapistCreation = () => {
     window.history.back();
   };
 
-  const navigate = useNavigate();
+  const toast = useToast();
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  // Fetch therapist data from the Redux store (presumed from your setup)
   const therapist = useSelector((state) => state.therapists.therapist);
   const loading = useSelector((state) => state.therapists.loading);
   const error = useSelector((state) => state.therapists.error);
@@ -44,16 +45,14 @@ const TherapistCreation = () => {
         if (id) {
           console.log("Fetching therapist data from the server...");
           const resultAction = await dispatch(getTherapistById(id)).unwrap();
-          // Save therapist data to localStorage
           localStorage.setItem("therapist", JSON.stringify(resultAction));
-          setFormData(resultAction); // Ensure formData is updated with the fetched data
+          setFormData(resultAction);
         }
       } catch (error) {
         console.error("Failed to fetch therapist data:", error);
       }
     };
 
-    // Check if data exists in localStorage before fetching from the server
     const savedTherapist = localStorage.getItem("therapist");
     if (savedTherapist) {
       console.log(
@@ -72,7 +71,7 @@ const TherapistCreation = () => {
         firstName: therapist.firstName || "",
         lastName: therapist.lastName || "",
         email: therapist.email || "",
-        mobileNumber: therapist.mobileNumber || "",
+        phoneNumber: therapist.phoneNumber || "",
         dob: therapist.dob || "",
         gender: therapist.gender || "",
         maritalStatus: therapist.maritalStatus || "",
@@ -100,16 +99,20 @@ const TherapistCreation = () => {
     }));
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
+    setIsSaving(true); // Start loading
     if (id) {
-      dispatch(updateTherapist({ ...formData, _id: id }))
-        .unwrap()
-        .then(() => {
-          setIsEditMode(false);
-        })
-        .catch((error) => {
-          console.error("Failed to update therapist:", error);
-        });
+      console.log("Updating therapist data...Saving changes...");
+      try {
+        await dispatch(updateTherapist({ ...formData, _id: id })).unwrap();
+        setIsEditMode(false);
+        toast.success("Therapist data updated successfully!");
+      } catch (error) {
+        console.log("Failed to update therapist:", error);
+        toast.error("Failed to update therapist data.");
+      } finally {
+        setIsSaving(false); // End loading
+      }
     }
   };
 
@@ -135,7 +138,7 @@ const TherapistCreation = () => {
           <div className="flex justify-between p-2 lg:p-6 border-2 border-slate-200 rounded-3xl">
             <div className="flex gap-2 items-center pt-4">
               <img
-                src={therapist?.imageUrl || ""}
+                src={therapist?.imageUrl || "https://via.placeholder.com/150"}
                 alt="therapist"
                 className="lg:w-28 lg:h-28 rounded-full"
               />
@@ -171,30 +174,86 @@ const TherapistCreation = () => {
             <div>
               {isEditMode ? (
                 <div className="flex flex-col p-4 lg:p-6 border-2 border-slate-200 rounded-3xl mt-5">
-                  {Object.keys(formData).map((key) => (
-                    <div key={key} className="mb-2">
-                      <label htmlFor={key} className="font-semibold">
-                        {key
-                          .replace(/([A-Z])/g, " $1")
-                          .replace(/^./, (str) => str.toUpperCase())}
-                        :
-                      </label>
-                      <input
-                        id={key}
-                        name={key}
-                        type="text"
-                        placeholder={key}
-                        value={formData[key]}
-                        onChange={handleChange}
-                        className="p-2 border rounded w-full"
-                      />
-                    </div>
-                  ))}
+                  {Object.keys(formData).map((key) => {
+                    if (key === "languages") {
+                      return (
+                        <div key={key} className="mb-2">
+                          <label htmlFor={key} className="font-semibold">
+                            {key
+                              .replace(/([A-Z])/g, " $1")
+                              .replace(/^./, (str) => str.toUpperCase())}
+                            :
+                          </label>
+                          <input
+                            id={key}
+                            name={key}
+                            type="text"
+                            placeholder="Enter languages separated by commas"
+                            value={
+                              formData[key] ? formData[key].join(", ") : ""
+                            }
+                            onChange={(e) => {
+                              const updatedLanguages = e.target.value
+                                .split(",")
+                                .map((lang) => lang.trim());
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                [key]: updatedLanguages,
+                              }));
+                            }}
+                            className="p-2 border rounded w-full"
+                          />
+                        </div>
+                      );
+                    }
+
+                    if (key === "dob") {
+                      return (
+                        <div key={key} className="mb-2">
+                          <label htmlFor={key} className="font-semibold">
+                            {key
+                              .replace(/([A-Z])/g, " $1")
+                              .replace(/^./, (str) => str.toUpperCase())}
+                            :
+                          </label>
+                          <input
+                            id={key}
+                            name={key}
+                            type="date"
+                            value={formData[key]}
+                            onChange={handleChange}
+                            className="p-2 border rounded w-full"
+                          />
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div key={key} className="mb-2">
+                        <label htmlFor={key} className="font-semibold">
+                          {key
+                            .replace(/([A-Z])/g, " $1")
+                            .replace(/^./, (str) => str.toUpperCase())}
+                          :
+                        </label>
+                        <input
+                          id={key}
+                          name={key}
+                          type="text"
+                          placeholder={key}
+                          value={formData[key]}
+                          onChange={handleChange}
+                          className="p-2 border rounded w-full"
+                        />
+                      </div>
+                    );
+                  })}
                   <button
-                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400"
                     onClick={handleSaveChanges}
+                    disabled={isSaving}
                   >
-                    Save Changes
+                    {isSaving ? "Saving Changes..." : "Save Changes"}
                   </button>
                 </div>
               ) : (
@@ -222,7 +281,7 @@ const TherapistCreation = () => {
                         <p>{formData.email}</p>
 
                         <p className="font-semibold">Mobile Number:</p>
-                        <p>{formData.mobileNumber}</p>
+                        <p>{formData.phoneNumber}</p>
 
                         <p className="font-semibold">Date of Birth:</p>
                         <p>{formData.dob}</p>
@@ -241,29 +300,63 @@ const TherapistCreation = () => {
 
                         <p className="font-semibold">Languages:</p>
                         <p>
-                          {formData.languages?.map((lang, index) => (
-                            <React.Fragment key={index}>
-                              {lang}
-                              <br />
-                            </React.Fragment>
-                          ))}
+                          {Array.isArray(formData.languages)
+                            ? formData.languages.map((lang, index) => (
+                                <React.Fragment key={index}>
+                                  {lang}
+                                  <br />
+                                </React.Fragment>
+                              ))
+                            : formData.languages
+                            ? formData.languages
+                                .split(",")
+                                .map((lang, index) => (
+                                  <React.Fragment key={index}>
+                                    {lang.trim()}
+                                    <br />
+                                  </React.Fragment>
+                                ))
+                            : "No languages available"}
                         </p>
 
                         <p className="font-semibold">State of Practice:</p>
                         <p>{formData.stateOfPractice}</p>
-
-                        <p className="font-semibold">Summary:</p>
-                        <p>{formData.summary}</p>
-
-                        <p className="font-semibold">Degree:</p>
-                        <p>{formData.degree}</p>
-
-                        <p className="font-semibold">Years of Practice:</p>
-                        <p>{formData.yearsOfPractice}</p>
-
-                        <p className="font-semibold">Institute:</p>
-                        <p>{formData.institute}</p>
                       </React.Fragment>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col justify-between p-2 lg:p-6 border-2 border-slate-200 rounded-3xl mt-5">
+                    <div className="flex justify-between py-4 ">
+                      <p className="font-semibold">Bio Description</p>
+                      <button
+                        onClick={toggleEditMode}
+                        className="w-12 h-6 flex items-center justify-center border-2 border-slate-200 rounded-lg shadow-md"
+                      >
+                        <MdEdit className="text-blue-500" />
+                      </button>
+                    </div>
+                    <p>{formData.summary}</p>
+                  </div>
+
+                  <div className="flex flex-col justify-between p-2 lg:p-6 border-2 border-slate-200 rounded-3xl mt-5">
+                    <div className="flex justify-between py-4 ">
+                      <p className="font-semibold">Bio Description</p>
+                      <button
+                        onClick={toggleEditMode}
+                        className="w-12 h-6 flex items-center justify-center border-2 border-slate-200 rounded-lg shadow-md"
+                      >
+                        <MdEdit className="text-blue-500" />
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="font-semibold">Graduating Degree:</p>
+                      <p>{formData.degree}</p>
+
+                      <p className="font-semibold">Years In Practice:</p>
+                      <p>{formData.yearsOfPractice} Years</p>
+
+                      <p className="font-semibold"> Graduating Institute:</p>
+                      <p>{formData.institute}</p>
                     </div>
                   </div>
                 </div>
