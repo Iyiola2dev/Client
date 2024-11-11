@@ -61,7 +61,7 @@ export const TherapyCards = ({ therapist }) => {
                 <img
                   src={therapist.imageUrl || "/path-to-your-image.jpg"}
                   alt="therapist"
-                  className="w-[150px] h-[150px] md:w-36 mb-4 md:h-36 rounded-full border-4 lg:w-[200px] lg:h-[200px] border-gray-300 object-cover lg:border-none mx-auto"
+                  className="w-[150px] h-[150px] md:w-36 md:h-36 lg:w-[200px] lg:h-[200px] mb-4 rounded-full border-4 border-gray-300 object-cover mx-auto"
                 />
               </Link>
               <span
@@ -105,7 +105,8 @@ export const TherapyCards = ({ therapist }) => {
                   <span className="text-[15px] lg:text-[16px]">
                     {therapist?.therapyType
                       ?.join(", ")
-                      .replace(/, ([^,]*)$/, " and $1")} Therapy
+                      .replace(/, ([^,]*)$/, " and $1") + " Therapy" ||
+                      "Therapy type not available"}
                   </span>
                 </div>
               </div>

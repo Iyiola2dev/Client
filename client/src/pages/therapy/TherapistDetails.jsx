@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeftLong, FaMagnifyingGlass } from "react-icons/fa6";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTherapistById } from "@/store/therapist-slice";
 import { CiCalendar } from "react-icons/ci";
@@ -66,7 +66,7 @@ const TherapistDetails = () => {
   console.log("Therapist data:", therapist);
 
   return (
-    <div className="block lg:flex lg:justify-between px-10 bg-[#F5F5DC] ">
+    <div className="block lg:flex lg:justify-between px-12 bg-[#F5F5DC] ">
       {/* first part */}
       <div className="pt-8">
         <div className="block lg:hidden md:hidden">
@@ -74,7 +74,7 @@ const TherapistDetails = () => {
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
         </div>
-        <div className="">
+        <div className="flex flex-col">
           <div className="lg:flex justify-start gap-3">
             <div>
               <img
@@ -128,7 +128,7 @@ const TherapistDetails = () => {
           </div>
 
           {/* buttons */}
-          <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:gap-2 lg:items-center mb-6">
+          <div className="mt-4 flex flex-col justify-start gap-4 lg:flex-row lg:gap-2 lg:items-center mb-6 ">
             <button
               type="button"
               className="text-sm lg:text-[16px] border border-blue-600 rounded-full px-4 py-1 lg:px-6 text-blue-600 w-fit"
@@ -162,7 +162,7 @@ const TherapistDetails = () => {
                 <button
                   type="button"
                   onClick={openModal}
-                  className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white"
+                  className="lg:mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white"
                 >
                   Book Appointment
                 </button>
@@ -353,11 +353,12 @@ const TherapistDetails = () => {
         {/* additional details */}
         <div className="lg:w-[40vw] mt-10 ">
           <p className="flex items-center gap-1 md:text-md lg-text-xl font-semibold">
-            <img
+            {/* <img
               src="https://t3.ftcdn.net/jpg/01/31/45/90/360_F_131459045_VJAQH4VTAz3Gb1yK9eFtJXKWhmr5XgHt.jpg"
               alt="therapist"
               className="w-10 h-10 bg-[#F5F5DC]"
-            />
+            /> */}
+            <FaMagnifyingGlass className="w-6 h-6" />
             Additional Details
           </p>
           <hr className="w-50 h-[2px] bg-black mt-2" />
@@ -414,6 +415,11 @@ const TherapistDetails = () => {
             <div className="flex items-center justify-center gap-2 w-full mt-4 mb-8 text-lg">
               <h3>Want Help Booking</h3>
               <h3 className="text-blue-600">Call Us At (+234) 809 388 2468</h3>
+
+              {/* test link to therapist upload */}
+              <Link to="/therapy/upload">
+              THERAPIST UPLOAD
+              </Link>
             </div>
           </div>
         </div>

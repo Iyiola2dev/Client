@@ -9,21 +9,22 @@ import ProtectedRoute from "@/auth/ProtectedRoute";
 import TherapistDetails from "./therapy/TherapistDetails";
 import TherapistInfo from "./therapy/Test";
 import TeenPage from "./therapy/teen/TeenPage";
+import TherapistCreation from "./admin-view/TherapistCreation";
 
-const Dashboard = () => {
+const TherapyDashboard = () => {
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       <div className="mt-[3rem] lg:mt-[10rem] md:mt-[5rem]">
         <Routes>
+          {/* Public Route for Therapy Landing Page */}
           <Route path="/" element={<LandingPage />} />
+
+          {/* Protected Therapy Routes */}
           <Route
             path="/appointment"
             element={
               <ProtectedRoute>
-                {/* Render components if authenticated */}
                 <Therapy />
               </ProtectedRoute>
             }
@@ -32,21 +33,18 @@ const Dashboard = () => {
             path="/appointment/teen"
             element={
               <ProtectedRoute>
-                {/* Render components if authenticated */}
                 <TeenPage />
               </ProtectedRoute>
             }
           />
           <Route path="/therapist-details/:id" element={<TherapistDetails />} />
           <Route path="/testpage" element={<TherapistInfo />} />
+          <Route path="/upload" element={<TherapistCreation />} />
         </Routes>
       </div>
-
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };
 
-export default Dashboard;
+export default TherapyDashboard;
