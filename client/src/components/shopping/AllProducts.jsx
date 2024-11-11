@@ -10,7 +10,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
+
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 import { sortOptions } from "@/config/Index";
