@@ -7,10 +7,17 @@ import { IoBedOutline } from "react-icons/io5";
 import { BsChatDots } from "react-icons/bs";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import "../../index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const TherapyCards = ({ therapist }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleViewAvailabilityClick = () => {
+    console.log("View Availability Clicked");
+    navigate("/therapy/bookings"); // Navigate to the modal route
+  };
 
   // Handle date selection from the calendar
   const handleDateChange = (date) => {
@@ -135,8 +142,8 @@ export const TherapyCards = ({ therapist }) => {
 
               <div className="text-center md:text-left block md:hidden lg:hidden">
                 <a
-                  href="/therapyDetails"
-                  className="text-sm lg:text-md text-blue-600 underline"
+                  onClick={handleViewAvailabilityClick} // Handle the click to navigate to the modal
+                  className="text-sm lg:text-md text-blue-600 underline cursor-pointer"
                 >
                   View Availability
                 </a>
@@ -206,10 +213,10 @@ export const TherapyCards = ({ therapist }) => {
             </a>
           </div>
 
-          <div className="text-center md:text-left md:mt-5 hidden lg:mt-6 md:block lg:block">
+          <div className="text-center md:text-left block md:hidden lg:hidden">
             <a
-              href="/therapist/:id"
-              className="text-sm lg:text-md text-blue-600 underline"
+              onClick={handleViewAvailabilityClick} // Handle the click to navigate to the modal
+              className="text-sm lg:text-md text-blue-600 underline cursor-pointer"
             >
               View Availability
             </a>
