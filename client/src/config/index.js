@@ -99,8 +99,8 @@ export const registerFormControls = [
       label: "Category",
       componentType: "select",
       options: [
-        { id: "type-man", value: "man", label: "Man" },
-        { id: "type-woman", value: "woman", label: "Woman" },
+        { id: "type-man", value: "men", label: "Men" },
+        { id: "type-woman", value: "women", label: "Women" },
         { id: "type-couples", value: "couples", label: "Couples" },
       ],
     },
