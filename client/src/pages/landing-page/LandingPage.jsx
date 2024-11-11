@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 
 import { IoStarSharp } from "react-icons/io5";
 import LandingQuestion from "./LandingQuestion";
+import { Link } from "react-router-dom";
 // import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
@@ -16,11 +17,13 @@ const LandingPage = () => {
           />
         </div>
         <div className="flex-1 flex justify-center ">
+          <Link to="/shop/shopping-Layout">
           <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
             alt="Animated Image"
-          />
+          /></Link>
+         
         </div>
       </main>
 
