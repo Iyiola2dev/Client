@@ -64,6 +64,10 @@ const TherapistDetails = () => {
     return <p>{error.message || "An error occurred"}</p>;
   }
 
+  const handleScheduling = () => {
+    navigate("/therapy/scheduling");
+  };
+
   console.log("Therapist data:", therapist);
 
   return (
@@ -179,10 +183,9 @@ const TherapistDetails = () => {
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.3 }}
                     className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-                    id="bookings"
                   >
                     {/* Modal Content */}
-                    <div id="bookings" className="relative bg-white rounded-lg shadow-lg max-w-lg w-[90vw] max-h-[90vh] overflow-y-auto">
+                    <div className="relative bg-white rounded-lg shadow-lg max-w-lg w-[90vw] max-h-[90vh] overflow-y-auto">
                       <button
                         type="button"
                         onClick={closeModal}
@@ -209,7 +212,7 @@ const TherapistDetails = () => {
                         <div className="flex items-center justify-center m-auto mt-12">
                           <a href="#bookings" className="lg:text-lg">
                             <button className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white lg:text-lg ">
-                              Book Appointment
+                              <a onClick={handleScheduling}>Book Appointment</a>
                             </button>
                           </a>
                         </div>
@@ -423,7 +426,7 @@ const TherapistDetails = () => {
             <div className="flex items-center justify-center m-auto mt-12">
               <a href="#bookings" className="lg:text-lg">
                 <button className="mt-4 border py-2 px-6 bg-gradient-to-r from-pink-400 via-blue-600 to-pink-600 rounded-3xl md:text-sm mb-4 w-fit text-white lg:text-lg ">
-                  Book Appointment
+                  <a onClick={handleScheduling}>Book Appointment</a>
                 </button>
               </a>
             </div>

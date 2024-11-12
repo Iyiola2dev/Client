@@ -10,7 +10,9 @@ import TherapistDetails from "./therapy/TherapistDetails";
 import TherapistInfo from "./therapy/Test";
 import TeenPage from "./therapy/teen/TeenPage";
 import TherapistCreation from "./admin-view/TherapistCreation";
-import ModalComponent from "./therapy/ModalComponent";
+// import ModalComponent from "./therapy/ModalComponent";
+// import Scheduling from "./therapy/Scheduling";
+import Current from "./therapy/bookings/Current";
 
 const TherapyDashboard = () => {
   return (
@@ -41,7 +43,8 @@ const TherapyDashboard = () => {
           <Route path="/therapist-details/:id" element={<TherapistDetails />} />
           <Route path="/testpage" element={<TherapistInfo />} />
           <Route path="/upload" element={<TherapistCreation />} />
-          <Route path="/bookings" element={<ModalComponent />} />
+          {/* <Route path="/bookings" element={<ModalComponent />} /> */}
+          <Route path="/scheduling" element={<Current />} />
         </Routes>
       </div>
       <Footer />
