@@ -1,5 +1,5 @@
 import CommonForm from "@/components/common/Form";
-import { registerFormControls } from "@/config/Index";
+import { registerFormControls } from "@/config/index";
 import { useToast } from "@/hooks/use-toast";
 import { registerUser } from "@/store/auth-slice";
 import { ArrowLeft } from "lucide-react";

@@ -22,7 +22,7 @@ const Navbar = () => {
     <div>
       {/* This is the navigation bar desktop view */}
       {/* This is the gradient colour for the page ( bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] )*/}
-      <div className="hidden lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full ">
+      <div className="fixed top-0 left-0 right-0 z-50 hidden lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full ">
         <div className=" flex w-full items-center gap-[5rem] px-10 py-3">
           <img
             className="h-[4rem]"
@@ -101,7 +101,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="lg:hidden">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 ">
         <div className=" flex items-center justify-between bg-black p-4">
           <button onClick={toggleMenu} className="text-white">
             {/* Hamburger Icon */}

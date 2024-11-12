@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "./api";
 
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
+  intendedRoute: "/",
 };
 
 // my Async thunk... this setup allows for a structured, reactive way to handle authentication in your application using Redux Toolkit.
@@ -23,6 +25,7 @@ export const registerUser = createAsyncThunk(
 );
 
 //This is for the login user
+
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
   const response = await axios.post(
     "http://localhost:5000/api/auth/login",
@@ -44,6 +47,17 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   return response.data;
 });
 
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred during login"
+      );
+    }
+  }
+);
 //checkAuth
 // export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
 //   const response = await axios.get(
@@ -84,6 +98,7 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -91,6 +106,12 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload.user;
       state.isAuthenticated = action.payload.isAuthenticated;
+    },
+    setIntendedRoute: (state, action) => {
+      state.intendedRoute = action.payload; // Update intendedRoute state with the payload
+    },
+    clearIntendedRoute: (state) => {
+      state.intendedRoute = "/"; // Reset to default route or as needed
     },
   },
 
@@ -157,5 +178,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setIntendedRoute, clearIntendedRoute } =
+  authSlice.actions;
+
 export default authSlice.reducer;

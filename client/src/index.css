@@ -64,3 +64,55 @@
     @apply bg-background text-foreground;
   }
 }
+
+.pacifico-regular h1 {
+  font-family: "Pacifico", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montez-regular h2, h1{
+  font-family: "Montez", serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 2.5rem;
+}
+
+@layer utilities {
+  .therapy-card:nth-last-child(1):nth-child(odd) {
+    @apply col-span-full place-self-center;
+  }
+}
+
+
+.playfair-display-select p, button, span, h2 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  }
+
+  .playfair-display-select .fint {
+    font-weight: 700;
+  }
+
+
+/* Highlight available dates in green */
+.highlight-available {
+  background-color: #d1fae5; /* Light green background */
+  color: #065f46; /* Dark green text color */
+  border-radius: 50%; /* Make the date rounded */
+}
+
+.highlight-available:hover {
+  background-color: #a7f3d0; /* Slightly darker green on hover */
+}
+
+.list-item-text {
+  font-family: inherit; /* Inherit the default or parent font, bypassing the global style in therapistDetail component*/
+}
+
+.list-item-text-2 {
+  font-family: inherit; 
+  font-weight: bold;
+}

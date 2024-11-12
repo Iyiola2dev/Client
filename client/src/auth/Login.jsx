@@ -1,11 +1,11 @@
+// Login.jsx
 import CommonForm from "@/components/common/Form";
-import { loginFormControls } from "@/config/Index";
-// Create a login form configuration
+import { loginFormControls } from "@/config/index";
 import { useToast } from "@/hooks/use-toast";
-import { loginUser } from "@/store/auth-slice";
+import { loginUser, clearIntendedRoute } from "@/store/auth-slice"; // Import the clearIntendedRoute action
 import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; // Import useSelector
 import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
@@ -16,10 +16,13 @@ const initialState = {
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { toast } = useToast();
 
-  function onSumbit(e) {
+  // Get the intended route from the Redux state
+  const intendedRoute = useSelector((state) => state.auth.intendedRoute);
+
+  const onSumbit = (e) => {
     e.preventDefault();
 
     dispatch(loginUser(formData)).then((data) => {
@@ -28,16 +31,17 @@ const Login = () => {
         toast({
           title: data?.payload?.message,
         });
+        dispatch(clearIntendedRoute()); // Clear intended route after successful login
+        navigate(intendedRoute || "/default-page"); // Redirect to the intended route or default
       } else {
-        // console.error("Registration failed:", data.payload); // Log any error details
         toast({
-          title: data?.payload?.message || " Incorrect email or password",
-          variant: "destructive", // This is a variant of the toast notification
+          title: data?.payload?.message || "Incorrect email or password",
+          variant: "destructive",
         });
       }
     });
     console.log(formData);
-  }
+  };
 
   return (
     <div className="bg-shadowTherapy bg-cover bg-center h-screen flex justify-center items-center">
