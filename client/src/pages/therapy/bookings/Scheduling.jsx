@@ -28,6 +28,7 @@ const Scheduling = ({ onComplete }) => {
     }));
   };
 
+   
   return (
     <div className="flex flex-col items-center justify-center  bg-[#F5F5DC]">
       {/* body */}
@@ -195,6 +196,7 @@ const Scheduling = ({ onComplete }) => {
             </div>
           </div>
         </div>
+        
       </div>
       {/* body */}
     </div>

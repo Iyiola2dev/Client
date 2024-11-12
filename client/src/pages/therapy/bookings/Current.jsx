@@ -80,6 +80,14 @@ const Current = () => {
   const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const [isConfirmationComplete, setIsConfirmationComplete] = useState(false);
 
+  const goBack = () => {
+    if (currentStep === 1) {
+      navigate(-2); // This will go back in browser history
+    } else {
+      setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Go back to previous step in the form
+    }
+  };
+
   const handleContinue = () => {
     console.log("continue was clicked...");
     // Prevent moving to the next step if the current step is incomplete
@@ -91,14 +99,19 @@ const Current = () => {
     setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
   };
 
-  const goBack = () => {
-    if (currentStep === 1) {
-      navigate(-2); // This will go back in browser history
-    } else {
-      setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Go back to previous step in the form
+  // Determine button label based on current step
+  const getButtonLabel = () => {
+    switch (currentStep) {
+      case 1:
+        return "Continue";
+      case 2:
+        return "Book Session";
+      case 3:
+        return "Buy Now";
+      default:
+        return "Continue";
     }
   };
-
 
   return (
     <div className="flex flex-col items-center justify-center bg-[#F5F5DC] pb-24">
@@ -109,60 +122,62 @@ const Current = () => {
           </button>
         </div>
         {/* Step Indicator */}
-        <div className="flex justify-center items-center mt-6 mb-8 mx-4">
+        <div className="flex justify-center items-center mt-6 mb-8 mx-4 lg:mx-[20rem]">
           <div
             className={`flex flex-col items-center ${
-              currentStep === 1 ? "text-blue-600 " : "text-gray-400"
+              currentStep === 1 ? "text-blue-600 " : "text-gray-500"
             }`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                isSchedulingComplete ? "bg-blue-600 text-white" : "bg-gray-200"
+              className={`w-8 h-8 lg:w-12 lg:h-12 rounded-full flex items-center justify-center ${
+                isSchedulingComplete ? "bg-blue-600 text-white" : "bg-gray-300"
               }`}
             >
               {isSchedulingComplete && <span>&#10003;</span>}
             </div>
-            <span className="text-sm">Scheduling</span>
+            <span className="text-sm lg:text-lg">Scheduling</span>
           </div>
 
           <div className="flex items-center justify-center mb-4 w-full">
-            <hr className="w-6 h-1 bg-slate-400" />
+            <hr className="w-6 h-1 lg:w-[10rem] bg-slate-400" />
           </div>
 
           <div
             className={`flex flex-col items-center ${
-              currentStep === 2 ? "text-blue-600" : "text-gray-400"
+              currentStep === 2 ? "text-blue-600" : "text-gray-500"
             }`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center ${
+              className={`w-8 h-8 lg:w-12 lg:h-12 rounded-full flex items-center justify-center ${
                 isQuestionnaireComplete
                   ? "bg-blue-600 text-white"
-                  : "bg-gray-200"
+                  : "bg-gray-300"
               }`}
             >
               {isQuestionnaireComplete && <span>&#10003;</span>}
             </div>
-            <span className="text-sm">Questionnaire</span>
+            <span className="text-sm lg:text-lg">Questionnaire</span>
           </div>
+
           <div className="flex items-center justify-center mb-4 w-full">
-            <hr className="w-6 h-1 bg-slate-400" />
+            <hr className="w-6 h-1 lg:w-[10rem] bg-slate-400" />
           </div>
+
           <div
             className={`flex flex-col items-center ${
-              currentStep === 3 ? "text-blue-600" : "text-gray-400"
+              currentStep === 3 ? "text-blue-600" : "text-gray-500"
             }`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center ${
+              className={`w-8 h-8 lg:w-12 lg:h-12 rounded-full flex items-center justify-center ${
                 isConfirmationComplete
                   ? "bg-blue-600 text-white"
-                  : "bg-gray-200"
+                  : "bg-gray-300"
               }`}
             >
               {isConfirmationComplete && <span>&#10003;</span>}
             </div>
-            <span className="text-sm">Confirmation</span>
+            <span className="text-sm lg:text-lg">Confirmation</span>
           </div>
         </div>
 
@@ -270,13 +285,13 @@ const Current = () => {
           )}
         </div>
 
-        {/* Continue Button */}
+         {/* Continue Button */}
         <div className="flex items-center justify-center mt-4">
           <button
             onClick={handleContinue}
-            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg"
+            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[18rem] lg:w-[51rem]"
           >
-            Continue
+            {getButtonLabel()}
           </button>
         </div>
       </div>

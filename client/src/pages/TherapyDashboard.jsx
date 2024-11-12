@@ -13,41 +13,48 @@ import TherapistCreation from "./admin-view/TherapistCreation";
 // import ModalComponent from "./therapy/ModalComponent";
 // import Scheduling from "./therapy/Scheduling";
 import Current from "./therapy/bookings/Current";
+import ScrollToTop from "./ScrollToTop";
 
 const TherapyDashboard = () => {
   return (
     <div>
-      <Navbar />
-      <div className="mt-[3rem] lg:mt-[10rem] md:mt-[5rem]">
-        <Routes>
-          {/* Public Route for Therapy Landing Page */}
-          <Route path="/" element={<LandingPage />} />
+      <ScrollToTop />
+      <div>
+        <Navbar />
+        <div className="mt-[3rem] lg:mt-[10rem] md:mt-[5rem]">
+          <Routes>
+            {/* Public Route for Therapy Landing Page */}
+            <Route path="/" element={<LandingPage />} />
 
-          {/* Protected Therapy Routes */}
-          <Route
-            path="/appointment"
-            element={
-              <ProtectedRoute>
-                <Therapy />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/appointment/teen"
-            element={
-              <ProtectedRoute>
-                <TeenPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/therapist-details/:id" element={<TherapistDetails />} />
-          <Route path="/testpage" element={<TherapistInfo />} />
-          <Route path="/upload" element={<TherapistCreation />} />
-          {/* <Route path="/bookings" element={<ModalComponent />} /> */}
-          <Route path="/scheduling" element={<Current />} />
-        </Routes>
+            {/* Protected Therapy Routes */}
+            <Route
+              path="/appointment"
+              element={
+                <ProtectedRoute>
+                  <Therapy />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/appointment/teen"
+              element={
+                <ProtectedRoute>
+                  <TeenPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/therapist-details/:id"
+              element={<TherapistDetails />}
+            />
+            <Route path="/testpage" element={<TherapistInfo />} />
+            <Route path="/upload" element={<TherapistCreation />} />
+            {/* <Route path="/bookings" element={<ModalComponent />} /> */}
+            <Route path="/scheduling/*" element={<Current />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

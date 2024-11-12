@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 const Questionnaire = ({ onComplete }) => {
   const [formValues, setFormValues] = useState({
@@ -7,18 +7,16 @@ const Questionnaire = ({ onComplete }) => {
     email: "",
     brings: "",
     emotion: "",
-    achive: "",
+    achieve: "",
     sought: "",
     else: "",
   });
 
-  // Check if the form is complete
   useEffect(() => {
     const isComplete = Object.values(formValues).every((value) => value !== "");
     onComplete(isComplete);
   }, [formValues, onComplete]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormValues((prevValues) => ({
@@ -34,10 +32,10 @@ const Questionnaire = ({ onComplete }) => {
       </div>
 
       <div className="flex flex-col items-center justify-center pt-8 px-4">
-        <form className="flex flex-col gap-6 items-center justify-center lg:block lg:w-[60vw]">
+        <form className="flex flex-col gap-6 items-center justify-center lg:block space-y-4 lg:w-[60vw]">
           <div className="space-y-2 w-full">
             <label className="font-semibold" htmlFor="accountName">
-              Account Name
+              1. Account Name
             </label>
             <input
               id="accountName"
@@ -52,14 +50,14 @@ const Questionnaire = ({ onComplete }) => {
 
           <div className="space-y-2 w-full">
             <label className="font-semibold" htmlFor="phone">
-              Phone Number
+              2. Phone Number
             </label>
             <div className="flex gap-2">
               <input
                 id="phone"
                 type="tel"
                 placeholder="+234 1234567890"
-                value={formValues.phoneNumber}
+                value={formValues.phone}
                 onChange={handleChange}
                 className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                 pattern="^\+\d{1,4}\s\d{7,12}$"
@@ -73,7 +71,7 @@ const Questionnaire = ({ onComplete }) => {
 
           <div className="space-y-2 w-full">
             <label className="font-semibold" htmlFor="email">
-              Email
+              3. Email
             </label>
             <input
               id="email"
@@ -87,11 +85,11 @@ const Questionnaire = ({ onComplete }) => {
           </div>
 
           <div className="space-y-2 w-full">
-            <label className="font-semibold" htmlFor="email">
-              What brings you to therapy?
+            <label className="font-semibold" htmlFor="brings">
+              4. What brings you to therapy?
             </label>
             <input
-              id="email"
+              id="brings"
               type="text"
               value={formValues.brings}
               onChange={handleChange}
@@ -102,11 +100,11 @@ const Questionnaire = ({ onComplete }) => {
           </div>
 
           <div className="space-y-2 w-full">
-            <label className="font-semibold" htmlFor="email">
-              How would you describe your current emotional state?
+            <label className="font-semibold" htmlFor="emotion">
+              5. How would you describe your current emotional state?
             </label>
             <input
-              id="email"
+              id="emotion"
               type="text"
               value={formValues.emotion}
               onChange={handleChange}
@@ -117,11 +115,11 @@ const Questionnaire = ({ onComplete }) => {
           </div>
 
           <div className="space-y-2 w-full">
-            <label className="font-semibold" htmlFor="email">
-              What goals do you hope to achieve through therapy?
+            <label className="font-semibold" htmlFor="achieve">
+              6. What goals do you hope to achieve through therapy?
             </label>
             <input
-              id="email"
+              id="achieve"
               type="text"
               value={formValues.achieve}
               onChange={handleChange}
@@ -132,11 +130,11 @@ const Questionnaire = ({ onComplete }) => {
           </div>
 
           <div className="space-y-2 w-full">
-            <label className="font-semibold" htmlFor="email">
-              Have you sought therapy orr counseling before?
+            <label className="font-semibold" htmlFor="sought">
+              7. Have you sought therapy or counseling before?
             </label>
             <input
-              id="email"
+              id="sought"
               type="text"
               value={formValues.sought}
               onChange={handleChange}
@@ -147,12 +145,14 @@ const Questionnaire = ({ onComplete }) => {
           </div>
 
           <div className="space-y-2 w-full">
-            <label className="font-semibold" htmlFor="email">
-              Is there anything else you'd like your therapist to know about your current situation?
+            <label className="font-semibold" htmlFor="else">
+              8. Is there anything else you'd like your therapist to know about
+              your current situation?
             </label>
-            <input
-              id="email"
-              type="text"
+            <textarea
+              id="else"
+              cols={30}
+              rows={15}
               value={formValues.else}
               onChange={handleChange}
               placeholder="Yes there is/No there isn't...."
@@ -164,6 +164,6 @@ const Questionnaire = ({ onComplete }) => {
       </div>
     </div>
   );
-}
+};
 
-export default Questionnaire
+export default Questionnaire;

@@ -12,7 +12,6 @@ import UnauthPage from "./pages/unauth-page";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollTextIcon } from "lucide-react";
 import ScrollToTop from "./pages/ScrollToTop";
 
 const App = () => {
