@@ -1,5 +1,6 @@
 import CommonForm from "@/components/common/Form";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import {
   Sheet,
   SheetContent,
@@ -7,8 +8,18 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config/Index";
-import React, { useState } from "react";
-import ProductImageUpload from "./Image-upload";
+import { useEffect, useState } from "react";
+import ProductImageUpload from "./image-upload/Image-upload";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNewProduct,
+  deleteProduct,
+  editProduct,
+  fetchAllProducts,
+} from "@/store/admin/products-slice";
+import AdminProductTile from "./admin-view2/Product-tile";
+
+//
 const initialFormData = {
   image: null,
   name: "",
@@ -16,19 +27,92 @@ const initialFormData = {
   description: "",
   category: "",
   stock: "",
+  types: "",
   productType: "",
   sales: "",
 };
 
 const AdminProducts = () => {
+  //this is the state to open the create product form
   const [openCreateProduct, setOpenCreateProduct] = useState(false);
+  //this is the state to store the form data
   const [formData, setFormData] = useState(initialFormData);
+  //this is the state to store the image file
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageURL, setuploadedImageURL] = useState("");
+  //this is the state to store the uploaded image url
+  const [uploadedImageURL, setUploadedImageURL] = useState("");
+  const { toast } = useToast();
+  //This is for the edit of product this state is to store the current id before it is edited
+  const [currentEditedId, setCurrentEditedId] = useState(null);
 
-  function onSumbit() {
-    console.log(formData);
+  //this is to get the product list and the adminProduct is the reducer name
+  const { productList } = useSelector((state) => state.adminProducts);
+  const dispatch = useDispatch();
+
+  //this is a loading state
+  const [imageLoadingState, setImageLoadingState] = useState(false);
+
+  //this is to submit the form
+  function onSumbit(e) {
+    e.preventDefault();
+    //this is to check if the currentEditedId is true and i pass in the edited product Api from my async thunk
+    currentEditedId !== null
+      ? dispatch(editProduct({ id: currentEditedId, formData })).then(
+          (data) => {
+            console.log(data, "edit");
+            if (data?.payload?.success) {
+              dispatch(fetchAllProducts());
+              setFormData(initialFormData);
+              setOpenCreateProduct(false);
+              setCurrentEditedId(null);
+            }
+          }
+        )
+      : dispatch(addNewProduct({ ...formData, image: uploadedImageURL })).then(
+          (data) => {
+            console.log(data);
+            if (data?.payload?.success) {
+              //this if the sucess is true, the image file is set to null, the form data is set to the initial form data and the open create product is set to false basically to reset the form
+              dispatch(fetchAllProducts());
+              setImageFile(null);
+              setFormData(initialFormData);
+              setOpenCreateProduct(false);
+              toast({
+                title: "Product added successfully",
+              });
+            }
+          }
+        );
   }
+
+  //This is to check if the form is valid if not the button will be disabled
+  function isFormValid() {
+    return Object.keys(formData)
+      .map((key) => formData[key] !== "")
+      .every((item) => item);
+  } //This function is to check if the form is vaild if not the form button will be disabled
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
+
+  // Function to handle delete
+  const handleDelete = (getCurrentProductId) => {
+    console.log(getCurrentProductId, "getCurrentProductId");
+
+    dispatch(deleteProduct(getCurrentProductId)).then((data) => {
+      if (data?.payload?.success) {
+        //This will get all the recent product
+        dispatch(fetchAllProducts());
+        // Display the success message
+        toast({
+          title: "Product deleted successfully",
+        });
+      }
+    });
+  };
+
+  console.log(productList.data, uploadedImageURL, "productList");
   return (
     <>
       <div className="mb-5 flex w-full justify-end">
@@ -36,14 +120,39 @@ const AdminProducts = () => {
           Add New Product
         </Button>
       </div>
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 "></div>
+      {/* This is the product tile card */}
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 ">
+        {productList?.data?.length > 0 ? (
+          productList.data.map((productItem, i) => (
+            <AdminProductTile
+              key={i}
+              product={productItem}
+              setCurrentEditedId={setCurrentEditedId}
+              setOpenCreateProduct={setOpenCreateProduct}
+              setFormData={setFormData}
+              handleDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>No product found</p>
+        )}
+      </div>
+
       <Sheet
         open={openCreateProduct}
-        onOpenChange={() => setOpenCreateProduct(false)}
+        onOpenChange={() => {
+          setOpenCreateProduct(false);
+          //This is to make the dialog box to close and reset the form
+          setCurrentEditedId(null);
+          setFormData(initialFormData);
+        }}
       >
         <SheetContent side="right" className="overflow-auto">
           <SheetHeader>
-            <SheetTitle>Add New Product</SheetTitle>
+            <SheetTitle>
+              {/* This is to check if the currentEditedId is true The title shows true and if it's not  */}
+              {currentEditedId !== null ? "Edit Product" : "Add New Product"}
+            </SheetTitle>
           </SheetHeader>
           {/* The image upLoad component */}
           {/* The props is passed to the productimageupload component */}
@@ -51,7 +160,10 @@ const AdminProducts = () => {
             imageFile={imageFile}
             setImageFile={setImageFile}
             uploadedImageURL={uploadedImageURL}
-            setuploadedImageURL={setuploadedImageURL}
+            setUploadedImageURL={setUploadedImageURL}
+            setImageLoadingState={setImageLoadingState}
+            imageLoadingState={imageLoadingState}
+            isEditMode={currentEditedId !== null}
           />
 
           {/* This is the commonform component */}
@@ -60,9 +172,10 @@ const AdminProducts = () => {
               formData={formData}
               setFormData={setFormData}
               formControls={addProductFormElements}
-              buttonText="Add Product"
+              buttonText={currentEditedId !== null ? "Update" : "Add Product"}
               borderRadius="rounded-md"
               onSubmit={onSumbit}
+              isBtnDisable={!isFormValid}
             />
           </div>
         </SheetContent>

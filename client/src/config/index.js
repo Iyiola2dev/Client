@@ -103,8 +103,16 @@ export const registerFormControls = [
     },
     {
       id: "product-type",
-      name: "productType",
-      label: "Product Type",
+      name: "types",
+      label: "Product type",
+      placeholder: "Enter the Product type",
+      componentType: "input",
+      type: "string",
+    },
+    {
+      id: "category",
+      name: "category",
+      label: "Category",
       componentType: "select",
       options: [
         { id: "type-man", value: "man", label: "Man" },
