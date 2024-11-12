@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import api from "./api";
 
+
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
@@ -10,50 +11,64 @@ const initialState = {
 };
 
 // my Async thunk... this setup allows for a structured, reactive way to handle authentication in your application using Redux Toolkit.
+// Register user
 export const registerUser = createAsyncThunk(
   "/auth/register",
-  async (formData) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-    return response.data;
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred during registration"
+      );
+    }
   }
 );
 
-//This is for the login user
-
-export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(
-    "http://localhost:5000/api/auth/login",
-    formData,
-    {
-      withCredentials: true,
-    }
-  );
-  return response.data;
-});
-export const logoutUser = createAsyncThunk("/auth/logout", async () => {
-  const response = await axios.post(
-    "http://localhost:5000/api/auth/logout",
-    {},
-    {
-      withCredentials: true,
-    }
-  );
-  return response.data;
-});
-
-
+// Login user
+export const loginUser = createAsyncThunk(
+  "/auth/login",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await api.post("/auth/login", formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(
         error.response && error.response.data
           ? error.response.data
           : "An error occurred during login"
+      );
+    }
+  }
+);
+
+// Logout user
+export const logoutUser = createAsyncThunk(
+  "/auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred during logout"
       );
     }
   }

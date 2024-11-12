@@ -8,9 +8,8 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config/index";
-import { useEffect, useState } from "react";
 
-import { addProductFormElements } from "@/config/index";
+
 import { useEffect, useState } from "react";
 import ProductImageUpload from "./image-upload/Image-upload";
 
@@ -23,7 +22,7 @@ import {
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
 
-import ProductImageUpload from "./Image-upload";
+
 
 
 //
