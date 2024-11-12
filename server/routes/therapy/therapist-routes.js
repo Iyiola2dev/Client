@@ -5,10 +5,10 @@ import {
   getTherapistById,
   updateTherapist,
   deleteTherapist,
-} from "../controllers/therapistController.js";
+} from "../../controllers/therapy/therapistController.js";
 import {
   validateTherapist,
-} from "../middleware/therapist-middleware.js";
+} from "../../middleware/therapist-middleware.js";
 
 const router = express.Router();
 

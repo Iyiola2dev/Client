@@ -1,4 +1,4 @@
-import Therapist from "../models/therapistModel.js";
+import Therapist from "../../models/therapistModel.js";
 
 // Create a new therapist
 export const createTherapist = async (req, res) => {
