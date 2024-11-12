@@ -7,9 +7,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { addProductFormElements } from "@/config/Index";
+import { addProductFormElements } from "@/config/index";
 import { useEffect, useState } from "react";
-import ProductImageUpload from "./image-upload/Image-upload";
+// import ProductImageUpload from "../image-upload/Image-upload";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewProduct,
@@ -18,6 +18,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
+import ProductImageUpload from "./Image-upload";
 
 //
 const initialFormData = {
