@@ -27,6 +27,7 @@ const Register = () => {
     // So basically, when the form is submitted and it's successful, the user is redirected to the login page.
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
+        console.log(data.payload)
         toast({
           title: data?.payload?.message,
         });

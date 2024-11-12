@@ -89,7 +89,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-//Logout
+//Logout controller the saved user token is cleared from the cookie i.e the user is logged out from the application
 export const logoutUser = async (req, res) => {
   res
     .clearCookie("token")

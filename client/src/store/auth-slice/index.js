@@ -25,16 +25,28 @@ export const registerUser = createAsyncThunk(
 );
 
 //This is for the login user
-export const loginUser = createAsyncThunk(
-  "/auth/login",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const response = await api.post("/auth/login", formData);
 
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem("authToken", token);
-      }
+export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
+  const response = await axios.post(
+    "http://localhost:5000/api/auth/login",
+    formData,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+});
+export const logoutUser = createAsyncThunk("/auth/logout", async () => {
+  const response = await axios.post(
+    "http://localhost:5000/api/auth/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+});
+
 
       return response.data;
     } catch (error) {
@@ -149,10 +161,19 @@ const authSlice = createSlice({
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success; //if the user is authenticated it will be true
       })
+
       .addCase(checkAuth.rejected, (state) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      //This is for the logout user
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+
+        // Updates user with the data returned from the server (in action.payload).
+        state.user = null;
+        state.isAuthenticated = false; //if the user is authenticated it will be true
       });
   },
 });

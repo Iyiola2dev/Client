@@ -84,15 +84,7 @@ export const registerFormControls = [
       placeholder: "Enter product description",
       componentType: "textarea",
     },
-    // Uncomment the following if you want to include an image URL field
-    // {
-    //   id: "product-image",
-    //   name: "image",
-    //   label: "Image URL",
-    //   placeholder: "Enter image URL",
-    //   componentType: "input",
-    //   type: "text",
-    // },
+
     {
       id: "product-stock",
       name: "stock",
@@ -115,8 +107,9 @@ export const registerFormControls = [
       label: "Category",
       componentType: "select",
       options: [
-        { id: "type-man", value: "man", label: "Man" },
-        { id: "type-woman", value: "woman", label: "Woman" },
+        { id: "type-man", value: "men", label: "Men" },
+        { id: "type-woman", value: "women", label: "Women" },
+        { id: "type-couples", value: "couples", label: "Couples" },
       ],
     },
     {
@@ -128,6 +121,15 @@ export const registerFormControls = [
       type: "number",
     },
   ];
+  
+
+  //
+  export const sortOptions = [
+    {id: "price-low-high",  label: "Price: Low - High"},
+    {id: "price-high-low",  label: "Price:  High - Low"},
+    {id: "title-a-z",  label: "Price:  A - Z"},
+    {id: "title-z-a",  label: "Price:  Z - A"},
+  ]
   
   
   
