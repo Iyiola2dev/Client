@@ -58,10 +58,14 @@ const TherapistDetails = () => {
     }
   }, [dispatch, id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center font-bold text-xl pt-14 pb-8">Loading Therapist details...</p>;
   if (error) {
     console.log("Error message:", error.message);
-    return <p>{error.message || "An error occurred"}</p>;
+    return (
+      <p className="text-center font-bold text-2xl py-10">
+        {error.message || "An error occurred"}
+      </p>
+    );
   }
 
   const handleScheduling = () => {
