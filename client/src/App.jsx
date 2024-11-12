@@ -56,9 +56,9 @@ const App = () => {
         <Route
           path="/shop/*"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <Shopping />
-            </CheckAuth>
+            // </CheckAuth>
           }
         />
 
