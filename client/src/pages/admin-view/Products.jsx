@@ -10,7 +10,7 @@ import {
 import { addProductFormElements } from "@/config/index";
 import { useEffect, useState } from "react";
 
-import { addProductFormElements } from "@/config/Index";
+import { addProductFormElements } from "@/config/index";
 import { useEffect, useState } from "react";
 import ProductImageUpload from "./image-upload/Image-upload";
 

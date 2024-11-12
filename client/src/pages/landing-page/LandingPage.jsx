@@ -57,6 +57,23 @@ const LandingPage = () => {
           className="flex-1 flex justify-center relative cursor-pointer" // Add cursor-pointer for better UX
           onClick={handleOpenModal}
         >
+          <div className="flex-1 flex justify-center ">
+            <Link to="/shop/home">
+              <img
+                className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
+                src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
+                alt="Animated Image"
+                width={500}
+                height={700}
+              />
+              <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
+                <p className="w-full lg:mt-3 p-1 lg:py-4 md:py-3 bg-black text-white text-[10px] md:text-[12px] lg:text-lg rounded-tr-md rounded-tl-md">
+                  Make Your X Life More Enjoyable
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
 
         <div className="flex-1 flex justify-center ">
           <Link to="/shop/home">
@@ -75,7 +92,7 @@ const LandingPage = () => {
             </p>
           </div>
 
-          /></Link>
+          </Link>
          
 
         </div>
