@@ -17,7 +17,7 @@ const LandingPage = () => {
           />
         </div>
         <div className="flex-1 flex justify-center ">
-          <Link to="/shop/shopping-Layout">
+          <Link to="/shop/home">
           <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"

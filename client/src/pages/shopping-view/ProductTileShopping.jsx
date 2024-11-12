@@ -23,8 +23,11 @@ const ShoppingProductTile = ({ product }) => {
           </div>
           <CardContent className="p-4 flex flex-col justify-center items-center  ">
             <h2 className="text-xl font-bold mb-2">{product?.name}</h2>
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between items-center ">
               <span className="text-sm ">{product?.category}</span>
+            </div>
+            <div>
+            <span className="text-sm ">{product?.types}</span>
             </div>
             <div className="flex flex-col justify-center items-center mb-2">
               <span

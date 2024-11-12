@@ -17,7 +17,7 @@ const Shopping = () => {
     <div>
       <Nav2/>
         <Routes>
-          <Route path="/" element={<Navigate to="/shop/shopping-Layout" />} />
+          <Route path="/" element={<Navigate to="/shop/home" />} />
           <Route path="/shopping-Layout" element={<ShoppingLayout />} />
           <Route path="/home" element={<ShoppingHome />} />
           <Route path="/listing" element={<ShoppingListing />} />

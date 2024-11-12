@@ -41,7 +41,7 @@ const ForCouples = () => {
     return (
         <div className='bg-black h-auto  flex flex-col justify-center  w-full'>
             <div className='p-7 flex justify-center items-center '>
-                <img className='md:h-[5rem]' src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1730560681/Mern-Ecommerce/For_Couples_pnkpv8.png" alt="" />
+                <img className='md:h-[3rem]' src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1730560681/Mern-Ecommerce/For_Couples_pnkpv8.png" alt="" />
             </div>
             <div className="flex justify-between text-white items-center px-7">
         {/* This is the sort */}

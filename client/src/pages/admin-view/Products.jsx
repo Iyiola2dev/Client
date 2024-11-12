@@ -8,7 +8,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config/Index";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductImageUpload from "./image-upload/Image-upload";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,7 +19,6 @@ import {
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
 
-
 //
 const initialFormData = {
   image: null,
@@ -28,6 +27,7 @@ const initialFormData = {
   description: "",
   category: "",
   stock: "",
+  types: "",
   productType: "",
   sales: "",
 };
@@ -91,8 +91,6 @@ const AdminProducts = () => {
       .map((key) => formData[key] !== "")
       .every((item) => item);
   } //This function is to check if the form is vaild if not the form button will be disabled
-  
-  
 
   useEffect(() => {
     dispatch(fetchAllProducts());
@@ -101,7 +99,7 @@ const AdminProducts = () => {
   // Function to handle delete
   const handleDelete = (getCurrentProductId) => {
     console.log(getCurrentProductId, "getCurrentProductId");
-  
+
     dispatch(deleteProduct(getCurrentProductId)).then((data) => {
       if (data?.payload?.success) {
         //This will get all the recent product
@@ -110,12 +108,10 @@ const AdminProducts = () => {
         toast({
           title: "Product deleted successfully",
         });
-  
-      
       }
     });
   };
-  
+
   console.log(productList.data, uploadedImageURL, "productList");
   return (
     <>
@@ -134,7 +130,7 @@ const AdminProducts = () => {
               setCurrentEditedId={setCurrentEditedId}
               setOpenCreateProduct={setOpenCreateProduct}
               setFormData={setFormData}
-              handleDelete = {handleDelete}
+              handleDelete={handleDelete}
             />
           ))
         ) : (
@@ -179,7 +175,7 @@ const AdminProducts = () => {
               buttonText={currentEditedId !== null ? "Update" : "Add Product"}
               borderRadius="rounded-md"
               onSubmit={onSumbit}
-              isBtnDisable = {!isFormValid}
+              isBtnDisable={!isFormValid}
             />
           </div>
         </SheetContent>
