@@ -62,11 +62,21 @@ const initialState = {
 };
 
 // This is to fetch all products or filtered by category
+// export const fetchAllFilteredProducts = createAsyncThunk(
+//   "/products/fetchAllProducts",
+//   async (category = "") => {
+//     const result = await axios.get("http://localhost:5000/api/shop/products/get", {
+//       params: { category }, // Send the category as a query parameter
+//     });
+//     return result?.data; // Return the data to be stored in the state
+//   }
+// );
+
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
-  async (category = "") => {
+  async ({ category = "", sort = "" }) => {
     const result = await axios.get("http://localhost:5000/api/shop/products/get", {
-      params: { category }, // Send the category as a query parameter
+      params: { category, sort }, // Send both category and sort as query parameters
     });
     return result?.data; // Return the data to be stored in the state
   }
