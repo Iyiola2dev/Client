@@ -54,7 +54,7 @@ const Confirmation = () => {
 
         {/* packages */}
         <div className="bg-white bg-opacity-20 px-4 py-10 rounded-md">
-          <div className="flex items-center text-xs gap-2 lg:text-lg  lg:gap-32 lg:justify-center lg:my-6 ">
+          <div className="flex items-center text-sm gap-12 flex-col lg:flex-row md:flex-row lg:text-lg md:text-lg lg:gap-32 lg:justify-center md:justify-center md:gap-14 lg:my-6 ">
             <div className="space-y-3">
               <p className="flex items-center">
                 5{" "}

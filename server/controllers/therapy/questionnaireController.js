@@ -1,8 +1,8 @@
 
-const Questionnaire = require("../../models/questionnaire");
+import Questionnaire  from "../../models/questionnaire.js";
 
 // Controller to handle saving questionnaire data
-const saveQuestionnaire = async (req, res) => {
+export const saveQuestionnaire = async (req, res) => {
   try {
     const newQuestionnaire = new Questionnaire(req.body);
     await newQuestionnaire.save();
@@ -19,4 +19,4 @@ const saveQuestionnaire = async (req, res) => {
   }
 };
 
-module.exports = { saveQuestionnaire };
+

@@ -1,5 +1,5 @@
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const questionnaireSchema = new mongoose.Schema({
   accountName: {
@@ -37,5 +37,4 @@ const questionnaireSchema = new mongoose.Schema({
 });
 
 const Questionnaire = mongoose.model("Questionnaire", questionnaireSchema);
-
-module.exports = Questionnaire;
+export default Questionnaire;

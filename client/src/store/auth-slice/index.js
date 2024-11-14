@@ -36,6 +36,7 @@ const initialState = {
 //   }
 // );
 
+
 // Register user
 export const registerUser = createAsyncThunk(
   "/auth/register",
