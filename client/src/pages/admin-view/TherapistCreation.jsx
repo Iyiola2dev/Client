@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getTherapistById, updateTherapist } from "@/store/therapist-slice"; // Assuming these actions exist
+import {
+  getTherapistById,
+  updateTherapist,
+} from "@/store/therapy/therapist-slice"; // Assuming these actions exist
 import { MdEdit } from "react-icons/md";
 import { useToast } from "@/hooks/use-toast";
 

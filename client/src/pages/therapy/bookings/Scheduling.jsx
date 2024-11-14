@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { RiErrorWarningLine } from "react-icons/ri";
+import {
+  postSchedule,
+  resetScheduleState,
+} from "@/store/therapy/schedule-slice";
 
 const Scheduling = ({ onComplete }) => {
+  const dispatch = useDispatch();
+  const { loading, success, error } = useSelector((state) => state.schedule);
+
   const [formValues, setFormValues] = useState({
     accountName: "",
     phone: "",
@@ -19,6 +28,23 @@ const Scheduling = ({ onComplete }) => {
     onComplete(isComplete);
   }, [formValues, onComplete]);
 
+  // Reset form on success
+  useEffect(() => {
+    if (success) {
+      setFormValues({
+        accountName: "",
+        phone: "",
+        email: "",
+        dob: "",
+        appointmentDate: "",
+        appointmentTime: "",
+        state: "",
+        city: "",
+      });
+      dispatch(resetScheduleState()); // Reset success state
+    }
+  }, [success, dispatch]);
+
   // Handle input changes
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -28,21 +54,26 @@ const Scheduling = ({ onComplete }) => {
     }));
   };
 
-   
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(postSchedule(formValues));
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center  bg-[#F5F5DC]">
+    <div className="flex flex-col items-center justify-center bg-[#F5F5DC]">
       {/* body */}
-      <div className="">
+      <div>
         {/* header2 */}
-        <div className="flex flex-col items-center justify-center  pt-8 px-6 gap-2 ">
-          <div className=" flex flex-col items-center justify-center lg:block lg:w-[60vw]">
+        <div className="flex flex-col items-center justify-center pt-8 px-6 gap-2 ">
+          <div className="flex flex-col items-center justify-center lg:block lg:w-[60vw]">
             <p className="text-2xl font-semibold">Responsible Party</p>
             <p className="text-lg text-center lg:text-start pt-2 font-semibold">
               This person will be paying for services
             </p>
             <p className="text-center lg:hidden">
               <strong>Just a heads up:</strong> If you are creating an account,
-              you must be 18 years or older. For minors you muct have a parent
+              you must be 18 years or older. For minors, you must have a parent
               or legal guardian listed as the responsible party.
             </p>
           </div>
@@ -50,7 +81,11 @@ const Scheduling = ({ onComplete }) => {
 
         {/* form */}
         <div className="flex flex-col items-center justify-center pt-8 px-4">
-          <form className="flex flex-col gap-6 items-center justify-center lg:block lg:w-[60vw]">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-6 items-center justify-center lg:block lg:w-[60vw]"
+          >
+            {/* Input fields go here, e.g., accountName, phone, email, etc. */}
             <div className="space-y-2 w-full">
               <label className="font-semibold" htmlFor="accountName">
                 Account Name
@@ -196,7 +231,6 @@ const Scheduling = ({ onComplete }) => {
             </div>
           </div>
         </div>
-        
       </div>
       {/* body */}
     </div>

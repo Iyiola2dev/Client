@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong, FaMagnifyingGlass } from "react-icons/fa6";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getTherapistById } from "@/store/therapist-slice";
+import { getTherapistById } from "@/store/therapy/therapist-slice";
 import { CiCalendar } from "react-icons/ci";
 import { MdOutlineChair, MdOutlinePhoneInTalk } from "react-icons/md";
 import { BiCoinStack } from "react-icons/bi";
@@ -52,11 +52,11 @@ const TherapistDetails = () => {
     return words[num] || num.toString(); // Fallback to number if out of bounds
   };
 
-   useEffect(() => {
-     if (location.state?.openModal) {
-       openModal(); // Trigger modal open function
-     }
-   }, [location.state]);
+  useEffect(() => {
+    if (location.state?.openModal) {
+      openModal(); // Trigger modal open function
+    }
+  }, [location.state]);
 
   // Effect to fetch therapist data when the component mounts or ID changes
   useEffect(() => {

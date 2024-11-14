@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Questionnaire = ({ onComplete }) => {
+const Questionnaire = ({ onComplete, onSubmit }) => {
   const [formValues, setFormValues] = useState({
     accountName: "",
     phone: "",
@@ -32,7 +32,13 @@ const Questionnaire = ({ onComplete }) => {
       </div>
 
       <div className="flex flex-col items-center justify-center pt-8 px-4">
-        <form className="flex flex-col gap-6 items-center justify-center lg:block space-y-4 lg:w-[60vw]">
+        <form
+          className="flex flex-col gap-6 items-center justify-center lg:block space-y-4 lg:w-[60vw]"
+          onSubmit={(e) => {
+            e.preventDefault(); // Prevent default form submission
+            onSubmit(formValues); // Call onSubmit with formValues
+          }}
+        >
           <div className="space-y-2 w-full">
             <label className="font-semibold" htmlFor="accountName">
               1. Account Name

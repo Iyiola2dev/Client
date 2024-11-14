@@ -2,7 +2,7 @@ import Scheduling from "./Scheduling";
 import Questionnaire from "./Questionnaire";
 import { useNavigate } from "react-router-dom";
 
-import { getTherapistById } from "@/store/therapist-slice";
+import { getTherapistById } from "@/store/therapy/therapist-slice";
 import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Confirmation from "./Confirmation";
 import { toast } from "@/hooks/use-toast";
-
+import { postSchedule } from "@/store/therapy/schedule-slice";
 
 const Current = () => {
   const { id } = useParams();
@@ -96,24 +96,88 @@ const Current = () => {
   //    window.scrollTo(0, 0);
   //  };
 
-  const handleContinue = () => {
-    // Prevent moving to the next step if the current step is incomplete
-    if (
-      (currentStep === 1 && !isSchedulingComplete) ||
-      (currentStep === 2 && !isQuestionnaireComplete) ||
-      (currentStep === 3 && isConfirmationComplete)
-    ) {
-      toast({
-        title: "Incomplete Step",
-        description: "Please complete this step before moving to the next.",
-        status: "error",
-      });
-      return;
-    }
+  // const handleContinue = () => {
+  //   // Prevent moving to the next step if the current step is incomplete
+  //   if (
+  //     (currentStep === 1 && !isSchedulingComplete) ||
+  //     (currentStep === 2 && !isQuestionnaireComplete) ||
+  //     (currentStep === 3 && isConfirmationComplete)
+  //   ) {
+  //     toast({
+  //       title: "Incomplete Step",
+  //       description: "Please complete this step before moving to the next.",
+  //       status: "error",
+  //     });
+  //     return;
+  //   }
 
-    window.scrollTo(0, 0);
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
-  };
+  //   window.scrollTo(0, 0);
+  //   setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
+  // };
+
+
+const handleContinue = () => {
+  // Check if both the scheduling and questionnaire steps are complete
+  if (!isSchedulingComplete && !isQuestionnaireComplete) {
+    toast({
+      title: "Incomplete Step",
+      description:
+        "Please complete both the Scheduling and Questionnaire steps before proceeding.",
+      status: "error",
+    });
+    return;
+  }
+
+  // Submit the scheduling form data if scheduling is complete
+  if (isSchedulingComplete) {
+    const schedulingData = {
+      /* get the data from Scheduling form (e.g., formValues from the Scheduling component) */
+    };
+    dispatch(postSchedule(schedulingData)) // Assuming the thunk is called postScheduling
+      .unwrap()
+      .then(() => {
+        toast({
+          title: "Success",
+          description: "Scheduling submitted successfully!",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to submit scheduling data.",
+          status: "error",
+        });
+      });
+  }
+
+  // Submit the questionnaire form data if questionnaire is complete
+  if (isQuestionnaireComplete) {
+    const questionnaireData = questionnaireData; // Get the questionnaire data (assuming it's stored in the state)
+    dispatch(postQuestionnaire(questionnaireData)) // Assuming the thunk is called postQuestionnaire
+      .unwrap()
+      .then(() => {
+        toast({
+          title: "Success",
+          description: "Questionnaire submitted successfully!",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to submit questionnaire data.",
+          status: "error",
+        });
+      });
+  }
+
+  // Proceed to the next step (confirmation)
+  window.scrollTo(0, 0);
+  setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
+};
+
+
 
   // Determine button label based on current step
   const getButtonLabel = () => {
