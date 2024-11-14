@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { IoStarSharp } from "react-icons/io5";
-
 import LandingQuestion from "./TherapyLandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
 import TeenButton from "@/components/ui/teenButton";
@@ -8,9 +7,6 @@ import "../../index.css";
 import React, { useState } from "react";
 import RestrictionModal from "./RestrictionModal";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { Link } from "react-router-dom";
-
 
 const LandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,21 +47,15 @@ const LandingPage = () => {
             </div>
           </a>
         </div>
-
         {/* Image and text container with click event to open modal */}
         <div
           className="flex-1 flex justify-center relative cursor-pointer" // Add cursor-pointer for better UX
           onClick={handleOpenModal}
         >
-
-        <div className="flex-1 flex justify-center ">
-          <Link to="/shop/home">
-
           <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
             alt="Animated Image"
-
             width={500}
             height={700}
           />
@@ -74,10 +64,6 @@ const LandingPage = () => {
               Make Your X Life More Enjoyable
             </p>
           </div>
-
-          /></Link>
-         
-
         </div>
         {/* Render the modal if isModalOpen is true */}
         <AnimatePresence>

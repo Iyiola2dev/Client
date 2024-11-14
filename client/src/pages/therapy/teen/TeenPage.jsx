@@ -1,7 +1,6 @@
  import React from 'react'
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
-import teenImage from "../../../assets/images/teen.svg";
 import teenImageTwo from "../../../assets/images/teenTwo.svg";
  
  const TeenPage = () => {
@@ -47,10 +46,14 @@ import teenImageTwo from "../../../assets/images/teenTwo.svg";
 
            {/* image */}
            <img
-             src={teenImage}
+             src={teenImageHighRes}
+             srcSet={`${teenImageMedium} 768w, ${teenImageHighRes} 1200w`}
+             sizes="(max-width: 768px) 70vw, (min-width: 769px) 50vw"
              alt="teen"
-             className="pt-10 md:w-[70vw] mx-auto"
+             className="pt-10 mx-auto"
+             loading="lazy"
            />
+
            <p className="font-bold pt-4">Teens</p>
 
            <p className="font-semibold text-4xl pr-1  pt-3">

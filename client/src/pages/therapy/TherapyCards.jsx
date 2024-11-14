@@ -16,7 +16,7 @@ export const TherapyCards = ({ therapist }) => {
 
   const handleViewAvailabilityClick = () => {
     console.log("View Availability Clicked");
-    navigate("/therapy/bookings"); // Navigate to the modal route
+    navigate("/therapy//therapist-details/:id"); // Navigate to the modal route
   };
 
   // Handle date selection from the calendar

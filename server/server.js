@@ -5,7 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from "./routes/auth/auth-routes.js";
 
-import therapistRouter from "./routes/therapist-routes.js";
+import therapistRouter from "./routes/therapy/therapist-routes.js";
 
 import adminProductRouter from "./routes/admin/products-routes.js";
 import shopProductsRouter from "./routes/shop/products-route.js"

@@ -42,37 +42,56 @@ const Navbar = () => {
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/about">About Us</Link>
               </li>
-             {/* Products Dropdown */}
-             <li className="relative text-white hover:text-[#C42571]">
-                <button onClick={toggleDropdown} className="focus:outline-none">
+              {/* Products Dropdown */}
+              <li className="relative text-white hover:text-[#C42571]">
+                <button
+                  onClick={toggleDropdown}
+                  className="list-item-text-3 focus:outline-none"
+                >
                   Our Products (+18 only)
                 </button>
                 {isDropdownOpen && (
                   <ul className="absolute z-30 left-0 mt-2 w-[40rem] h-auto bg-red-400 flex justify-between shadow-lg rounded-lg text-black">
                     <li className="hover:bg-[#C42571] hover:text-white">
-                      <Link to="/shop/for-men" className="block px-4 py-2" onClick={() => setIsDropdownOpen(false)}>
+                      <Link
+                        to="/shop/for-men"
+                        className="block px-4 py-2"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
                         For-Men
                       </Link>
                     </li>
                     <li className="hover:bg-[#C42571] hover:text-white">
-                      <Link to="/shop/for-women" className="block px-4 py-2" onClick={() => setIsDropdownOpen(false)}>
+                      <Link
+                        to="/shop/for-women"
+                        className="block px-4 py-2"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
                         For-Women
                       </Link>
                     </li>
                     <li className="hover:bg-[#C42571] hover:text-white">
-                      <Link to="/shop/for-couple" className="block px-4 py-2" onClick={() => setIsDropdownOpen(false)}>
+                      <Link
+                        to="/shop/for-couple"
+                        className="block px-4 py-2"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
                         Couples
                       </Link>
                     </li>
                     <li className="hover:bg-[#C42571] hover:text-white">
-                      <Link to="/shop/all-products" className="block px-4 py-2" onClick={() => setIsDropdownOpen(false)}>
-                      All Products
+                      <Link
+                        to="/shop/all-products"
+                        className="block px-4 py-2"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        All Products
                       </Link>
                     </li>
                   </ul>
                 )}
               </li>
-              
+
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/courses">Courses</Link>
               </li>
@@ -155,31 +174,62 @@ const Navbar = () => {
               >
                 About Us
               </Link>
-                {/* Dropdown in Mobile View */}
-                <div className="relative">
-                <button onClick={toggleDropdown} className="text-left w-full hover:text-[#C42571]">
+              {/* Dropdown in Mobile View */}
+              <div className="relative">
+                <button
+                  onClick={toggleDropdown}
+                  className="text-left w-full hover:text-[#C42571]"
+                >
                   Our Products (+18 only)
                 </button>
                 {isDropdownOpen && (
                   <ul className="pl-4 mt-2 space-y-2">
                     <li>
-                      <Link to="/shop/for-men" className="block hover:text-[#C42571]" onClick={() => { toggleMenu(); setIsDropdownOpen(false); }}>
+                      <Link
+                        to="/shop/for-men"
+                        className="block hover:text-[#C42571]"
+                        onClick={() => {
+                          toggleMenu();
+                          setIsDropdownOpen(false);
+                        }}
+                      >
                         For-Men
                       </Link>
                     </li>
                     <li>
-                      <Link to="/shop/for-women" className="block hover:text-[#C42571]" onClick={() => { toggleMenu(); setIsDropdownOpen(false); }}>
+                      <Link
+                        to="/shop/for-women"
+                        className="block hover:text-[#C42571]"
+                        onClick={() => {
+                          toggleMenu();
+                          setIsDropdownOpen(false);
+                        }}
+                      >
                         For-Women
                       </Link>
                     </li>
                     <li>
-                      <Link to="/shop/for-couple" className="block hover:text-[#C42571]" onClick={() => { toggleMenu(); setIsDropdownOpen(false); }}>
+                      <Link
+                        to="/shop/for-couple"
+                        className="block hover:text-[#C42571]"
+                        onClick={() => {
+                          toggleMenu();
+                          setIsDropdownOpen(false);
+                        }}
+                      >
                         Couples
                       </Link>
                     </li>
                     <li>
-                      <Link to="/shop/all-products" className="block hover:text-[#C42571]" onClick={() => { toggleMenu(); setIsDropdownOpen(false); }}>
-                       All Products
+                      <Link
+                        to="/shop/all-products"
+                        className="block hover:text-[#C42571]"
+                        onClick={() => {
+                          toggleMenu();
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        All Products
                       </Link>
                     </li>
                   </ul>
