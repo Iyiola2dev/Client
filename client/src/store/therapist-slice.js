@@ -18,6 +18,7 @@ export const getAllTherapists = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
+      console.log(error)
       return rejectWithValue(
         error.response && error.response.data
           ? error.response.data
@@ -83,7 +84,8 @@ const therapistsSlice = createSlice({
       })
       .addCase(getAllTherapists.fulfilled, (state, action) => {
         state.loading = false;
-        state.therapists = action.payload.therapists || []; // Access nested therapists array
+        // Ensure you access therapists from the payload properly
+        state.therapists = action.payload.therapists || [];
       })
       .addCase(getAllTherapists.rejected, (state, action) => {
         state.loading = false;

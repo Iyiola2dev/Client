@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import api from "./api";
-import * as jwt_decode from "jwt-decode";
+// import * as jwt_decode from "jwt-decode";
 
 
 // Initial state
@@ -12,29 +12,29 @@ const initialState = {
   intendedRoute: "/",
 };
 
-// Helper function to check token expiration
-const isTokenExpired = (token) => {
-  if (!token) return true;
-  const { exp } = jwt_decode(token);
-  return Date.now() >= exp * 1000; // Convert expiration to milliseconds
-};
+// // Helper function to check token expiration
+// const isTokenExpired = (token) => {
+//   if (!token) return true;
+//   const { exp } = jwt_decode(token);
+//   return Date.now() >= exp * 1000; // Convert expiration to milliseconds
+// };
 
-// Interceptor to automatically log out if token is expired
-axios.interceptors.request.use(
-  async (config) => {
-    const token = localStorage.getItem("token");
-    if (isTokenExpired(token)) {
-      await store.dispatch(logoutUser());
-      return Promise.reject("Token expired, logging out.");
-    } else {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// // Interceptor to automatically log out if token is expired
+// axios.interceptors.request.use(
+//   async (config) => {
+//     const token = localStorage.getItem("token");
+//     if (isTokenExpired(token)) {
+//       await store.dispatch(logoutUser());
+//       return Promise.reject("Token expired, logging out.");
+//     } else {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 // Register user
 export const registerUser = createAsyncThunk(

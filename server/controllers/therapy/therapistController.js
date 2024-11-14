@@ -21,7 +21,10 @@ export const createTherapist = async (req, res) => {
 export const getAllTherapists = async (req, res) => {
   try {
     const therapists = await Therapist.find(); // Fetch all therapists
-    res.status(200).json({ success: true, count: therapists.length, therapists });
+    console.log(therapists); // Log the therapists data
+    res
+      .status(200)
+      .json({ success: true, count: therapists.length, therapists });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

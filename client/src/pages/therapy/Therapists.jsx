@@ -11,6 +11,7 @@ const Therapists = () => {
   );
 
   useEffect(() => {
+    console.log(therapists)
     dispatch(getAllTherapists());
   }, [dispatch]);
 

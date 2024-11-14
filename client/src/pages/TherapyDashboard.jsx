@@ -1,7 +1,6 @@
 // TherapyDashboard.jsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./landing-page/TherapyLandingPage";
 import Therapy from "./therapy/Therapy";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/TherapyNavbar";
