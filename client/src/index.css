@@ -27,7 +27,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -53,7 +53,7 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 @layer base {
@@ -71,7 +71,8 @@
   font-style: normal;
 }
 
-.montez-regular h2, h1{
+.montez-regular h2,
+h1 {
   font-family: "Montez", serif;
   font-weight: 700;
   font-style: normal;
@@ -84,18 +85,19 @@
   }
 }
 
-
-.playfair-display-select p, button, span, h2 {
+.playfair-display-select p,
+button,
+span,
+h2 {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  }
+}
 
-  .playfair-display-select .fint {
-    font-weight: 700;
-  }
-
+.playfair-display-select .fint {
+  font-weight: 700;
+}
 
 /* Highlight available dates in green */
 .highlight-available {
@@ -113,6 +115,10 @@
 }
 
 .list-item-text-2 {
-  font-family: inherit; 
+  font-family: inherit;
   font-weight: bold;
+}
+
+.list-item-text-3 {
+  font-family: inherit;
 }

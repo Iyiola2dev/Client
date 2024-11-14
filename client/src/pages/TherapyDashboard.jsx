@@ -24,11 +24,11 @@ const TherapyDashboard = () => {
         <div className="mt-[3rem] lg:mt-[10rem] md:mt-[5rem]">
           <Routes>
             {/* Public Route for Therapy Landing Page */}
-            <Route path="/" element={<LandingPage />} />
+            {/* <Route path="/" element={<LandingPage />} /> */}
 
             {/* Protected Therapy Routes */}
             <Route
-              path="/appointment"
+              path="/"
               element={
                 <ProtectedRoute>
                   <Therapy />

@@ -10,6 +10,8 @@ import { MdOutlineChair } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Confirmation from "./Confirmation";
+import { toast } from "@/hooks/use-toast";
+
 
 const Current = () => {
   const { id } = useParams();
@@ -88,14 +90,28 @@ const Current = () => {
     }
   };
 
+  //  const handleContinue = () => {
+  //    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Advances to the next step up to a maximum of 3 to move to the next step regardless of the step’s completion
+  //    // Scroll to the top of the page
+  //    window.scrollTo(0, 0);
+  //  };
+
   const handleContinue = () => {
-    console.log("continue was clicked...");
     // Prevent moving to the next step if the current step is incomplete
     if (
-      (currentStep === 1 && isSchedulingComplete) ||
-      (currentStep === 2 && isQuestionnaireComplete)
-    )
+      (currentStep === 1 && !isSchedulingComplete) ||
+      (currentStep === 2 && !isQuestionnaireComplete) ||
+      (currentStep === 3 && isConfirmationComplete)
+    ) {
+      toast({
+        title: "Incomplete Step",
+        description: "Please complete this step before moving to the next.",
+        status: "error",
+      });
       return;
+    }
+
+    window.scrollTo(0, 0);
     setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
   };
 
@@ -116,7 +132,7 @@ const Current = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-[#F5F5DC] pb-24">
       <div className="pt-8">
-        <div className="block lg:hidden md:hidden">
+        <div className="block lg:pl-[5rem]">
           <button onClick={goBack} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
@@ -170,12 +186,14 @@ const Current = () => {
           >
             <div
               className={`w-8 h-8 lg:w-12 lg:h-12 rounded-full flex items-center justify-center ${
-                isConfirmationComplete
+                currentStep === 3 || isConfirmationComplete
                   ? "bg-blue-600 text-white"
                   : "bg-gray-300"
               }`}
             >
-              {isConfirmationComplete && <span>&#10003;</span>}
+              {(currentStep === 3 || isConfirmationComplete) && (
+                <span>&#10003;</span>
+              )}
             </div>
             <span className="text-sm lg:text-lg">Confirmation</span>
           </div>
@@ -285,11 +303,11 @@ const Current = () => {
           )}
         </div>
 
-         {/* Continue Button */}
+        {/* Continue Button */}
         <div className="flex items-center justify-center mt-4">
           <button
             onClick={handleContinue}
-            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[18rem] lg:w-[51rem]"
+            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[24rem] lg:w-[51rem]"
           >
             {getButtonLabel()}
           </button>
