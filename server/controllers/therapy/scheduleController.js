@@ -4,15 +4,18 @@ import Schedule from "../../models/scheduleModel.js";
 // Create a new scheduling entry
 export const createSchedule = async (req, res) => {
   try {
+    console.log(req.body); // Debugging: log request body
     const newSchedule = new Schedule(req.body);
     await newSchedule.save();
     res
       .status(201)
       .json({ message: "Schedule created successfully", newSchedule });
   } catch (error) {
+    console.error(error); // Log the error
     res.status(500).json({ message: "Failed to create schedule", error });
   }
 };
+
 
 
 // Get all schedules

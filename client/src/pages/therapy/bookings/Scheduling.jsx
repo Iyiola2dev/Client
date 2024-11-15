@@ -7,7 +7,7 @@ import {
   resetScheduleState,
 } from "@/store/therapy/schedule-slice";
 
-const Scheduling = ({ onComplete }) => {
+const Scheduling = ({ onComplete, onDataChange }) => {
   const dispatch = useDispatch();
   const { loading, success, error } = useSelector((state) => state.schedule);
 
@@ -22,9 +22,18 @@ const Scheduling = ({ onComplete }) => {
     city: "",
   });
 
+  // Pass form data upwards whenever it changes
+  useEffect(() => {
+    if (onDataChange) {
+      onDataChange(formValues);
+    }
+  }, [formValues, onDataChange]);
+
   // Check if the form is complete
   useEffect(() => {
-    const isComplete = Object.values(formValues).every((value) => value !== "");
+    const isComplete = Object.values(formValues).every(
+      (value) => value.trim() !== ""
+    );
     onComplete(isComplete);
   }, [formValues, onComplete]);
 
@@ -57,6 +66,7 @@ const Scheduling = ({ onComplete }) => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formValues); // Debugging: log form values
     dispatch(postSchedule(formValues));
   };
 
@@ -110,7 +120,7 @@ const Scheduling = ({ onComplete }) => {
                   id="phone"
                   type="tel"
                   placeholder="+234 1234567890"
-                  value={formValues.phoneNumber}
+                  value={formValues.phone}
                   onChange={handleChange}
                   className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                   pattern="^\+\d{1,4}\s\d{7,12}$"
@@ -159,7 +169,7 @@ const Scheduling = ({ onComplete }) => {
                 <input
                   id="appointmentDate"
                   type="date"
-                  value={formValues.date}
+                  value={formValues.appointmentDate}
                   onChange={handleChange}
                   className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                   required
@@ -173,7 +183,7 @@ const Scheduling = ({ onComplete }) => {
                 <input
                   id="appointmentTime"
                   type="time"
-                  value={formValues.time}
+                  value={formValues.appointmentTime}
                   onChange={handleChange}
                   className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                   required

@@ -7,7 +7,11 @@ export const postSchedule = createAsyncThunk(
   "schedule/postSchedule",
   async (scheduleData, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/schedule", scheduleData);
+      console.log(scheduleData); // Debugging: log schedule data
+      const response = await axios.post(
+        "http://localhost:5000/api/schedule",
+        scheduleData
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -15,12 +19,13 @@ export const postSchedule = createAsyncThunk(
   }
 );
 
+
 // Async thunk for getting all schedules
 export const getAllSchedules = createAsyncThunk(
   "schedule/getAllSchedules",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/schedules");
+      const response = await axios.get("http://localhost:5000/api/schedules");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -34,7 +39,9 @@ export const getScheduleById = createAsyncThunk(
   "schedule/getScheduleById",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/schedules/${id}`);
+      const response = await axios.get(
+        `http://localhost:5000/api/schedules/${id}`
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -47,7 +54,10 @@ export const updateSchedule = createAsyncThunk(
   "schedule/updateSchedule",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`/api/schedules/${id}`, updatedData);
+      const response = await axios.put(
+        `http://localhost:5000//api/schedules/${id}`,
+        updatedData
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -61,7 +71,9 @@ export const deleteSchedule = createAsyncThunk(
   "schedule/deleteSchedule",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`/api/schedules/${id}`);
+      const response = await axios.delete(
+        `http://localhost:5000/api/schedules/${id}`
+      );
       return { id }; // Return the ID of the deleted schedule
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");

@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import Confirmation from "./Confirmation";
 import { toast } from "@/hooks/use-toast";
 import { postSchedule } from "@/store/therapy/schedule-slice";
+import { postQuestionnaire } from "@/store/therapy/question-slice";
 
 const Current = () => {
   const { id } = useParams();
@@ -27,7 +28,16 @@ const Current = () => {
   }, [id, dispatch]);
 
   const [selectedOption, setSelectedOption] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSchedulingComplete, setIsSchedulingComplete] = useState(false);
+  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
+  const [isConfirmationComplete, setIsConfirmationComplete] = useState(false);
+ const [schedulingData, setSchedulingData] = useState({}); // Add scheduling data state
 
+ const handleSchedulingDataChange = (data) => {
+   setSchedulingData(data); // Update scheduling data
+ };
+ 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -77,10 +87,7 @@ const Current = () => {
     return `${weekday} | ${monthDay} - ${formattedTime} ${timeZone}`;
   };
 
-  const [currentStep, setCurrentStep] = useState(1);
-  const [isSchedulingComplete, setIsSchedulingComplete] = useState(false);
-  const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
-  const [isConfirmationComplete, setIsConfirmationComplete] = useState(false);
+  
 
   const goBack = () => {
     if (currentStep === 1) {
@@ -122,7 +129,7 @@ const handleContinue = () => {
     toast({
       title: "Incomplete Step",
       description:
-        "Please complete both the Scheduling and Questionnaire steps before proceeding.",
+        "Please complete either the Scheduling or Questionnaire step before proceeding.",
       status: "error",
     });
     return;
@@ -130,10 +137,7 @@ const handleContinue = () => {
 
   // Submit the scheduling form data if scheduling is complete
   if (isSchedulingComplete) {
-    const schedulingData = {
-      /* get the data from Scheduling form (e.g., formValues from the Scheduling component) */
-    };
-    dispatch(postSchedule(schedulingData)) // Assuming the thunk is called postScheduling
+    dispatch(postSchedule(schedulingData)) 
       .unwrap()
       .then(() => {
         toast({
@@ -143,9 +147,10 @@ const handleContinue = () => {
         });
       })
       .catch((error) => {
+        console.log(error)
         toast({
           title: "Error",
-          description: error.message || "Failed to submit scheduling data.",
+          description: error.message || "Failed to submit scheduling data. Do try again.",
           status: "error",
         });
       });
@@ -352,7 +357,10 @@ const handleContinue = () => {
         <div className="flex flex-col items-center justify-center">
           {currentStep === 1 && (
             <div>
-              <Scheduling onComplete={setIsSchedulingComplete} />
+              <Scheduling
+                onComplete={setIsSchedulingComplete}
+                onDataChange={handleSchedulingDataChange}
+              />
             </div>
           )}
           {currentStep === 2 && (
