@@ -43,7 +43,7 @@ app.use(express.json());
 app.use("/api/auth", userRouter);
 
 app.use("/api/therapists", therapistRouter);
-app.use("api/question", questionnaireRouter);
+app.use("/api/question", questionnaireRouter);
 app.use("/api/schedule", scheduleRouter);
 
 // this is where we use the adminProductRouter

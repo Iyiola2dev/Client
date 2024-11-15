@@ -32,11 +32,16 @@ const Current = () => {
   const [isSchedulingComplete, setIsSchedulingComplete] = useState(false);
   const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const [isConfirmationComplete, setIsConfirmationComplete] = useState(false);
- const [schedulingData, setSchedulingData] = useState({}); // Add scheduling data state
+ const [schedulingData, setSchedulingData] = useState({}); 
+ const [questionnaireData, setQuestionnaireData] = useState({}); 
 
  const handleSchedulingDataChange = (data) => {
    setSchedulingData(data); // Update scheduling data
  };
+
+const handleQuestionDataChange = (data) => {
+  setQuestionnaireData(data);
+};
  
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -125,7 +130,7 @@ const Current = () => {
 
 const handleContinue = () => {
   // Check if both the scheduling and questionnaire steps are complete
-  if (!isSchedulingComplete && !isQuestionnaireComplete) {
+  if (isSchedulingComplete && isQuestionnaireComplete) {
     toast({
       title: "Incomplete Step",
       description:
@@ -158,8 +163,7 @@ const handleContinue = () => {
 
   // Submit the questionnaire form data if questionnaire is complete
   if (isQuestionnaireComplete) {
-    const questionnaireData = questionnaireData; // Get the questionnaire data (assuming it's stored in the state)
-    dispatch(postQuestionnaire(questionnaireData)) // Assuming the thunk is called postQuestionnaire
+    dispatch(postQuestionnaire(questionnaireData)) 
       .unwrap()
       .then(() => {
         toast({
@@ -365,7 +369,10 @@ const handleContinue = () => {
           )}
           {currentStep === 2 && (
             <div>
-              <Questionnaire onComplete={setIsQuestionnaireComplete} />
+              <Questionnaire
+                onComplete={setIsQuestionnaireComplete}
+                onDataChange={handleQuestionDataChange}
+              />
             </div>
           )}
           {currentStep === 3 && (
