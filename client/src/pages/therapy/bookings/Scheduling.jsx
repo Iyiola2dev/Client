@@ -7,6 +7,7 @@ import {
   resetScheduleState,
 } from "@/store/therapy/schedule-slice";
 
+
 const Scheduling = ({ onComplete, onDataChange }) => {
   const dispatch = useDispatch();
   const { loading, success, error } = useSelector((state) => state.schedule);
@@ -25,9 +26,24 @@ const Scheduling = ({ onComplete, onDataChange }) => {
   // Pass form data upwards whenever it changes
   useEffect(() => {
     if (onDataChange) {
-      onDataChange(formValues);
+      const therapistId = localStorage.getItem("therapistId");
+      const userId = localStorage.getItem("userId");
+
+      console.log("Therapist ID:", therapistId); // Log therapistId
+      console.log("User ID:", userId); // Log userId
+
+      if (therapistId && userId) {
+        onDataChange({
+          ...formValues,
+          therapistId, // Add therapistId
+          userId, // Add userId
+        });
+      } else {
+        console.error("Therapist or User ID missing from localStorage");
+      }
     }
   }, [formValues, onDataChange]);
+
 
   // Check if the form is complete
   useEffect(() => {
@@ -66,10 +82,34 @@ const Scheduling = ({ onComplete, onDataChange }) => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues); // Debugging: log form values
-    dispatch(postSchedule(formValues));
-  };
 
+    // Get therapistId and userId from localStorage
+    const therapistId = localStorage.getItem("therapistId");
+    const userId = localStorage.getItem("userId");
+
+    // Ensure both therapistId and userId exist in localStorage
+    if (!therapistId || !userId) {
+      console.error("Therapist ID or User ID is missing in localStorage");
+      return;
+    }
+
+    // Include therapistId and userId in the form data
+    const scheduleData = {
+      ...formValues,
+      therapistId, // Add therapist ID from localStorage
+      userId, // Add user ID from localStorage
+    };
+
+    // Pass data to parent component (onDataChange)
+    if (onDataChange) {
+      onDataChange(scheduleData); // Send all relevant data to parent
+    }
+
+    console.log(scheduleData); // Debugging: log form data with IDs
+
+    // Dispatch the action to post the schedule
+    dispatch(postSchedule(scheduleData));
+  };
   return (
     <div className="flex flex-col items-center justify-center bg-[#F5F5DC]">
       {/* body */}

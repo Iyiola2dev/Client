@@ -128,63 +128,74 @@ const handleQuestionDataChange = (data) => {
   // };
 
 
-const handleContinue = () => {
-  // Check if both the scheduling and questionnaire steps are complete
-  if (isSchedulingComplete && isQuestionnaireComplete) {
-    toast({
-      title: "Incomplete Step",
-      description:
-        "Please complete either the Scheduling or Questionnaire step before proceeding.",
-      status: "error",
-    });
-    return;
-  }
 
-  // Submit the scheduling form data if scheduling is complete
-  if (isSchedulingComplete) {
-    dispatch(postSchedule(schedulingData)) 
-      .unwrap()
-      .then(() => {
-        toast({
-          title: "Success",
-          description: "Scheduling submitted successfully!",
-          status: "success",
-        });
-      })
-      .catch((error) => {
-        console.log(error)
-        toast({
-          title: "Error",
-          description: error.message || "Failed to submit scheduling data. Do try again.",
-          status: "error",
-        });
+  const handleContinue = () => {
+    if (isSchedulingComplete && isQuestionnaireComplete) {
+      toast({
+        title: "Incomplete Step",
+        description:
+          "Please complete either the Scheduling or Questionnaire step before proceeding.",
+        status: "error",
       });
-  }
+      return;
+    }
 
-  // Submit the questionnaire form data if questionnaire is complete
-  if (isQuestionnaireComplete) {
-    dispatch(postQuestionnaire(questionnaireData)) 
-      .unwrap()
-      .then(() => {
-        toast({
-          title: "Success",
-          description: "Questionnaire submitted successfully!",
-          status: "success",
+    // Submit the scheduling form data if scheduling is complete
+    if (isSchedulingComplete && schedulingData) {
+       if (!schedulingData.therapistId || !schedulingData.userId) {
+         console.error("Missing therapistId or userId in scheduling data.");
+         toast({
+           title: "Error",
+           description: "Therapist ID or User ID is missing.",
+           status: "error",
+         });
+         return;
+       }
+      dispatch(postSchedule(schedulingData))
+        .unwrap()
+        .then(() => {
+          toast({
+            title: "Success",
+            description: "Scheduling submitted successfully!",
+            status: "success",
+          });
+        })
+        .catch((error) => {
+          toast({
+            title: "Error",
+            description:
+              error.message ||
+              "Failed to submit scheduling data. Do try again.",
+            status: "error",
+          });
         });
-      })
-      .catch((error) => {
-        toast({
-          title: "Error",
-          description: error.message || "Failed to submit questionnaire data.",
-          status: "error",
-        });
-      });
-  }
+    }
 
-  // Proceed to the next step (confirmation)
-  window.scrollTo(0, 0);
-  setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
-};
+    // Submit the questionnaire form data if questionnaire is complete
+    if (isQuestionnaireComplete) {
+      dispatch(postQuestionnaire(questionnaireData))
+        .unwrap()
+        .then(() => {
+          toast({
+            title: "Success",
+            description: "Questionnaire submitted successfully!",
+            status: "success",
+          });
+        })
+        .catch((error) => {
+          toast({
+            title: "Error",
+            description:
+              error.message || "Failed to submit questionnaire data.",
+            status: "error",
+          });
+        });
+    }
+
+    // Proceed to the next step (confirmation)
+    window.scrollTo(0, 0);
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
+  };
 
 
 
@@ -203,8 +214,8 @@ const handleContinue = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[#F5F5DC] pb-24">
-      <div className="pt-8">
+    <div className="flex flex-col items-center justify-center bg-[#F5F5DC] pb-24 ">
+      <div className="pt-8 mx-12">
         <div className="block lg:pl-[5rem]">
           <button onClick={goBack} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
@@ -358,7 +369,7 @@ const handleContinue = () => {
         </div>
 
         {/* Step Content */}
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center mx-6">
           {currentStep === 1 && (
             <div>
               <Scheduling
@@ -383,10 +394,10 @@ const handleContinue = () => {
         </div>
 
         {/* Continue Button */}
-        <div className="flex items-center justify-center mt-4">
+        <div className="flex items-center justify-center mt-4 ">
           <button
             onClick={handleContinue}
-            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[24rem] lg:w-[51rem]"
+            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[20rem] lg:w-[51rem]"
           >
             {getButtonLabel()}
           </button>

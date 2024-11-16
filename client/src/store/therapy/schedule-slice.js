@@ -7,7 +7,7 @@ export const postSchedule = createAsyncThunk(
   "schedule/postSchedule",
   async (scheduleData, { rejectWithValue }) => {
     try {
-      console.log(scheduleData); // Debugging: log schedule data
+      console.log("Posting schedule with data:", scheduleData); // Debugging log
       const response = await axios.post(
         "http://localhost:5000/api/schedule",
         scheduleData
@@ -18,7 +18,6 @@ export const postSchedule = createAsyncThunk(
     }
   }
 );
-
 
 // Async thunk for getting all schedules
 export const getAllSchedules = createAsyncThunk(

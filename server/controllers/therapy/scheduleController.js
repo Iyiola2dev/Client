@@ -4,17 +4,58 @@ import Schedule from "../../models/scheduleModel.js";
 // Create a new scheduling entry
 export const createSchedule = async (req, res) => {
   try {
-    console.log(req.body); // Debugging: log request body
-    const newSchedule = new Schedule(req.body);
+    // Destructure the necessary fields from req.body
+    const {
+      therapistId,
+      userId,
+      accountName,
+      phone,
+      email,
+      dob,
+      appointmentDate,
+      appointmentTime,
+      state,
+      city,
+    } = req.body;
+
+    // Validate that therapistId and userId are provided
+    if (!therapistId || !userId) {
+      console.error("Missing therapistId or userId in request body:", req.body);
+      return res
+        .status(400)
+        .json({ message: "Therapist ID and User ID are required" });
+    }
+
+    // Create a new schedule with the provided data
+    const newSchedule = new Schedule({
+      therapistId,
+      userId,
+      accountName,
+      phone,
+      email,
+      dob,
+      appointmentDate,
+      appointmentTime,
+      state,
+      city,
+    });
+
+    // Save the new schedule to the database
     await newSchedule.save();
-    res
-      .status(201)
-      .json({ message: "Schedule created successfully", newSchedule });
+
+    // Return a successful response
+    res.status(201).json({
+      message: "Schedule created successfully",
+      newSchedule,
+    });
   } catch (error) {
-    console.error(error); // Log the error
-    res.status(500).json({ message: "Failed to create schedule", error });
+    console.error("Error while creating schedule:", error.message);
+    res
+      .status(500)
+      .json({ message: "Failed to create schedule", error: error.message });
   }
 };
+
 
 
 

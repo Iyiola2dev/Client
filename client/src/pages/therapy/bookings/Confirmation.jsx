@@ -3,8 +3,8 @@ import coinImage from "../../../assets/images/coin.webp";
 
 const Confirmation = () => {
   return (
-    <div className="flex py-14 px-3  items-center justify-center bg-[#F5F5DC]">
-      <div className="bg-black lg:w-[65vw]  text-white flex flex-col py-8 px-3 lg:px-14 w-[95vw] rounded-xl">
+    <div className="flex py-14   items-center justify-center bg-[#F5F5DC]">
+      <div className="bg-black lg:w-[65vw]  text-white flex flex-col py-8 px-3 lg:px-14 w-[90vw] rounded-xl">
         <div>
           <p className="text-2xl underline text-center mb-8">Promotions</p>
         </div>
