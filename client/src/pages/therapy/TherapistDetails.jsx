@@ -90,7 +90,7 @@ const TherapistDetails = () => {
     <div className="block lg:flex lg:justify-between px-12 bg-[#F5F5DC] ">
       {/* first part */}
       <div className="pt-8">
-        <div className="block lg:hidden md:hidden">
+        <div className=" ">
           <button onClick={() => navigate(-1)} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>

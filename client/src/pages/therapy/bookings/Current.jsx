@@ -229,7 +229,7 @@ const Current = () => {
   return (
     <div className="flex flex-col items-center justify-center bg-[#F5F5DC] pb-24 ">
       <div className="pt-8 mx-12">
-        <div className="block lg:pl-[5rem]">
+        <div className=" pl-4 lg:pl-[10rem] ">
           <button onClick={goBack} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
