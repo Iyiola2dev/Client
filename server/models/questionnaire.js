@@ -30,10 +30,19 @@ const questionnaireSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  else: {
+  other: {
     type: String,
     required: true,
   },
+  // Add reference to the therapist
+  therapistId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Therapist",
+    required: true,
+  },
+
+  // Add reference to the user making the schedule
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const Questionnaire = mongoose.model("Questionnaire", questionnaireSchema);

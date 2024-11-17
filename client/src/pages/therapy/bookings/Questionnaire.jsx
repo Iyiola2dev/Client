@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postQuestionnaire,
@@ -7,7 +7,9 @@ import {
 
 const Questionnaire = ({ onComplete, onDataChange }) => {
   const dispatch = useDispatch();
-  const { loading, success, error } = useSelector((state) => state.questionnaire);
+  const { loading, success, error } = useSelector(
+    (state) => state.questionnaire
+  );
 
   const [formValues, setFormValues] = useState({
     accountName: "",
@@ -17,13 +19,40 @@ const Questionnaire = ({ onComplete, onDataChange }) => {
     emotion: "",
     achieve: "",
     sought: "",
-    else: "",
+    other: "",
   });
+
+  // Use a ref to track the last submitted data to prevent loops
+  const previousValues = useRef();
 
   // Pass form data upwards whenever it changes
   useEffect(() => {
-    if (onDataChange) {
-      onDataChange(formValues);
+    const user = JSON.parse(localStorage.getItem("user")); // Parse the user object
+    const therapist = JSON.parse(localStorage.getItem("therapist")); // Parse the therapist object
+
+    const userId = user?.id; // Access user ID
+    const therapistId = therapist?._id; // Access therapist ID
+
+    console.log("Therapist ID:", therapistId); // Debug log
+    console.log("User ID:", userId); // Debug log
+
+    // Check if therapistId and userId are available
+    if (therapistId && userId) {
+      const updatedValues = {
+        ...formValues,
+        therapistId,
+        userId,
+      };
+
+      // Only call onDataChange if data has changed
+      if (
+        JSON.stringify(previousValues.current) !== JSON.stringify(updatedValues)
+      ) {
+        previousValues.current = updatedValues; // Update ref to current values
+        onDataChange(updatedValues); // Trigger the parent callback
+      }
+    } else {
+      console.error("Therapist or User ID missing from localStorage");
     }
   }, [formValues, onDataChange]);
 
@@ -46,7 +75,7 @@ const Questionnaire = ({ onComplete, onDataChange }) => {
         emotion: "",
         achieve: "",
         sought: "",
-        else: "",
+        other: "",
       });
       dispatch(resetQuestionnaireState()); // Reset success state
     }
@@ -192,15 +221,15 @@ const Questionnaire = ({ onComplete, onDataChange }) => {
             </li>
 
             <li className="space-y-2 w-full">
-              <label className="font-semibold" htmlFor="else">
-                Is there anything else you'd like your therapist to know
-                about your current situation?
+              <label className="font-semibold" htmlFor="other">
+                Is there anything other you'd like your therapist to know about
+                your current situation?
               </label>
               <textarea
-                id="else"
+                id="other"
                 cols={30}
                 rows={15}
-                value={formValues.else}
+                value={formValues.other}
                 onChange={handleChange}
                 placeholder="Yes there is/No there isn't...."
                 className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"

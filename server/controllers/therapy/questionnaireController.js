@@ -3,18 +3,66 @@ import Questionnaire from "../../models/questionnaire.js";
 // Controller to handle saving questionnaire data (POST)
 export const saveQuestionnaire = async (req, res) => {
   try {
-    const newQuestionnaire = new Questionnaire(req.body);
+    // Destructure required fields from the request body
+    const {
+      therapistId,
+      userId,
+      accountName,
+      phone,
+      email,
+      brings,
+      emotion,
+      achieve,
+      sought,
+      other,
+    } = req.body;
+
+    // Validate that therapistId and userId are provided
+    if (!therapistId || !userId) {
+      console.error("Missing therapistId or userId in request body:", req.body);
+      return res
+        .status(400)
+        .json({ message: "Therapist ID and User ID are required" });
+    }
+
+    // Validate other required fields if necessary
+    if (!accountName || !email) {
+      console.error("Missing accountName or email in request body:", req.body);
+      return res
+        .status(400)
+        .json({ message: "Account Name and Email are required" });
+    }
+
+    // Create a new questionnaire entry with the provided data
+    const newQuestionnaire = new Questionnaire({
+      therapistId,
+      userId,
+      accountName,
+      phone,
+      email,
+      brings,
+      emotion,
+      achieve,
+      sought,
+      other,
+    });
+
+    // Save the new questionnaire to the database
     await newQuestionnaire.save();
+
+    // Return a successful response
     res.status(201).json({
-      message: "Form data saved successfully",
-      data: newQuestionnaire,
+      message: "Questionnaire saved successfully",
+      newQuestionnaire,
     });
   } catch (error) {
+    console.error("Error while saving questionnaire:", error.message);
     res
       .status(500)
-      .json({ message: "Error saving form data", error: error.message });
+      .json({ message: "Failed to save questionnaire", error: error.message });
   }
 };
+
 
 // Controller to retrieve all questionnaires (GET)
 export const getAllQuestionnaires = async (req, res) => {

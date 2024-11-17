@@ -32,17 +32,19 @@ const Current = () => {
   const [isSchedulingComplete, setIsSchedulingComplete] = useState(false);
   const [isQuestionnaireComplete, setIsQuestionnaireComplete] = useState(false);
   const [isConfirmationComplete, setIsConfirmationComplete] = useState(false);
- const [schedulingData, setSchedulingData] = useState({}); 
- const [questionnaireData, setQuestionnaireData] = useState({}); 
+  const [schedulingData, setSchedulingData] = useState({});
+  const [questionnaireData, setQuestionnaireData] = useState({});
 
- const handleSchedulingDataChange = (data) => {
-   setSchedulingData(data); // Update scheduling data
- };
+  const handleSchedulingDataChange = (data) => {
+    console.log("Received Data in Parent:", data); // Debug log
+    setSchedulingData(data); // Update scheduling data
+  };
 
-const handleQuestionDataChange = (data) => {
-  setQuestionnaireData(data);
-};
- 
+  const handleQuestionDataChange = (data) => {
+    console.log("Received Data in Parent:", data); // Debug log
+    setQuestionnaireData(data);
+  };
+
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -92,8 +94,6 @@ const handleQuestionDataChange = (data) => {
     return `${weekday} | ${monthDay} - ${formattedTime} ${timeZone}`;
   };
 
-  
-
   const goBack = () => {
     if (currentStep === 1) {
       navigate(-2); // This will go back in browser history
@@ -127,30 +127,31 @@ const handleQuestionDataChange = (data) => {
   //   setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
   // };
 
-
-
   const handleContinue = () => {
-    if (isSchedulingComplete && isQuestionnaireComplete) {
-      toast({
-        title: "Incomplete Step",
-        description:
-          "Please complete either the Scheduling or Questionnaire step before proceeding.",
-        status: "error",
-      });
-      return;
-    }
+    // if (isSchedulingComplete && isQuestionnaireComplete) {
+    //   toast({
+    //     title: "Incomplete Step",
+    //     description:
+    //       "Please complete either the Scheduling or Questionnaire step before proceeding.",
+    //     status: "error",
+    //   });
+    //   return;
+    // }
 
-    // Submit the scheduling form data if scheduling is complete
     if (isSchedulingComplete && schedulingData) {
-       if (!schedulingData.therapistId || !schedulingData.userId) {
-         console.error("Missing therapistId or userId in scheduling data.");
-         toast({
-           title: "Error",
-           description: "Therapist ID or User ID is missing.",
-           status: "error",
-         });
-         return;
-       }
+      console.log("Scheduling Data Before Dispatch:", schedulingData); // Debug log
+
+      if (!schedulingData.therapistId || !schedulingData.userId) {
+        console.error("Missing therapistId or userId in scheduling data.");
+        toast({
+          title: "Error",
+          description:
+            "Could not submit schedule. Try setting a schedule again.",
+          status: "error",
+        });
+        return;
+      }
+
       dispatch(postSchedule(schedulingData))
         .unwrap()
         .then(() => {
@@ -172,10 +173,24 @@ const handleQuestionDataChange = (data) => {
     }
 
     // Submit the questionnaire form data if questionnaire is complete
-    if (isQuestionnaireComplete) {
+    if (isQuestionnaireComplete && questionnaireData) {
+      console.log("Questionnaire Data Before Dispatch:", questionnaireData); // Debug log
+
+      if (!questionnaireData.therapistId || !questionnaireData.userId) {
+        console.error("Missing therapistId or userId in questionnaire data.");
+        toast({
+          title: "Error",
+          description:
+            "Could not submit questionnaire. Try filling the form again.",
+          status: "error",
+        });
+        return;
+      }
+
       dispatch(postQuestionnaire(questionnaireData))
         .unwrap()
         .then(() => {
+          console.log("Questionnaire data after dispatch:", questionnaireData); // Debug log
           toast({
             title: "Success",
             description: "Questionnaire submitted successfully!",
@@ -196,8 +211,6 @@ const handleQuestionDataChange = (data) => {
     window.scrollTo(0, 0);
     setCurrentStep((prevStep) => Math.min(prevStep + 1, 3));
   };
-
-
 
   // Determine button label based on current step
   const getButtonLabel = () => {
@@ -300,7 +313,7 @@ const handleQuestionDataChange = (data) => {
         </div>
 
         {/* image section */}
-        <div className="bg-blue-200 py-8 px-4 lg:px-32 w-[100vw] mt-8">
+        <div className="bg-blue-200 py-8 px-4  lg:px-32 w-[100vw] mt-8  lg:mx-32">
           <div className="bg-white rounded-lg py-4 px-2 space-y-2 flex flex-col lg:flex-row lg:justify-between lg:px-6 lg:py-8  items-center">
             <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
               <img
@@ -369,7 +382,7 @@ const handleQuestionDataChange = (data) => {
         </div>
 
         {/* Step Content */}
-        <div className="flex flex-col items-center justify-center mx-6">
+        <div className="flex flex-col items-center justify-center mx-6 ">
           {currentStep === 1 && (
             <div>
               <Scheduling
@@ -397,7 +410,7 @@ const handleQuestionDataChange = (data) => {
         <div className="flex items-center justify-center mt-4 ">
           <button
             onClick={handleContinue}
-            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[20rem] lg:w-[51rem]"
+            className="bg-gradient-to-r from-blue-600 via-pink-600 to-purple-600 text-white py-2 px-8 rounded-xl text-lg w-[18rem] lg:w-[40rem] 2xl:w-[20rem]"
           >
             {getButtonLabel()}
           </button>

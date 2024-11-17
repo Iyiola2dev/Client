@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RiErrorWarningLine } from "react-icons/ri";
@@ -6,7 +6,6 @@ import {
   postSchedule,
   resetScheduleState,
 } from "@/store/therapy/schedule-slice";
-
 
 const Scheduling = ({ onComplete, onDataChange }) => {
   const dispatch = useDispatch();
@@ -23,27 +22,39 @@ const Scheduling = ({ onComplete, onDataChange }) => {
     city: "",
   });
 
+  // Use a ref to track the last submitted data to prevent loops
+  const previousValues = useRef();
+
   // Pass form data upwards whenever it changes
   useEffect(() => {
-    if (onDataChange) {
-      const therapistId = localStorage.getItem("therapistId");
-      const userId = localStorage.getItem("userId");
+    const user = JSON.parse(localStorage.getItem("user")); // Parse the user object
+    const therapist = JSON.parse(localStorage.getItem("therapist")); // Parse the therapist object
 
-      console.log("Therapist ID:", therapistId); // Log therapistId
-      console.log("User ID:", userId); // Log userId
+    const userId = user?.id; // Access user ID
+    const therapistId = therapist?._id; // Access therapist ID
 
-      if (therapistId && userId) {
-        onDataChange({
-          ...formValues,
-          therapistId, // Add therapistId
-          userId, // Add userId
-        });
-      } else {
-        console.error("Therapist or User ID missing from localStorage");
+    console.log("Therapist ID:", therapistId); // Debug log
+    console.log("User ID:", userId); // Debug log
+
+    // Check if therapistId and userId are available
+    if (therapistId && userId) {
+      const updatedValues = {
+        ...formValues,
+        therapistId,
+        userId,
+      };
+
+      // Only call onDataChange if data has changed
+      if (
+        JSON.stringify(previousValues.current) !== JSON.stringify(updatedValues)
+      ) {
+        previousValues.current = updatedValues; // Update ref to current values
+        onDataChange(updatedValues); // Trigger the parent callback
       }
+    } else {
+      console.error("Therapist or User ID missing from localStorage");
     }
   }, [formValues, onDataChange]);
-
 
   // Check if the form is complete
   useEffect(() => {
@@ -89,7 +100,7 @@ const Scheduling = ({ onComplete, onDataChange }) => {
 
     // Ensure both therapistId and userId exist in localStorage
     if (!therapistId || !userId) {
-      console.error("Therapist ID or User ID is missing in localStorage");
+      console.error("Could not submit schedule. Missing therapistId or userId");
       return;
     }
 
