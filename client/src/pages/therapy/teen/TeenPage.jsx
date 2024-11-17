@@ -42,7 +42,7 @@ import teenImageTwo from "../../../assets/images/teenTwo.svg";
                {/* consult button */}
                <div className="pt-6 pl-0">
                  <Link
-                   to="/therapy/appointment"
+                   to="/therapy/teenAppointment"
                    className=" bg-gradient-to-r from-blue-600 via-pink-700 to-purple-600 text-white py-4 px-8 font-semibold text-lg rounded-lg"
                  >
                    Consult with a Therapist

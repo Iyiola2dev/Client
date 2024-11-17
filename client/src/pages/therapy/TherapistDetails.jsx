@@ -84,6 +84,14 @@ const TherapistDetails = () => {
     navigate("/therapy/scheduling");
   };
 
+  const goBack = () => {
+    window.history.back();
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100); // Delay to ensure navigation completes
+  };
+
+
   console.log("Therapist data:", therapist);
 
   return (
@@ -91,7 +99,7 @@ const TherapistDetails = () => {
       {/* first part */}
       <div className="pt-8">
         <div className=" ">
-          <button onClick={() => navigate(-1)} type="button">
+          <button onClick={goBack} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
         </div>

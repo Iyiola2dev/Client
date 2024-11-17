@@ -96,11 +96,16 @@ const Current = () => {
 
   const goBack = () => {
     if (currentStep === 1) {
-      navigate(-2); // This will go back in browser history
+      navigate(-2); // Navigate back in history
+      setTimeout(() => {
+        window.scrollTo(0, 0); // Ensure scroll-to-top happens after navigation
+      }, 100);
     } else {
-      setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Go back to previous step in the form
+      setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Go back a step
+      window.scrollTo(0, 0); // Scroll to the top
     }
   };
+
 
   //  const handleContinue = () => {
   //    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Advances to the next step up to a maximum of 3 to move to the next step regardless of the step’s completion

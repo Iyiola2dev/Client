@@ -10,16 +10,20 @@ import Calendar from "./Calender";
 const Therapy = () => {
   const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1); // Takes the user one page back in history
-  };
+ const goBack = () => {
+   window.history.back();
+   setTimeout(() => {
+     window.scrollTo(0, 0);
+   }, 100); // Delay to ensure navigation completes
+ };
+
 
   return (
     <div style={{ backgroundColor: "#F5F5DC" }}>
       {" "}
       <div className="pt-6">
         {/* arrow to go back */}
-        <div className="lg:hidden block pl-6">
+        <div className=" pl-6">
           <button onClick={goBack}>
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
