@@ -84,15 +84,18 @@ const Navbar = () => {
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/contact">Contact Us</Link>
               </li>
+              <li className="text-white hover:text-[#C42571]">
+                <Link to="/therapy/edit">Edit Therapist</Link>
+              </li>
             </ul>
 
             <div className="flex gap-4 w-[35%]">
               {/* The button component is from shacdn */}
-              <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
+              <Button className="list-item-text-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
                 <Link>Sign Up</Link>
               </Button>
-              <Button className="bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
-                <Link>Login</Link>
+              <Button className="list-item-text-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
+                <Link>Logout</Link>
               </Button>
             </div>
           </nav>

@@ -21,7 +21,6 @@ export const TherapyCards = ({ therapist }) => {
     });
   };
 
-
   // Handle date selection from the calendar
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -160,45 +159,11 @@ export const TherapyCards = ({ therapist }) => {
           <Calendar
             onChange={handleDateChange}
             value={selectedDate}
-            tileClassName={({ date, view }) => {
-              if (
-                !therapist?.availableDates ||
-                !Array.isArray(therapist.availableDates)
-              ) {
-                console.log("Available dates are not defined");
-                return "";
-              }
-
-              therapist.availableDates.forEach((availableDate) => {
-                console.log(
-                  "Available Date:",
-                  new Date(availableDate).toISOString()
-                );
-              });
-              console.log("Current Tile Date:", date.toISOString());
-
-              if (
-                therapist.availableDates.some((availableDate) => {
-                  const availableDateWithoutTime = new Date(availableDate)
-                    .toISOString()
-                    .split("T")[0];
-                  const currentTileDateWithoutTime = date
-                    .toISOString()
-                    .split("T")[0];
-
-                  console.log(
-                    `Comparing: ${availableDateWithoutTime} with ${currentTileDateWithoutTime}`
-                  );
-                  return (
-                    availableDateWithoutTime === currentTileDateWithoutTime
-                  );
-                })
-              ) {
-                console.log("Highlighting date:", date);
-                return "highlight-available";
-              }
-
-              return "";
+            tileClassName={({ date }) => {
+              const isSelectedDate =
+                selectedDate &&
+                date.toDateString() === selectedDate.toDateString();
+              return isSelectedDate ? "highlight-selected" : "";
             }}
           />
 
@@ -210,13 +175,13 @@ export const TherapyCards = ({ therapist }) => {
 
           <div className="playfair-display-select md:mt-4">
             <a href="/therapy/testpage">
-              <button className="mt-4 text-black border py-2 px-4 rounded-lg border-slate-300 ">
+              <button className="mt-4 text-black border p-2 rounded-lg border-slate-300 ">
                 More
               </button>
             </a>
           </div>
 
-          <div className="text-center md:text-left block md:hidden lg:hidden">
+          <div className="text-center md:text-left ">
             <a
               onClick={handleViewAvailabilityClick} // Handle the click to navigate to the modal
               className="text-sm lg:text-md text-blue-600 underline cursor-pointer"

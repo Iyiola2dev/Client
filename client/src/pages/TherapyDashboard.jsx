@@ -59,6 +59,7 @@ const TherapyDashboard = () => {
             <Route path="/upload" element={<TherapistCreation />} />
             {/* <Route path="/bookings" element={<ModalComponent />} /> */}
             <Route path="/scheduling/*" element={<Current />} />
+            <Route path="/edit" element={<TherapistCreation />} />
           </Routes>
         </div>
         <Footer />

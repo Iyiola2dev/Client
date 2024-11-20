@@ -122,3 +122,16 @@ h2 {
 .list-item-text-3 {
   font-family: inherit;
 }
+
+.highlight-selected {
+  background-color: #4caf50; /* Green */
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  transition: transform 0.2s ease-in-out;
+}
+
+.react-calendar__tile:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}
