@@ -23,6 +23,10 @@ const ForCouples = () => {
     setSort(value);
   };
 
+  function handleGetProductDetails (getCurrentProductId){
+    console.log(getCurrentProductId);
+    }
+
   // Fetch products for the "couples" category on initial load and on sort change
   useEffect(() => {
     dispatch(fetchAllFilteredProducts({ category: "couples", sort }));
@@ -67,7 +71,7 @@ const ForCouples = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
         {productList && productList.length > 0
           ? productList.map((productItem, index) => (
-              <ShoppingProductTile key={index} product={productItem} />
+              <ShoppingProductTile key={index} product={productItem} handleGetProductDetails={handleGetProductDetails}  />
             ))
           : null}
       </div>

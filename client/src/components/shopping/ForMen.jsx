@@ -24,6 +24,11 @@ const ForMen = () => {
     setSort(value);
   };
 
+  function handleGetProductDetails (getCurrentProductId){
+    console.log(getCurrentProductId);
+    }
+
+
   // Fetch products for the "men" category on initial load and on sort change
   useEffect(() => {
     console.log("Dispatching fetch with:", { category: "men", sort });
@@ -70,7 +75,7 @@ const ForMen = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
         {productList && productList.length > 0
           ? productList.map((productItem, index) => (
-              <ShoppingProductTile key={index} product={productItem} />
+              <ShoppingProductTile key={index} product={productItem} handleGetProductDetails={handleGetProductDetails} />
             ))
           : null}
       </div>
