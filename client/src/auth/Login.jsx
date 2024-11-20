@@ -16,11 +16,14 @@ const initialState = {
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+
+  // const navigate = useNavigate();
   const { toast } = useToast();
 
   // Get the intended route from the Redux state
-  const intendedRoute = useSelector((state) => state.auth.intendedRoute);
+  // const intendedRoute = useSelector((state) => state.auth.intendedRoute);
+  //I commented this codes out because it is not used in the Login component
 
   const onSumbit = (e) => {
     e.preventDefault();
@@ -31,8 +34,10 @@ const Login = () => {
         toast({
           title: data?.payload?.message,
         });
-        dispatch(clearIntendedRoute()); // Clear intended route after successful login
-        navigate(intendedRoute || "/default-page"); // Redirect to the intended route or default
+
+        //I commented this codes out because it is not used in the Login component
+        // dispatch(clearIntendedRoute()); // Clear intended route after successful login
+        // navigate(intendedRoute || "/default-page"); // Redirect to the intended route or default
       } else {
         toast({
           title: data?.payload?.message || "Incorrect email or password",
