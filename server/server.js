@@ -9,6 +9,7 @@ import therapistRouter from "./routes/therapy/therapist-routes.js";
 
 import adminProductRouter from "./routes/admin/products-routes.js";
 import shopProductsRouter from "./routes/shop/products-route.js"
+import shopCartRouter from "./routes/shop/cart-routes.js"
 
 
 dotenv.config();
@@ -48,6 +49,9 @@ app.use("/api/admin/products", adminProductRouter);
 
 // this is where we use the shopProductsRouter
 app.use("/api/shop/products", shopProductsRouter);
+
+//
+app.use("/api/shop/cart", shopCartRouter);
 
 
 // this is where we start the server
