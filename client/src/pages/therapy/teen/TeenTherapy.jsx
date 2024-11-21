@@ -1,29 +1,24 @@
 import React from "react";
-import Selecton from "./Category";
+import Selecton from "../Category";
 import PaginationButtons from "@/components/ui/pagnationButton";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import Therapists from "./Therapists";
-import Calendar from "./Calender";
-
+import Therapists from "./TeenTherapists";
+// import Therapists from "../TeenTherapists";
 
 const Therapy = () => {
   const navigate = useNavigate();
 
- const goBack = () => {
-   window.history.back();
-   setTimeout(() => {
-     window.scrollTo(0, 0);
-   }, 100); // Delay to ensure navigation completes
- };
-
+  const goBack = () => {
+    navigate(-1); // Takes the user one page back in history
+  };
 
   return (
-    <div style={{ backgroundColor: "#F5F5DC" }}>
+    <div className="bg-[linear-gradient(to_bottom_right,_rgba(249,_168,_212,_0.7)_0%,_rgba(96,_165,_250,_0.7)_50%,_rgba(134,_239,_172,_0.7)_100%)]">
       {" "}
       <div className="pt-6">
         {/* arrow to go back */}
-        <div className=" pl-6">
+        <div className=" block pl-6">
           <button onClick={goBack}>
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
@@ -32,11 +27,6 @@ const Therapy = () => {
         {/* drop downs */}
         <div>
           <Selecton />
-        </div>
-
-        {/* after dropdown */}
-        <div>
-          <Calendar />
         </div>
 
         {/* therapy cards */}

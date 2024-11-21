@@ -1,8 +1,7 @@
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OpeningsList from "./OpeningsList";
-import { getTherapistById } from "@/store/therapist-slice";
+import { getTherapistById } from "@/store/therapy/therapist-slice";
 
 const TherapistProfile = ({ therapistId }) => {
   // Add therapistId as a prop

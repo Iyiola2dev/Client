@@ -1,7 +1,16 @@
-import { useEffect, useState } from "react";
-import { RiErrorWarningLine } from "react-icons/ri";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Scheduling = ({ onComplete }) => {
+import { RiErrorWarningLine } from "react-icons/ri";
+import {
+  postSchedule,
+  resetScheduleState,
+} from "@/store/therapy/schedule-slice";
+
+const Scheduling = ({ onComplete, onDataChange }) => {
+  const dispatch = useDispatch();
+  const { loading, success, error } = useSelector((state) => state.schedule);
+
   const [formValues, setFormValues] = useState({
     accountName: "",
     phone: "",
@@ -13,11 +22,64 @@ const Scheduling = ({ onComplete }) => {
     city: "",
   });
 
+  // Use a ref to track the last submitted data to prevent loops
+  const previousValues = useRef();
+
+  // Pass form data upwards whenever it changes
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user")); // Parse the user object
+    const therapist = JSON.parse(localStorage.getItem("therapist")); // Parse the therapist object
+
+    const userId = user?.id; // Access user ID
+    const therapistId = therapist?._id; // Access therapist ID
+
+    console.log("Therapist ID:", therapistId); // Debug log
+    console.log("User ID:", userId); // Debug log
+
+    // Check if therapistId and userId are available
+    if (therapistId && userId) {
+      const updatedValues = {
+        ...formValues,
+        therapistId,
+        userId,
+      };
+
+      // Only call onDataChange if data has changed
+      if (
+        JSON.stringify(previousValues.current) !== JSON.stringify(updatedValues)
+      ) {
+        previousValues.current = updatedValues; // Update ref to current values
+        onDataChange(updatedValues); // Trigger the parent callback
+      }
+    } else {
+      console.error("Therapist or User ID missing from localStorage");
+    }
+  }, [formValues, onDataChange]);
+
   // Check if the form is complete
   useEffect(() => {
-    const isComplete = Object.values(formValues).every((value) => value !== "");
+    const isComplete = Object.values(formValues).every(
+      (value) => value.trim() !== ""
+    );
     onComplete(isComplete);
   }, [formValues, onComplete]);
+
+  // Reset form on success
+  useEffect(() => {
+    if (success) {
+      setFormValues({
+        accountName: "",
+        phone: "",
+        email: "",
+        dob: "",
+        appointmentDate: "",
+        appointmentTime: "",
+        state: "",
+        city: "",
+      });
+      dispatch(resetScheduleState()); // Reset success state
+    }
+  }, [success, dispatch]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -28,21 +90,51 @@ const Scheduling = ({ onComplete }) => {
     }));
   };
 
-   
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Get therapistId and userId from localStorage
+    const therapistId = localStorage.getItem("therapistId");
+    const userId = localStorage.getItem("userId");
+
+    // Ensure both therapistId and userId exist in localStorage
+    if (!therapistId || !userId) {
+      console.error("Could not submit schedule. Missing therapistId or userId");
+      return;
+    }
+
+    // Include therapistId and userId in the form data
+    const scheduleData = {
+      ...formValues,
+      therapistId, // Add therapist ID from localStorage
+      userId, // Add user ID from localStorage
+    };
+
+    // Pass data to parent component (onDataChange)
+    if (onDataChange) {
+      onDataChange(scheduleData); // Send all relevant data to parent
+    }
+
+    console.log(scheduleData); // Debugging: log form data with IDs
+
+    // Dispatch the action to post the schedule
+    dispatch(postSchedule(scheduleData));
+  };
   return (
-    <div className="flex flex-col items-center justify-center  bg-[#F5F5DC]">
+    <div className="flex flex-col items-center justify-center bg-[#F5F5DC]">
       {/* body */}
-      <div className="">
+      <div>
         {/* header2 */}
-        <div className="flex flex-col items-center justify-center  pt-8 px-6 gap-2 ">
-          <div className=" flex flex-col items-center justify-center lg:block lg:w-[60vw]">
+        <div className="flex flex-col items-center justify-center pt-8 px-6 gap-2 ">
+          <div className="flex flex-col items-center justify-center lg:block lg:w-[60vw]">
             <p className="text-2xl font-semibold">Responsible Party</p>
             <p className="text-lg text-center lg:text-start pt-2 font-semibold">
               This person will be paying for services
             </p>
             <p className="text-center lg:hidden">
               <strong>Just a heads up:</strong> If you are creating an account,
-              you must be 18 years or older. For minors you muct have a parent
+              you must be 18 years or older. For minors, you must have a parent
               or legal guardian listed as the responsible party.
             </p>
           </div>
@@ -50,7 +142,11 @@ const Scheduling = ({ onComplete }) => {
 
         {/* form */}
         <div className="flex flex-col items-center justify-center pt-8 px-4">
-          <form className="flex flex-col gap-6 items-center justify-center lg:block lg:w-[60vw]">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-6 items-center justify-center lg:block lg:w-[60vw]"
+          >
+            {/* Input fields go here, e.g., accountName, phone, email, etc. */}
             <div className="space-y-2 w-full">
               <label className="font-semibold" htmlFor="accountName">
                 Account Name
@@ -75,7 +171,7 @@ const Scheduling = ({ onComplete }) => {
                   id="phone"
                   type="tel"
                   placeholder="+234 1234567890"
-                  value={formValues.phoneNumber}
+                  value={formValues.phone}
                   onChange={handleChange}
                   className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                   pattern="^\+\d{1,4}\s\d{7,12}$"
@@ -124,7 +220,7 @@ const Scheduling = ({ onComplete }) => {
                 <input
                   id="appointmentDate"
                   type="date"
-                  value={formValues.date}
+                  value={formValues.appointmentDate}
                   onChange={handleChange}
                   className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                   required
@@ -138,7 +234,7 @@ const Scheduling = ({ onComplete }) => {
                 <input
                   id="appointmentTime"
                   type="time"
-                  value={formValues.time}
+                  value={formValues.appointmentTime}
                   onChange={handleChange}
                   className="w-full p-2 border-2 border-slate-700 rounded-xl text-sm"
                   required
@@ -196,7 +292,6 @@ const Scheduling = ({ onComplete }) => {
             </div>
           </div>
         </div>
-        
       </div>
       {/* body */}
     </div>

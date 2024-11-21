@@ -1,8 +1,8 @@
 // TherapyDashboard.jsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./landing-page/TherapyLandingPage";
 import Therapy from "./therapy/Therapy";
+import TeenTherapy from "./therapy/teen/TeenTherapy";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/TherapyNavbar";
 import ProtectedRoute from "@/auth/ProtectedRoute";
@@ -44,6 +44,14 @@ const TherapyDashboard = () => {
               }
             />
             <Route
+              path="/teenAppointment"
+              element={
+                <ProtectedRoute>
+                  <TeenTherapy />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/therapist-details/:id"
               element={<TherapistDetails />}
             />
@@ -51,6 +59,7 @@ const TherapyDashboard = () => {
             <Route path="/upload" element={<TherapistCreation />} />
             {/* <Route path="/bookings" element={<ModalComponent />} /> */}
             <Route path="/scheduling/*" element={<Current />} />
+            <Route path="/edit" element={<TherapistCreation />} />
           </Routes>
         </div>
         <Footer />
