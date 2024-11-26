@@ -51,6 +51,7 @@ const App = () => {
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <Admin />
             </CheckAuth>
+            // <Admin />
           }
         />
         <Route

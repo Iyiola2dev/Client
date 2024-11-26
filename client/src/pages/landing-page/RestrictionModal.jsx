@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import restrictImage from "../../assets/images/restrict.svg";
 
 const RestrictionModal = ({ onClose }) => {
+const navigate = useNavigate()
+
+
+const handleEnter = () => {
+  navigate("/shop/home")
+}
+ 
   return (
     <div className="border-none shadow-lg rounded-2xl w-[95vw]  md:w-[500px]  lg:w-[500px] h-auto bg-black bg-opacity-50">
       <div className="flex flex-col px-2 py-6 justify-center items-center gap-2 lg:gap-4 text-white">
@@ -20,7 +28,7 @@ const RestrictionModal = ({ onClose }) => {
           If you want to continue and have the legal age in your country, please
           click on the confirm button to continue, otherwise click on exit.
         </p>
-        <button className="lg:text-xl bg-gradient-to-r from-pink-500 via-blue-600 to-pink-600 py-1 px-10 rounded-md">
+        <button  onClick={handleEnter} className="lg:text-xl bg-gradient-to-r from-pink-500 via-blue-600 to-pink-600 py-1 px-10 rounded-md">
           I am 18+ years old <br />
           <span className="lg:text-2xl font-semibold text-lg">Enter</span>
         </button>

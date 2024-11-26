@@ -22,11 +22,17 @@ const LandingPage = () => {
 
   return (
     <div className="bg-[#F5F5DC]">
-      <main className="flex items-center justify-center min-h-full flex-wrap">
+      <main className="flex items-center justify-center h-auto flex-wrap">
         <div className="flex-1 flex justify-center relative">
           <a href="#category">
-            <img
+               {/* I made changes to the styling LexiconBigGee*/}
+            {/* <img
               className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
+              src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
+              alt="Smiley Doctor"
+            /> */}
+             <img
+              className="w-full h-auto aspect-square object-cover"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
               alt="Smiley Doctor"
             />
@@ -34,7 +40,9 @@ const LandingPage = () => {
             {/* Overlay Container for Text and Button */}
             <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
               {/* First Text with Transparent Background */}
-              <p className="lg:text-blue-700 md:text-xl lg:text-3xl text-black text-[12px] font-bold mb-2 bg-white bg-opacity-40 p-2 w-full">
+
+            {/* I added text-xs for moblie view LexiconBigGee */}
+              <p className="lg:text-blue-700 text-xs md:text-xl lg:text-3xl text-black text-[12px] font-bold mb-2 bg-white bg-opacity-40 p-2 w-full ">
                 TRANSFORM YOUR LIFE WITH TAILORED THERAPY
               </p>
 
@@ -52,8 +60,16 @@ const LandingPage = () => {
           className="flex-1 flex justify-center relative cursor-pointer" // Add cursor-pointer for better UX
           onClick={handleOpenModal}
         >
-          <img
+          {/* I made changes to the styling LexiconBigGee*/}
+          {/* <img
             className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
+            src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
+            alt="Animated Image"
+            width={500}
+            height={700}
+          /> */}
+          <img
+            className="w-full h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
             alt="Animated Image"
             width={500}

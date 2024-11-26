@@ -11,9 +11,11 @@ import {
 } from "../ui/dropdown-menu";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sortOptions } from "@/config/Index";
+import { useNavigate } from "react-router-dom";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // The shopProducts is coming from my redux store
   
@@ -28,12 +30,18 @@ const AllProducts = () => {
     dispatch(fetchAllFilteredProducts({ category, sort: value })); // Fetch products with the new sort
   };
 
+function handleGetProductDetails (getCurrentProductId){
+console.log(getCurrentProductId);
+}
+
+
   // Fetch products on initial load with default sort and category
   useEffect(() => {
     dispatch(fetchAllFilteredProducts({ category, sort }));
   }, [dispatch, category, sort]);
 
   return (
+    // #252525 this is the background color we're meant to use for the background
     <div className="bg-black h-auto flex flex-col justify-center w-full">
       <div className="p-7 flex justify-center items-center">
         <h1 className="text-3xl font-bold text-white">All Products</h1>
@@ -68,7 +76,7 @@ const AllProducts = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
         {productList && productList.length > 0
           ? productList.map((productItem, index) => (
-              <ShoppingProductTile key={index} product={productItem} />
+              <ShoppingProductTile key={index} product={productItem} handleGetProductDetails={handleGetProductDetails} />
             ))
           : null}
       </div>

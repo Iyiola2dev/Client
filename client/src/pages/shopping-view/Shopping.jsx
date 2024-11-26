@@ -11,6 +11,8 @@ import ForMen from "@/components/shopping/ForMen";
 import ForWomen from "@/components/shopping/ForWomen";
 import ForCouples from "@/components/shopping/ForCouples";
 import AllProducts from "@/components/shopping/AllProducts";
+import Footer from "@/components/footer/Footer";
+import ProductDetails from "@/components/shopping/productDetails/ProductDetails";
 
 const Shopping = () => {
   return (
@@ -18,7 +20,7 @@ const Shopping = () => {
       <Nav2/>
         <Routes>
 
-          <Route path="/" element={<Navigate to="/shop/shopping-Layout" />} />
+          {/* <Route path="/" element={<Navigate to="/shop/shopping-Layout" />} /> */}
 
           <Route path="/" element={<Navigate to="/shop/home" />} />
 
@@ -31,10 +33,12 @@ const Shopping = () => {
           <Route path="/for-women" element={<ForWomen />} />
           <Route path="/for-couple" element={<ForCouples/>} />
           <Route path="/all-products" element={<AllProducts/>} />
+          <Route path = "/product/:id" element={<ProductDetails/>} />
           <Route />
           <Route />
         </Routes>
       {/* </ShoppingLayout> */}
+      <Footer/>
     </div>
   );
 };

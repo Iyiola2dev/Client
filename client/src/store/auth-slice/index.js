@@ -9,32 +9,7 @@ const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
-  intendedRoute: "/",
-};
 
-// // Helper function to check token expiration
-// const isTokenExpired = (token) => {
-//   if (!token) return true;
-//   const { exp } = jwt_decode(token);
-//   return Date.now() >= exp * 1000; // Convert expiration to milliseconds
-// };
-
-// // Interceptor to automatically log out if token is expired
-// axios.interceptors.request.use(
-//   async (config) => {
-//     const token = localStorage.getItem("token");
-//     if (isTokenExpired(token)) {
-//       await store.dispatch(logoutUser());
-//       return Promise.reject("Token expired, logging out.");
-//     } else {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
 
 
 // Register user
@@ -130,12 +105,15 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.isAuthenticated = action.payload.isAuthenticated;
     },
-    setIntendedRoute: (state, action) => {
-      state.intendedRoute = action.payload;
-    },
-    clearIntendedRoute: (state) => {
-      state.intendedRoute = "/";
-    },
+
+    //I don't need this action in the auth slice
+    
+    // setIntendedRoute: (state, action) => {
+    //   state.intendedRoute = action.payload;
+    // },
+    // clearIntendedRoute: (state) => {
+    //   state.intendedRoute = "/";
+    // },
   },
   extraReducers: (builder) => {
     builder

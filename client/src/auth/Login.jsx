@@ -15,11 +15,14 @@ const initialState = {
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+
+  // const navigate = useNavigate();
   const { toast } = useToast();
 
   // Get the intended route from the Redux state
-  const intendedRoute = useSelector((state) => state.auth.intendedRoute);
+  // const intendedRoute = useSelector((state) => state.auth.intendedRoute);
+  //I commented this codes out because it is not used in the Login component
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,16 +34,6 @@ const Login = () => {
           title: data?.payload?.message,
         });
 
-        // Save user data (e.g., auth token) to localStorage
-        const user = data?.payload?.user;
-        const token = data?.payload?.token;
-
-        // Store token and user data in localStorage
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        dispatch(clearIntendedRoute()); // Clear intended route after successful login
-        navigate(intendedRoute || "/default-page"); // Redirect to the intended route or default
       } else {
         toast({
           title: data?.payload?.message || "Incorrect email or password",
