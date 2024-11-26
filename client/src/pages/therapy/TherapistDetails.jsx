@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowLeftLong, FaMagnifyingGlass } from "react-icons/fa6";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getTherapistById } from "@/store/therapist-slice";
+import { getTherapistById } from "@/store/therapy/therapist-slice";
 import { CiCalendar } from "react-icons/ci";
 import { MdOutlineChair, MdOutlinePhoneInTalk } from "react-icons/md";
 import { BiCoinStack } from "react-icons/bi";
@@ -18,6 +18,7 @@ const TherapistDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation(); // Access the state passed through navigate
 
   const therapist = useSelector((state) => state.therapists.therapist);
   const loading = useSelector((state) => state.therapists.loading);
@@ -51,6 +52,12 @@ const TherapistDetails = () => {
     return words[num] || num.toString(); // Fallback to number if out of bounds
   };
 
+  useEffect(() => {
+    if (location.state?.openModal) {
+      openModal(); // Trigger modal open function
+    }
+  }, [location.state]);
+
   // Effect to fetch therapist data when the component mounts or ID changes
   useEffect(() => {
     if (id) {
@@ -58,7 +65,12 @@ const TherapistDetails = () => {
     }
   }, [dispatch, id]);
 
-  if (loading) return <p className="text-center font-bold text-xl pt-14 pb-8">Loading Therapist details...</p>;
+  if (loading)
+    return (
+      <p className="text-center font-bold text-xl pt-14 pb-8">
+        Loading Therapist details...
+      </p>
+    );
   if (error) {
     console.log("Error message:", error.message);
     return (
@@ -72,14 +84,22 @@ const TherapistDetails = () => {
     navigate("/therapy/scheduling");
   };
 
+  const goBack = () => {
+    window.history.back();
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100); // Delay to ensure navigation completes
+  };
+
+
   console.log("Therapist data:", therapist);
 
   return (
     <div className="block lg:flex lg:justify-between px-12 bg-[#F5F5DC] ">
       {/* first part */}
       <div className="pt-8">
-        <div className="block lg:hidden md:hidden">
-          <button onClick={() => navigate(-1)} type="button">
+        <div className=" ">
+          <button onClick={goBack} type="button">
             <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
         </div>

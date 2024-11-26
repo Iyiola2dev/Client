@@ -1,74 +1,32 @@
-import React, { useState, useEffect } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Include default calendar styles
+import React from "react";
 import { FaArrowsAltH } from "react-icons/fa";
 import { GiTripleYin } from "react-icons/gi";
 import { IoBedOutline } from "react-icons/io5";
 import { BsChatDots } from "react-icons/bs";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
-import "../../index.css";
 import { Link, useNavigate } from "react-router-dom";
 
-export const TherapyCards = ({ therapist }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
-
+export const TherapyCards = ({ therapist, imageArray, index }) => {
   const navigate = useNavigate();
 
   const handleViewAvailabilityClick = () => {
-    console.log("View Availability Clicked");
-    navigate(`/therapy/therapist-details/${therapistId}`, {
+    navigate(`/therapy/therapist-details/${therapist._id}`, {
       state: { openModal: true },
     });
   };
 
-  // Handle date selection from the calendar
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
-  // Filter the time slots for the selected date
-  const getTimeSlots = () => {
-    if (selectedDate && therapist.openings) {
-      const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
-
-      const openingForSelectedDate = therapist.openings.find(
-        (opening) => opening.day === formattedSelectedDate
-      );
-
-      if (openingForSelectedDate && openingForSelectedDate.times) {
-        return openingForSelectedDate.times.map((time, index) => (
-          <button
-            key={index}
-            className="py-2 px-4 rounded-md bg-gray-200 text-center hover:bg-blue-100"
-          >
-            {time}
-          </button>
-        ));
-      }
-    }
-    return (
-      <div className="col-span-4 text-center text-gray-500">
-        No Available Slots
-      </div>
-    );
-  };
-
-  useEffect(() => {
-    console.log("Therapist:", therapist);
-  }, [therapist]);
-
-  // Extract therapist ID from the therapist object
-  const therapistId = therapist._id;
-
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-6 m-4 shadow-lg lg:w-full lg:mx-9">
       <div className="flex flex-col md:flex-row md:justify-between lg:flex-row lg:justify-between">
+        {/* Left Column: Therapist Details */}
         <div className="md:w-1/2 lg:w-1/2 lg:flex-row lg:mt-8">
           <div className="flex lg:flex-row flex-col justify-center md:justify-start mb-4">
             <div className="relative">
-              <Link to={`/therapy/therapist-details/${therapistId}`}>
+              <Link to={`/therapy/therapist-details/${therapist._id}`}>
                 <img
-                  src={therapist.imageUrl || "/path-to-your-image.jpg"}
+                  src={
+                    therapist.imageUrl || imageArray[index % imageArray.length]
+                  }
                   alt="therapist"
                   className="w-[150px] h-[150px] md:w-36 md:h-36 lg:w-[200px] lg:h-[200px] mb-4 rounded-full border-4 border-gray-300 object-cover mx-auto"
                 />
@@ -135,7 +93,7 @@ export const TherapyCards = ({ therapist }) => {
               </div>
 
               <div className="flex justify-center md:justify-start mb-4">
-                <Link to={`/therapy/therapist-details/${therapistId}`}>
+                <Link to={`/therapy/therapist-details/${therapist._id}`}>
                   <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white lg:text-[16px] lg:w-60 lg:ml-16 lg:mt-4 lg:px-2 lg:h-8 text-sm rounded-full px-6 py-1">
                     Book Now
                   </button>
@@ -154,41 +112,13 @@ export const TherapyCards = ({ therapist }) => {
           </div>
         </div>
 
-        {/* Right Column: Availability Calendar */}
+        {/* Right Column: Therapy images */}
         <div className="hidden md:flex md:flex-col md:w-1/2 items-center mt-8">
-          <Calendar
-            onChange={handleDateChange}
-            value={selectedDate}
-            tileClassName={({ date }) => {
-              const isSelectedDate =
-                selectedDate &&
-                date.toDateString() === selectedDate.toDateString();
-              return isSelectedDate ? "highlight-selected" : "";
-            }}
+          <img
+            src={imageArray[index % imageArray.length]}
+            alt="therapist illustration"
+            className="w-[500px] h-auto mb-4 object-cover"
           />
-
-          {selectedDate && (
-            <div className="grid grid-cols-4 gap-y-4 gap-x-2 mt-4 text-sm">
-              {getTimeSlots()}
-            </div>
-          )}
-
-          <div className="playfair-display-select md:mt-4">
-            <a href="/therapy/testpage">
-              <button className="mt-4 text-black border p-2 rounded-lg border-slate-300 ">
-                More
-              </button>
-            </a>
-          </div>
-
-          <div className="text-center md:text-left ">
-            <a
-              onClick={handleViewAvailabilityClick} // Handle the click to navigate to the modal
-              className="text-sm lg:text-md text-blue-600 underline cursor-pointer"
-            >
-              View Availability
-            </a>
-          </div>
         </div>
       </div>
     </div>

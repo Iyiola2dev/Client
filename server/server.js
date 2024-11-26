@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import userRouter from "./routes/auth/auth-routes.js";
 
 import therapistRouter from "./routes/therapy/therapist-routes.js";
+import questionnaireRouter from "./routes/therapy/questionnaire-routes.js";
+import scheduleRouter from "./routes/therapy/schedule-routes.js";
 
 import adminProductRouter from "./routes/admin/products-routes.js";
 import shopProductsRouter from "./routes/shop/products-route.js"
@@ -42,7 +44,8 @@ app.use(express.json());
 app.use("/api/auth", userRouter);
 
 app.use("/api/therapists", therapistRouter);
-
+app.use("/api/question", questionnaireRouter);
+app.use("/api/schedule", scheduleRouter);
 
 // this is where we use the adminProductRouter
 app.use("/api/admin/products", adminProductRouter);

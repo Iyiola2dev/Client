@@ -1,4 +1,3 @@
-// Login.jsx
 import CommonForm from "@/components/common/Form";
 import { loginFormControls } from "@/config/index";
 import { useToast } from "@/hooks/use-toast";
@@ -25,7 +24,7 @@ const Login = () => {
   // const intendedRoute = useSelector((state) => state.auth.intendedRoute);
   //I commented this codes out because it is not used in the Login component
 
-  const onSumbit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     dispatch(loginUser(formData)).then((data) => {
@@ -35,9 +34,6 @@ const Login = () => {
           title: data?.payload?.message,
         });
 
-        //I commented this codes out because it is not used in the Login component
-        // dispatch(clearIntendedRoute()); // Clear intended route after successful login
-        // navigate(intendedRoute || "/default-page"); // Redirect to the intended route or default
       } else {
         toast({
           title: data?.payload?.message || "Incorrect email or password",
@@ -45,6 +41,7 @@ const Login = () => {
         });
       }
     });
+
     console.log(formData);
   };
 
@@ -71,7 +68,7 @@ const Login = () => {
                 formControls={loginFormControls}
                 formData={formData}
                 setFormData={setFormData}
-                onSubmit={onSumbit}
+                onSubmit={onSubmit}
                 buttonText="Login"
                 borderRadius="rounded-full"
               />
