@@ -8,7 +8,8 @@ import api from "./api";
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
-  user: null,
+    user: null,
+  };
 
 
 

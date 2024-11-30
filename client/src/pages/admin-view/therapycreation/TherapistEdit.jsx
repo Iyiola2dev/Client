@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { IoCameraReverseOutline } from "react-icons/io5";
 import { updateTherapist } from "@/store/therapy/therapist-slice";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "react-router-dom";
 
+const TherapistEdit = ({ therapistData: propTherapistData }) => {
+  const location = useLocation();
+  const locationTherapistData = location.state?.therapistData;
 
-const TherapistEdit = ({ therapistData }) => {
-  const [therapist, setTherapist] = useState(therapistData || {});
+  // Prefer location data if available, otherwise use prop
+  const [therapist, setTherapist] = useState(
+    locationTherapistData || propTherapistData || {}
+  );
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(
-    therapistData?.imageUrl || ""
+    locationTherapistData?.imageUrl || propTherapistData?.imageUrl || ""
   );
   const [isLoading, setIsLoading] = useState(false); // State for loading
   const dispatch = useDispatch();
 
   const { toast } = useToast(); // Initialize the useToast hook
+
+  useEffect(() => {
+    console.log("Therapist data:", locationTherapistData || propTherapistData);
+    setTherapist(locationTherapistData || propTherapistData || {});
+  }, [locationTherapistData, propTherapistData]);
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -44,49 +55,66 @@ const TherapistEdit = ({ therapistData }) => {
     e.preventDefault();
     setIsLoading(true); // Show loading state
 
-    // Prepare form data if there's a new image
-    const formData = new FormData();
-    if (selectedImage) {
-      formData.append("image", selectedImage);
-    }
-
-    // Add therapist data to the form
-    Object.keys(therapist).forEach((key) => {
-      formData.append(key, therapist[key]);
-    });
-
     try {
-      // Dispatch the updateTherapist thunk
-      dispatch(updateTherapist(formData));
+      if (!therapist._id) {
+        throw new Error("Therapist ID is missing. Cannot update therapist.");
+      }
 
-      // Show success toast
-      toast({
-        title: "Success!",
-        description: "Changes saved successfully!",
-        status: "success", // 'success' status
-        duration: 5000,
-        isClosable: true,
-      });
+      let imageUrl = therapist.imageUrl;
 
-      window.history.back();
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("file", selectedImage);
+
+        const response = await fetch("http://localhost:5000/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          imageUrl = result.url;
+        } else {
+          throw new Error(result.message || "Image upload failed");
+        }
+      }
+
+      const updatedData = { ...therapist, _id: therapist._id, imageUrl };
+
+      const updateResponse = await dispatch(
+        updateTherapist(updatedData)
+      ).unwrap();
+
+      if (updateResponse.success) {
+        toast({
+          title: "Success!",
+          description: "Changes saved successfully!",
+          status: "success",
+          duration: 5000,
+          isclosable: true.toString(),
+        });
+
+        window.history.back();
+      } else {
+        throw new Error(updateResponse.message || "Failed to save changes.");
+      }
     } catch (error) {
-      // Show error toast
       toast({
         title: "Error!",
-        description: "Failed to save changes.",
-        status: "error", // 'error' status
+        description: error.message || "Failed to save changes.",
+        status: "error",
         duration: 5000,
-        isClosable: true,
+        isclosable: true.toString(),
       });
     } finally {
-      setIsLoading(false); // Hide loading state
+      setIsLoading(false);
     }
   };
 
   const goBack = () => {
     window.history.back();
   };
-
   return (
     <div className="py-20">
       {/* Back Button */}
@@ -283,10 +311,11 @@ const TherapistEdit = ({ therapistData }) => {
                   onChange={handleInputChange}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option>18-25</option>
-                  <option>26-35</option>
-                  <option>36-45</option>
-                  <option>46-55</option>
+                  <option>18-28</option>
+                  <option>28-38</option>
+                  <option>38-48</option>
+                  <option>48-58</option>
+                  <option>59+</option>
                 </select>
               </div>
             </div>

@@ -64,8 +64,11 @@ const TherapistView = () => {
   };
 
   const goToEdit = () => {
-    navigate(`/therapy/editTherapist/${therapist._id}`);
-  }
+    navigate(`/therapy/editTherapist/${therapist._id}`, {
+      state: { therapistData },
+    });
+  };
+
 
   return (
     <div>
