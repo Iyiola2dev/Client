@@ -65,7 +65,12 @@ export const loginUser = async (req, res) => {
 
     // Create a token
     const token = jwt.sign(
-      { id: checkUser._id, role: checkUser.role, email: checkUser.email },
+      {
+        id: checkUser._id,
+        role: checkUser.role,
+        email: checkUser.email,
+        userName: checkUser.userName,
+      },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "60m" }
     );
@@ -79,6 +84,7 @@ export const loginUser = async (req, res) => {
         id: checkUser._id,
         email: checkUser.email,
         role: checkUser.role,
+        userName: checkUser.userName,
       },
     });
   } catch (error) {
