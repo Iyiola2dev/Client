@@ -24,7 +24,7 @@ const Therapists = () => {
 
   return (
     <div className="flex items-center justify-center py-20 ">
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {Array.isArray(therapists) && therapists.length > 0 ? (
           therapists.map((therapist) => (
             <TherapistCard key={therapist._id} therapist={therapist} />

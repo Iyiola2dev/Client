@@ -5,83 +5,55 @@ import { updateTherapist } from "@/store/therapy/therapist-slice";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "react-router-dom";
+import useImageUpload from "../image-upload/UseImage";
 
 const TherapistEdit = ({ therapistData: propTherapistData }) => {
   const location = useLocation();
   const locationTherapistData = location.state?.therapistData;
 
-  // Prefer location data if available, otherwise use prop
   const [therapist, setTherapist] = useState(
     locationTherapistData || propTherapistData || {}
   );
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(
-    locationTherapistData?.imageUrl || propTherapistData?.imageUrl || ""
-  );
-  const [isLoading, setIsLoading] = useState(false); // State for loading
-  const dispatch = useDispatch();
 
-  const { toast } = useToast(); // Initialize the useToast hook
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
+  const {
+    imageFile,
+    uploadedImageURL,
+    isLoading: isImageUploading,
+    handleImageChange,
+    uploadImage,
+    setImageFile,
+    setUploadedImageURL,
+  } = useImageUpload("http://localhost:5000/api/admin/products/upload-image");
 
   useEffect(() => {
-    console.log("Therapist data:", locationTherapistData || propTherapistData);
-    setTherapist(locationTherapistData || propTherapistData || {});
-  }, [locationTherapistData, propTherapistData]);
+    if (imageFile) {
+      uploadImage();
+    }
+  }, [imageFile]);
 
-  // Handle input changes
+  useEffect(() => {
+    if (uploadedImageURL) {
+      setTherapist((prev) => ({ ...prev, imageUrl: uploadedImageURL }));
+    }
+  }, [uploadedImageURL]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTherapist({ ...therapist, [name]: value });
   };
 
-  // Handle image selection
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedImage(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
-
-  // Handle image deletion
-  const handleDeleteImage = () => {
-    setSelectedImage(null);
-    setImagePreview("");
-    setTherapist({ ...therapist, imageUrl: "" }); // Remove image URL from data
-  };
-
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Show loading state
 
     try {
       if (!therapist._id) {
         throw new Error("Therapist ID is missing. Cannot update therapist.");
       }
 
-      let imageUrl = therapist.imageUrl;
-
-      if (selectedImage) {
-        const formData = new FormData();
-        formData.append("file", selectedImage);
-
-        const response = await fetch("http://localhost:5000/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          imageUrl = result.url;
-        } else {
-          throw new Error(result.message || "Image upload failed");
-        }
-      }
-
-      const updatedData = { ...therapist, _id: therapist._id, imageUrl };
-
+      const updatedData = { ...therapist, imageUrl: uploadedImageURL };
       const updateResponse = await dispatch(
         updateTherapist(updatedData)
       ).unwrap();
@@ -92,7 +64,6 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
           description: "Changes saved successfully!",
           status: "success",
           duration: 5000,
-          isclosable: true.toString(),
         });
 
         window.history.back();
@@ -105,16 +76,18 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
         description: error.message || "Failed to save changes.",
         status: "error",
         duration: 5000,
-        isclosable: true.toString(),
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const goBack = () => {
-    window.history.back();
+  const handleDeleteImage = () => {
+    setImageFile(null);
+    setUploadedImageURL("");
+    setTherapist((prev) => ({ ...prev, imageUrl: "" }));
   };
+
+  const goBack = () => window.history.back();
+
   return (
     <div className="py-20">
       {/* Back Button */}
@@ -127,35 +100,51 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-[90vw] lg:w-1/2 bg-white p-10 rounded-lg shadow-md">
           {/* Image and Upload/Delete Buttons */}
-          <div className="flex flex-col lg:flex-row justify-between items-center mb-6">
-            <div className="relative h-[180px] w-[180px] bg-slate-200 rounded-full border-4 border-slate-200 overflow-hidden">
+          <div className="flex flex-col items-center mb-6">
+            <div className="relative h-32 w-32 rounded-full border-2 border-gray-300 overflow-hidden">
+              {/* Display the image */}
               <img
-                src={imagePreview || "https://via.placeholder.com/180"}
-                alt="therapist"
+                src={
+                  uploadedImageURL ||
+                  therapist.imageUrl ||
+                  "https://via.placeholder.com/180"
+                }
+                alt="Therapist Avatar"
                 className="object-cover w-full h-full"
               />
-              <label
-                htmlFor="upload"
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white p-2 rounded-full cursor-pointer"
+
+              {/* Camera icon overlay, visible only when no image is uploaded */}
+              {!(uploadedImageURL || therapist.imageUrl) && (
+                <label
+                  htmlFor="upload"
+                  className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white text-sm cursor-pointer"
+                >
+                  <IoCameraReverseOutline className="w-8 h-8 p-1 rounded-full bg-blue-500 " />
+                </label>
+              )}
+            </div>
+
+            <div className="flex items-center justify-center gap-8">
+              {/* Button for Uploading New Image */}
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                onClick={() => document.getElementById("upload").click()}
+                type="button"
               >
-                <IoCameraReverseOutline className="w-8 h-8" />
-              </label>
+                Upload New
+              </button>
+
+              {/* Hidden input field for file selection */}
               <input
                 type="file"
                 id="upload"
                 className="hidden"
-                onChange={handleImageUpload}
+                onChange={(e) => handleImageChange(e.target.files[0])}
               />
-            </div>
-            <div className="flex gap-4 mt-4 lg:mt-0">
-              <label
-                htmlFor="upload"
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md cursor-pointer"
-              >
-                Upload New
-              </label>
+
+              {/* Button for Deleting the Image */}
               <button
-                className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md"
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"
                 onClick={handleDeleteImage}
                 type="button"
               >
@@ -218,7 +207,7 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
                 <input
                   type="text"
                   name="phone"
-                  value={therapist.phone || ""}
+                  value={therapist.mobile || ""}
                   onChange={handleInputChange}
                   placeholder="+234"
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -351,14 +340,17 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
             </div>
 
             {/* Submit Button */}
-            <div className="text-center mt-6">
-              <button
-                type="submit"
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
-              >
-                {isLoading ? "Saving Changes..." : "Save Changes"}
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={isImageUploading}
+              className={`w-full px-4 py-2 text-white rounded-md ${
+                isImageUploading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500"
+              }`}
+            >
+              {isImageUploading ? "Uploading Image..." : "Save Changes"}
+            </button>
           </form>
         </div>
       </div>

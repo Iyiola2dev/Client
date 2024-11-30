@@ -48,7 +48,7 @@ const TherapistView = () => {
     firstName: placeholderText,
     lastName: placeholderText,
     email: placeholderText,
-    phoneNumber: placeholderText,
+    mobile: placeholderText,
     dob: "yyyy-MM-dd",
     gender: placeholderText,
     maritalStatus: placeholderText,
@@ -97,7 +97,7 @@ const TherapistView = () => {
               <img
                 src={therapistData.imageUrl}
                 alt="therapist"
-                className="lg:w-28 lg:h-28 rounded-full"
+                className="lg:w-28 lg:h-28 rounded-full w-28 h-28"
               />
               <div>
                 <p className="font-bold text-lg">
@@ -135,7 +135,7 @@ const TherapistView = () => {
                 <p>{therapistData.email}</p>
 
                 <p className="font-semibold">Mobile Number:</p>
-                <p>{therapistData.phoneNumber}</p>
+                <p>{therapistData.mobile}</p>
               </div>
 
               <div>

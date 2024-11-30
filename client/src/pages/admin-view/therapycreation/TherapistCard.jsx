@@ -17,7 +17,7 @@ const TherapistCard = ({ therapist }) => {
   return (
     <div
       onClick={handleCardClick}
-      className="cursor-pointer border rounded-lg p-4 hover:shadow-lg transition-shadow flex gap-5 items-center w-[500px]"
+      className="cursor-pointer border rounded-lg p-4 hover:shadow-lg transition-shadow flex flex-col lg:flex-row justify-center gap-5 items-center lg:w-[500px]"
     >
       <div>
         <img
@@ -27,7 +27,7 @@ const TherapistCard = ({ therapist }) => {
         />
       </div>
 
-      <div>
+      <div className="text-center">
         <p className="text-lg font-bold">
           {therapist.firstName || "First Name"}{" "}
           {therapist.lastName || "Last Name"}
