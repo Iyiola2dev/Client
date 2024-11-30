@@ -14,7 +14,7 @@ const ShoppingProductTile = ({ product, handleGetProductDetails }) => {
           <div className="relative">
             <img
               src={product?.image}
-              alt={product.title}
+              alt={product.name}
               className="w-full h-[300px] object-cover rounded-t lg"
             />
 
@@ -25,7 +25,7 @@ const ShoppingProductTile = ({ product, handleGetProductDetails }) => {
             ) : null}
           </div>
           <CardContent className="p-4 flex flex-col justify-center items-center  ">
-            <h2 className="text-xl font-bold mb-2">{product?.name}</h2>
+            <h2 className="text-[10px] text-center font-bold mb-2">{product?.name}</h2>
             <div className="flex justify-between items-center ">
               <span className="text-sm ">{product?.category}</span>
             </div>
