@@ -2,10 +2,10 @@
 import CommonForm from "@/components/common/Form";
 import { loginFormControls } from "@/config/index";
 import { useToast } from "@/hooks/use-toast";
-import { loginUser, clearIntendedRoute } from "@/store/auth-slice"; // Import the clearIntendedRoute action
+import { loginUser } from "@/store/auth-slice"; // Import the clearIntendedRoute action
 import { ArrowLeft } from "lucide-react";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; // Import useSelector
+import  { useState } from "react";
+import { useDispatch } from "react-redux"; // Import useSelector
 import { Link, useNavigate } from "react-router-dom";
 
 const initialState = {
@@ -16,28 +16,35 @@ const initialState = {
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
-  // const navigate = useNavigate();
+  
   const { toast } = useToast();
 
-  // Get the intended route from the Redux state
-  // const intendedRoute = useSelector((state) => state.auth.intendedRoute);
+  
   //I commented this codes out because it is not used in the Login component
 
   const onSumbit = (e) => {
     e.preventDefault();
 
     dispatch(loginUser(formData)).then((data) => {
-      console.log(data);
+     
       if (data?.payload?.success) {
-        toast({
-          title: data?.payload?.message,
-        });
+        toast({ title: data?.payload?.message });
 
-        //I commented this codes out because it is not used in the Login component
-        // dispatch(clearIntendedRoute()); // Clear intended route after successful login
-        // navigate(intendedRoute || "/default-page"); // Redirect to the intended route or default
+        // Retrieve the last attempted URL
+        const lastAttemptedURL = localStorage.getItem("lastAttemptedURL");
+
+        // Redirect based on role or saved URL
+        if (data.payload.user.role === "admin") {
+          navigate("/admin/dashboard", { replace: true });
+        } else {
+          navigate(lastAttemptedURL || "/therapy", { replace: true });
+        }
+
+        // Clear the last attempted URL after successful login
+        localStorage.removeItem("lastAttemptedURL");
       } else {
         toast({
           title: data?.payload?.message || "Incorrect email or password",
@@ -45,7 +52,7 @@ const Login = () => {
         });
       }
     });
-    console.log(formData);
+  
   };
 
   return (

@@ -11,8 +11,10 @@ const ProtectedRoute = ({ children }) => {
   const dispatch = useDispatch();
 
   if (!isAuthenticated) {
-    // Save the intended route before redirecting
-    dispatch(setIntendedRoute(window.location.pathname));
+    // Save the last route
+    const currentRoute = window.location.pathname;
+    localStorage.setItem("lastAttemptedURL", currentRoute);
+  
     return <Navigate to="/auth/login" replace />;
   }
 
