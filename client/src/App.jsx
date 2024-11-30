@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import ScrollToTop from "./pages/ScrollToTop";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 const App = () => {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -57,9 +58,12 @@ const App = () => {
         <Route
           path="/shop/*"
           element={
-            // <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <ProtectedRoute>
+               <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <Shopping />
-            // </CheckAuth>
+            </CheckAuth>
+            </ProtectedRoute>
+           
           }
         />
 
