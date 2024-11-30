@@ -26,7 +26,7 @@ import Product from "../../models/productModel.js";
 
 export const getFilteredProducts = async (req, res) => {
   try {
-    const { category, sort } = req.query; // Get category and sort from query params
+    const { category, sort, limit } = req.query; // Get category and sort from query params
 
     // Filter products by category if provided, otherwise get all products
     const filter = category ? { category } : {};
@@ -43,6 +43,11 @@ export const getFilteredProducts = async (req, res) => {
       query = query.sort({ name: 1 }); // Ascending title (alphabetically)
     } else if (sort === "title-z-a") {
       query = query.sort({ name: -1 }); // Descending title (reverse alphabetical)
+    }
+
+    // Apply limit if provided, otherwise default to no limit
+    if (limit) {
+      query = query.limit(parseInt(limit)); // Convert limit to a number
     }
 
     // Execute query
