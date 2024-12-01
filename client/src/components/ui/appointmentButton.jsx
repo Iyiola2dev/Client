@@ -10,9 +10,9 @@ const AppointmentButton = ({ text }) => {
 
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate("/therapy/appointment"); // Navigate directly to the appointment page
+      navigate("/therapy"); // Navigate directly to the appointment page
     } else {
-      dispatch(setIntendedRoute("/therapy/appointment")); // Save the intended route
+      dispatch(setIntendedRoute("/therapy")); // Save the intended route
       navigate("/auth/login"); // Redirect to the login page
     }
   };

@@ -3,8 +3,8 @@ import coinImage from "../../../assets/images/coin.webp";
 
 const Confirmation = () => {
   return (
-    <div className="flex py-14 px-3  items-center justify-center bg-[#F5F5DC]">
-      <div className="bg-black lg:w-[65vw]  text-white flex flex-col py-8 px-3 lg:px-14 w-[95vw] rounded-xl">
+    <div className="flex py-14   items-center justify-center bg-[#F5F5DC]">
+      <div className="bg-black lg:w-[65vw]  text-white flex flex-col py-8 px-3 lg:px-14 w-[90vw] rounded-xl">
         <div>
           <p className="text-2xl underline text-center mb-8">Promotions</p>
         </div>
@@ -54,7 +54,7 @@ const Confirmation = () => {
 
         {/* packages */}
         <div className="bg-white bg-opacity-20 px-4 py-10 rounded-md">
-          <div className="flex items-center text-xs gap-2 lg:text-lg  lg:gap-32 lg:justify-center lg:my-6 ">
+          <div className="flex items-center text-sm gap-12 flex-col lg:flex-row md:flex-row lg:text-lg md:text-lg lg:gap-32 lg:justify-center md:justify-center md:gap-14 lg:my-6 ">
             <div className="space-y-3">
               <p className="flex items-center">
                 5{" "}

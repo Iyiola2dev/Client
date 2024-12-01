@@ -1,8 +1,7 @@
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TherapyCards } from "./TherapyCards";
-import { getAllTherapists } from "@/store/therapist-slice";
+import { getAllTherapists } from "@/store/therapy/therapist-slice";
 
 const Therapists = () => {
   const dispatch = useDispatch();
@@ -11,6 +10,7 @@ const Therapists = () => {
   );
 
   useEffect(() => {
+    console.log(therapists);
     dispatch(getAllTherapists());
   }, [dispatch]);
 
