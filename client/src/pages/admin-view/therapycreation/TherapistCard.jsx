@@ -11,7 +11,7 @@ const TherapistCard = ({ therapist }) => {
   }
 
   const handleCardClick = () => {
-    navigate(`/therapy/edit/${therapist._id}`);
+    navigate(`/admin/edit/${therapist._id}`);
   };
 
   return (

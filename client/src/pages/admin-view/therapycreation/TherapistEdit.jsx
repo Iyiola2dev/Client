@@ -45,40 +45,60 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
     setTherapist({ ...therapist, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      if (!therapist._id) {
-        throw new Error("Therapist ID is missing. Cannot update therapist.");
-      }
+  try {
+    // Retrieve the token from localStorage
+    const token = localStorage.getItem("token");
 
-      const updatedData = { ...therapist, imageUrl: uploadedImageURL };
-      const updateResponse = await dispatch(
-        updateTherapist(updatedData)
-      ).unwrap();
+    if (!token) {
+      throw new Error("Authentication token not found. Please log in again.");
+    }
 
-      if (updateResponse.success) {
-        toast({
-          title: "Success!",
-          description: "Changes saved successfully!",
-          status: "success",
-          duration: 5000,
-        });
+    const updatedData = { ...therapist, imageUrl: uploadedImageURL };
 
-        window.history.back();
-      } else {
-        throw new Error(updateResponse.message || "Failed to save changes.");
-      }
-    } catch (error) {
+    // Dispatch the thunk with the token and data
+    const updateResponse = await dispatch(
+      updateTherapist({ data: updatedData, token })
+    ).unwrap();
+
+    if (updateResponse.success) {
       toast({
-        title: "Error!",
-        description: error.message || "Failed to save changes.",
-        status: "error",
+        title: "Success!",
+        description: "Changes saved successfully!",
+        status: "success",
         duration: 5000,
       });
+
+      window.history.back();
+    } else {
+      throw new Error(updateResponse.message || "Failed to save changes.");
     }
-  };
+  } catch (error) {
+    let errorMessage = "Failed to save changes.";
+    if (error.response) {
+      console.error("Server Error:", error.response.data);
+      errorMessage =
+        error.response.data?.message ||
+        `Server Error: ${error.response.statusText} (${error.response.status})`;
+    } else if (error.request) {
+      console.error("No Response Received:", error.request);
+      errorMessage = "No response from the server. Please try again later.";
+    } else {
+      console.error("Error:", error.message);
+      errorMessage = error.message || "An unexpected error occurred.";
+    }
+
+    toast({
+      title: "Error!",
+      description: errorMessage,
+      status: "error",
+      duration: 5000,
+    });
+  }
+};
+
 
   const handleDeleteImage = () => {
     setImageFile(null);
@@ -89,7 +109,7 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
   const goBack = () => window.history.back();
 
   return (
-    <div className="py-20">
+    <div className="py-10">
       {/* Back Button */}
       <div className="block mb-8 lg:ml-14 ">
         <button onClick={goBack}>
@@ -101,7 +121,7 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
         <div className="w-[90vw] lg:w-1/2 bg-white p-10 rounded-lg shadow-md">
           {/* Image and Upload/Delete Buttons */}
           <div className="flex flex-col items-center mb-6">
-            <div className="relative h-32 w-32 rounded-full border-2 border-gray-300 overflow-hidden">
+            <div className="relative h-32 w-32 lg:w-44 lg:h-44 rounded-full border-2 border-gray-300 overflow-hidden">
               {/* Display the image */}
               <img
                 src={
