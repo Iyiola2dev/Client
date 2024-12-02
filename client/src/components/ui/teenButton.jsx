@@ -5,7 +5,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setIntendedRoute } from "@/store/auth-slice";
+// import { setIntendedRoute } from "@/store/auth-slice";
 
 
 const TeenButton = ({ text }) => {
@@ -15,12 +15,13 @@ const TeenButton = ({ text }) => {
 
   const handleBookingClick = () => {
     if (isAuthenticated) {
-      navigate("/therapy/appointment/teen"); // Navigate directly to the teen appointment page
+      navigate("/therapy/appointment/teen"); // Navigate directly to the appointment page
     } else {
-      dispatch(setIntendedRoute("/auth/login")); // Save the intended route
-      navigate("/auth/login");
+      localStorage.setItem("intendedRoute", "/therapy"); // Save the intended route
+      navigate("/auth/login"); // Redirect to the login page
     }
   };
+
 
   return (
     <button
