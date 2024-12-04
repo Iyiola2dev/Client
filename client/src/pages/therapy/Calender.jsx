@@ -1,10 +1,13 @@
-
 import React, { useState, useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-const Calendar = () => {
+const Calendar = ({ therapists = [] }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [weekDates, setWeekDates] = useState([]);
+
+  const individualTherapistsCount = therapists?.reduce((count, therapist) => {
+    return therapist.therapyType?.includes("Individual") ? count + 1 : count;
+  }, 0);
 
   useEffect(() => {
     // Calculate the week starting from Sunday to Saturday
@@ -48,13 +51,13 @@ const Calendar = () => {
   return (
     <div className="mt-5 bg-white mx-4 lg:mx-9 rounded-lg">
       {/* Responsive Text */}
-      <p className="text-center text-sm py-2  lg:hidden md:hidden">
-        3 Providers Found For Individual Therapy
+      <p className="text-center text-sm py-2 lg:hidden md:hidden">
+        {individualTherapistsCount} Providers Found For Individual Therapy
       </p>
 
       <div className="hidden md:flex lg:flex justify-between items-center gap-12 px-8 py-2 playfair-display-select">
         <p className="lg:text-lg lg:font-medium md:text-[13px] md:font-medium mb-2">
-          5 Providers Found For Individual Therapy
+          {individualTherapistsCount} Providers Found For Individual Therapy
         </p>
 
         {/* Calendar Header */}

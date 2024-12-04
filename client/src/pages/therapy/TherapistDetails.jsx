@@ -104,7 +104,7 @@ const TherapistDetails = () => {
           <div className="lg:flex justify-start gap-3">
             <div>
               <img
-                src={therapist.imageUrl || "/path-to-your-image.jpg"}
+                src={therapist?.imageUrl || "default-image.jpg"}
                 alt="therapist"
                 className="w-[250px] h-[250px] md:w-36 md:h-36 lg:w-[200px] lg:h-[200px] mb-4 rounded-full border-4 border-gray-300 object-cover mx-auto"
               />
