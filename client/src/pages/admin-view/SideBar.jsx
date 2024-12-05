@@ -2,7 +2,8 @@ import React from "react";
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-import { FaFirstOrderAlt } from "react-icons/fa6";
+import { FaFirstOrderAlt } from "react-icons/fa6"; 
+import { FaUserMd } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import {
@@ -31,6 +32,12 @@ const adminSideBarMenuItems = [
     path: "/admin/orders",
     icons: <FaFirstOrderAlt />,
   },
+  {
+    id: "therapists",
+    label: "Therapists",
+    path: "/admin/edit",
+    icons: <FaUserMd />, // New therapist icon
+  },
 ];
 
 function MenuItems({ setOpen }) {
@@ -42,7 +49,7 @@ function MenuItems({ setOpen }) {
           key={menuItem.id}
           onClick={() => {
             navigate(menuItem.path);
-            //Close the sidebar when a menu item is clicked
+            // Close the sidebar when a menu item is clicked
             setOpen ? setOpen(false) : null;
           }}
           className="flex items-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-muted hover:text-foreground cursor-pointer text-xl"
@@ -55,17 +62,10 @@ function MenuItems({ setOpen }) {
   );
 }
 
-//The open And setOpen props are passed from the AdminLayout component
 const AdminSideBar = ({ open, setOpen }) => {
   const navigate = useNavigate();
   return (
     <>
-      {/* The sheet component is from shacdn */}
-      {/*  Sidebar Sheet Component for Admin Panel Layout
-// This component renders a sidebar that appears on the left side of the screen when open.
-// It uses the `Sheet` component, with `SheetContent` defining the sidebar area and a width of 64 (tailwind: `w-64`).
-// Inside, `SheetHeader` includes a title section with an icon and "Admin Panel" text.
-// The `MenuItems` component is rendered below the header to display navigation options. */}
       <div className=" lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent side="left" className="w-64">

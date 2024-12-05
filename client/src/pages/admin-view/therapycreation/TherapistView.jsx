@@ -48,7 +48,7 @@ const TherapistView = () => {
     firstName: placeholderText,
     lastName: placeholderText,
     email: placeholderText,
-    phoneNumber: placeholderText,
+    mobile: placeholderText,
     dob: "yyyy-MM-dd",
     gender: placeholderText,
     maritalStatus: placeholderText,
@@ -64,16 +64,20 @@ const TherapistView = () => {
   };
 
   const goToEdit = () => {
-    navigate(`/therapy/editTherapist/${therapist._id}`);
-  }
+    navigate(`/admin/editTherapist/${therapist._id}`, {
+      state: { therapistData },
+    });
+    console.log("Edit therapist data:", therapistData);
+  };
+
 
   return (
     <div>
-      <div className="py-20">
+      <div className="py-0 lg:pb-20">
         {/* Back Button */}
-        <div className="block ">
-          <button onClick={goBack}>
-            <FaArrowLeftLong className="pl-4 w-[40px] h-[20px] text-pink-500" />
+        <div className=" pl-4 lg:pl-[5rem] ">
+          <button onClick={goBack} type="button">
+            <FaArrowLeftLong className="mt-10 w-[40px] h-[20px] text-pink-500" />
           </button>
         </div>
 
@@ -90,11 +94,11 @@ const TherapistView = () => {
 
           {/* Therapist Header */}
           <div className="flex justify-between p-2 lg:p-6 border-2 border-slate-200 rounded-3xl">
-            <div className="flex gap-2 items-center pt-4">
+            <div className="flex flex-col lg:flex-row  mt-6 gap-2 items-center pt-4">
               <img
                 src={therapistData.imageUrl}
                 alt="therapist"
-                className="lg:w-28 lg:h-28 rounded-full"
+                className="lg:w-44 lg:h-44 rounded-full w-36 h-36"
               />
               <div>
                 <p className="font-bold text-lg">
@@ -132,7 +136,7 @@ const TherapistView = () => {
                 <p>{therapistData.email}</p>
 
                 <p className="font-semibold">Mobile Number:</p>
-                <p>{therapistData.phoneNumber}</p>
+                <p>{therapistData.mobile}</p>
               </div>
 
               <div>
@@ -211,7 +215,6 @@ const TherapistView = () => {
           </div>
 
           {/* edit mode */}
-          
 
           {/* edit mode */}
         </div>

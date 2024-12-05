@@ -8,6 +8,38 @@ const initialState = {
   error: null,
 };
 
+// Async thunk to create a new therapist
+export const createNewTherapist = createAsyncThunk(
+  "/therapists/create",
+  async (therapistData, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      Object.keys(therapistData).forEach((key) => {
+        formData.append(key, therapistData[key]);
+      });
+
+      const response = await axios.post(
+        "http://localhost:5000/api/therapists",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred"
+      );
+    }
+  }
+);
+
 // Async thunk to get all therapists
 export const getAllTherapists = createAsyncThunk(
   "/therapists/getAll",
@@ -18,7 +50,7 @@ export const getAllTherapists = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(
         error.response && error.response.data
           ? error.response.data
@@ -53,31 +85,49 @@ export const getTherapistById = createAsyncThunk(
 // Async thunk to update a therapist
 export const updateTherapist = createAsyncThunk(
   "/therapists/update",
-  async (therapist, { rejectWithValue }) => {
+  async ({ data, token }, { rejectWithValue }) => {
     try {
+      console.log("Token being sent:", token); // Log the token
+      console.log("Data being sent:", data); // Log the request data
+
       const response = await axios.put(
-        `http://localhost:5000/api/therapists/${therapist._id}`,
-        therapist,
+        `http://localhost:5000/api/therapists/${data._id}`,
+        data,
         {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response && error.response.data
-          ? error.response.data
-          : "An error occurred"
+        error.response?.data?.message || "Failed to update therapist."
       );
     }
   }
 );
+
+
 
 const therapistsSlice = createSlice({
   name: "therapists",
   initialState,
   extraReducers: (builder) => {
     builder
+      .addCase(createNewTherapist.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createNewTherapist.fulfilled, (state, action) => {
+        state.loading = false;
+        state.therapists.push(action.payload.therapist); // Add the new therapist to the list
+      })
+      .addCase(createNewTherapist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(getAllTherapists.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -115,7 +165,6 @@ const therapistsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-
   },
 });
 

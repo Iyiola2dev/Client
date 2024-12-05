@@ -8,8 +8,12 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaBlog, FaInfoCircle, FaRegQuestionCircle, FaShoppingCart, FaWallet } from "react-icons/fa";
 import { FiMessageSquare } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
+import { logoutUser } from "@/store/auth-slice";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -27,6 +31,13 @@ const Navbar = () => {
    const handleCourseClick = () => {
      setIsDropdownOpen(false);
    }; 
+
+   
+const handleLogout = () => {
+  console.log("logging out");
+  dispatch(logoutUser()); // Clears user data 
+  navigate("/auth/login"); // Redirects the user to the login page
+};
 
   return (
     <div>
@@ -92,9 +103,12 @@ const Navbar = () => {
             <div className="flex gap-4 w-[35%]">
               {/* The button component is from shacdn */}
               <Button className="list-item-text-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
-                <Link>Sign Up</Link>
+                <Link to="/auth/register">Sign Up</Link>
               </Button>
-              <Button className="list-item-text-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white">
+              <Button
+                onClick={handleLogout}
+                className="list-item-text-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]  w-full text-white"
+              >
                 <Link>Logout</Link>
               </Button>
             </div>
@@ -281,9 +295,8 @@ const Navbar = () => {
                 Help
               </Link>
               <Link
-                to="/auth/login"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
-                onClick={toggleMenu}
+                onClick={handleLogout} // Calls the logout function
               >
                 <CiLogout className="w-5 h-5 font-bold" />
                 Log out
