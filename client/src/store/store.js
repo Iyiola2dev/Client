@@ -8,6 +8,7 @@ import scheduleReducer from "./therapy/schedule-slice";
 
 import adminProductsSlice from "./admin/products-slice";
 import shopProductsSlice from "./shop/products-slice";
+import shopCartSlice from "./shop/cart-slice/index"
 
 
 // This store will be created on global reducer and it will hold all the application state
@@ -25,6 +26,7 @@ const store = configureStore({
 
     adminProducts: adminProductsSlice,
     shopProducts: shopProductsSlice,
+    shopCart : shopCartSlice
 
   },
 });

@@ -85,7 +85,7 @@ export const fetchCartItems = async (req, res) => {
 
     // Find the user's cart and populate product details for each item
     const cart = await Cart.findOne({ userId }).populate({
-      path: "item.productId",
+      path: "items.productId",
       select: "image name price sales", // Only select specific fields for better performance
     });
 
@@ -151,14 +151,14 @@ export const updateCartItemQty = async (req, res) => {
 
     const cart = await Cart.findOne({ userId });
     if (!cart) {
-      cart = new Cart({
-        userId,
-        products: [{ productId, items: [] }],
-      });
+      return res.status(404).json({
+        success: false,
+        message: "Cart not found", 
+      })
     }
 
     const findCurrentProductIndex = cart.items.findIndex(
-      (items) => items.productId.toString() === productId
+      (item) => item.productId.toString() === productId
     );
 
     if (findCurrentProductIndex === -1) {
@@ -172,7 +172,7 @@ export const updateCartItemQty = async (req, res) => {
     await cart.save();
 
     await cart.populate({
-      path: "item.productId",
+      path: "items.productId",
       select: "image name price sales",
     });
 
@@ -224,13 +224,13 @@ export const deleteCartItem = async (req, res) => {
       });
     }
 
-    cart.items.filter(item => item.productId._id.toString() !== productId)
+   cart.items = cart.items.filter(item => item.productId._id.toString() !== productId)
      
     await cart.save();
 
 
     //This populate is to return the product available in the cart
-    await Cart.populate({
+    await cart.populate({
       path: "items.productId",
       select: "image name price sales",
     });

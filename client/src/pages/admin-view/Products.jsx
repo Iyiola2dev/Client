@@ -25,6 +25,7 @@ import AdminProductTile from "./admin-view2/Product-tile";
 
 
 
+
 //
 const initialFormData = {
   image: null,
@@ -65,7 +66,7 @@ const AdminProducts = () => {
     currentEditedId !== null
       ? dispatch(editProduct({ id: currentEditedId, formData })).then(
           (data) => {
-            console.log(data, "edit");
+            // console.log(data, "edit");
             if (data?.payload?.success) {
               dispatch(fetchAllProducts());
               setFormData(initialFormData);
@@ -76,7 +77,7 @@ const AdminProducts = () => {
         )
       : dispatch(addNewProduct({ ...formData, image: uploadedImageURL })).then(
           (data) => {
-            console.log(data);
+            // console.log(data);
             if (data?.payload?.success) {
               //this if the sucess is true, the image file is set to null, the form data is set to the initial form data and the open create product is set to false basically to reset the form
               dispatch(fetchAllProducts());
@@ -172,6 +173,7 @@ const AdminProducts = () => {
             isEditMode={currentEditedId !== null}
           />
 
+        
           {/* This is the commonform component */}
           <div className="py-6">
             <CommonForm

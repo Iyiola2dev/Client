@@ -1,5 +1,8 @@
 import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "@/store/shop/products-slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,28 +15,51 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sortOptions } from "@/config/Index";
 import { useNavigate } from "react-router-dom";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // The shopProducts is coming from my redux store
   
-  const { productList } = useSelector((state) => state.shopProducts);
 
+  const { productList } = useSelector((state) => state.shopProducts);
+  const { user } = useSelector((state) => state.auth);
   const [sort, setSort] = useState("price-low-high"); // Default sort value
   const [category, setCategory] = useState(""); // Optional: Set initial category if needed
+  const  {toast} = useToast();
+
 
   // Handle sort option changes and fetch sorted products
   const handleSort = (value) => {
     setSort(value);
-    dispatch(fetchAllFilteredProducts({ category, sort: value })); // Fetch products with the new sort
+    dispatch(fetchAllFilteredProducts({ category, sort: value }));
   };
 
-function handleGetProductDetails (getCurrentProductId){
-console.log(getCurrentProductId);
-}
+  
 
+  function handleGetProductDetails(getCurrentProductId) {
+    dispatch(fetchProductDetails(getCurrentProductId));
+    navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
+    console.log(`Navigating to: /product/${getCurrentProductId}`);
+  }
+
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title : "Product is added to cart",
+        })
+      }
+    });
+  }
 
   // Fetch products on initial load with default sort and category
   useEffect(() => {
@@ -69,14 +95,36 @@ console.log(getCurrentProductId);
         </div>
 
         {/* Product Count */}
-        <div>{productList.length} Products</div>
+        {/* <div className="flex gap-2 justify-center items-center">
+        
+          <div className="flex gap-4 text-sm font-bold text-[#ffdb8a]">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <p
+                key={i + 1}
+                onClick={() => handlePageChange(i + 1)}
+                className={`hover:text-green-900 px-3 py-2 cursor-pointer ${
+                  currentPage === i + 1 ? "text-green-500" : ""
+                }`}
+              >
+                {i + 1}
+              </p>
+            ))}
+          </div>
+
+          <div>{productList.length} Products</div>
+        </div> */}
       </div>
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
         {productList && productList.length > 0
           ? productList.map((productItem, index) => (
-              <ShoppingProductTile key={index} product={productItem} handleGetProductDetails={handleGetProductDetails} />
+              <ShoppingProductTile
+                key={index}
+                product={productItem}
+                handleGetProductDetails={handleGetProductDetails}
+                handleAddtoCart={handleAddtoCart}
+              />
             ))
           : null}
       </div>

@@ -9,7 +9,7 @@ const AdminProductTile = ({
   setOpenCreateProduct,
   handleDelete,
 }) => {
-  console.log("AdminProductTile product:", product);
+  // console.log("AdminProductTile product:", product);
   return (
     <div>
       {/* This card is to get the product information */}

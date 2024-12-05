@@ -13,6 +13,7 @@ import ForCouples from "@/components/shopping/ForCouples";
 import AllProducts from "@/components/shopping/AllProducts";
 import Footer from "@/components/footer/Footer";
 import ProductDetails from "@/components/shopping/productDetails/ProductDetails";
+import Cartview from "@/components/cart/Cartview";
 
 const Shopping = () => {
   return (
@@ -33,6 +34,7 @@ const Shopping = () => {
           <Route path="/for-women" element={<ForWomen />} />
           <Route path="/for-couple" element={<ForCouples/>} />
           <Route path="/all-products" element={<AllProducts/>} />
+          <Route path="/cart" element={<Cartview/>} />
           <Route path = "/product/:id" element={<ProductDetails/>} />
           <Route />
           <Route />

@@ -4,7 +4,7 @@ import LandingQuestion from "./TherapyLandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
 import TeenButton from "@/components/ui/teenButton";
 import "../../index.css";
-import React, { useState } from "react";
+import  { useState } from "react";
 import RestrictionModal from "./RestrictionModal";
 import { motion, AnimatePresence } from "framer-motion";
 

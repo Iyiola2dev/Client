@@ -3,15 +3,12 @@ import axios from "axios";
 import api from "./api";
 // import * as jwt_decode from "jwt-decode";
 
-
 // Initial state
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
-    user: null,
-  };
-
-
+  user: null,
+};
 
 // Register user
 export const registerUser = createAsyncThunk(
@@ -108,7 +105,7 @@ const authSlice = createSlice({
     },
 
     //I don't need this action in the auth slice
-    
+
     // setIntendedRoute: (state, action) => {
     //   state.intendedRoute = action.payload;
     // },

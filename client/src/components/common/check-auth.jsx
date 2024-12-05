@@ -1,19 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 //This is still a dummy work in progress
 const CheckAuth = ({ isAuthenticated, user, children }) => {
   const location = useLocation();
-  console.log(location.pathname, isAuthenticated);
-  //This is when the user is not authenticated and is not on the login or register page he get a redirection back to the login page
-  // Redirect unauthenticated users to login, except on login/register pages
-  // if (
-  //   !isAuthenticated &&
-  //   !location.pathname.includes("/login") &&
-  //   !location.pathname.includes("/register")
-  // ) {
-  //   return <Navigate to="/auth/login" />;
-  // }
+
+ 
 
   if (
     !isAuthenticated &&
@@ -22,17 +14,24 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
     return <Navigate to="/auth/login" />;
   }
 
+  useEffect(()=>{
+    if(!isAuthenticated){
+      // Save the last route
+      localStorage.setItem("lastAttemptedUrl", location.pathname);
+    }
+  }, [isAuthenticated, location.pathname])
 
   if (isAuthenticated) {
     if (
       location.pathname === "/auth/login" ||
       location.pathname === "/auth/register"
     ) {
+      const lastAttemptedURL = localStorage.getItem("lastAttemptedURL");
       if (user?.role === "admin") {
         return <Navigate to="/admin/dashboard" />;
 
       } else {
-        return <Navigate to="/therapy" />;
+        return <Navigate to={lastAttemptedURL ||"/therapy"  } replace/>;
       }
 
 

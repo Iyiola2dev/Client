@@ -23,11 +23,11 @@ const initialState = {
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
-  async ({ category = "", sort = "" }) => {
+  async ({ category = "", sort = "", limit = "" }) => {
     const result = await axios.get(
       "http://localhost:5000/api/shop/products/get",
       {
-        params: { category, sort }, // Send both category and sort as query parameters
+        params: { category, sort, limit }, // Send both category and sort as query parameters
       }
     );
     return result?.data; // Return the data to be stored in the state

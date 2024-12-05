@@ -42,7 +42,7 @@ const CommonForm = ({
                 ...formData,
                 [getControlItem.name]: e.target.value,
               });
-              console.log(formData);
+              
             }}
           />
         );
@@ -56,7 +56,7 @@ const CommonForm = ({
                 ...formData,
                 [getControlItem.name]: value,
               });
-              console.log(formData);
+             
             }}
             value={value}
           >
@@ -87,7 +87,7 @@ const CommonForm = ({
                 ...formData,
                 [getControlItem.name]: e.target.value,
               });
-              console.log(formData);
+             
             }}
             className="resize-none h-32" // Adjust height and disable resizing
           />
@@ -107,7 +107,7 @@ const CommonForm = ({
                 ...formData,
                 [getControlItem.name]: e.target.value,
               });
-              console.log(formData);
+             
             }}
           />
         );

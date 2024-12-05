@@ -19,15 +19,51 @@ const ProductImageUpload = ({
   const inputRef = useRef(null);
 
   // Function to handle changes in the file input
-  const handleImageFileChange = (e) => {
-    console.log(e.target.files);
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      //if the file is selected, the setImageFile function is called to update the selected image file state
-      setImageFile(selectedFile);
-      //   setuploadedImageURL(URL.createObjectURL(selectefFile));
-    }
+  // const handleImageFileChange = (e) => {
+  //   console.log("targetFile", e.target.files);
+  //   const selectedFile = Array.from(e.target.files)
+  //   setImageFile(selectedFile);
+  //   // if (selectedFile) {
+  //   //   //if the file is selected, the setImageFile function is called to update the selected image file state
+  //   //   setImageFile(selectedFile);
+  //   //   //   setuploadedImageURL(URL.createObjectURL(selectefFile));
+  //   // }
+
+  //   // for (let file of selectedFile) {
+  //   //   const fileData = file
+  //   //   console.log("file", fileData);
+  //   //   uploadImageToCloudinary(fileData);
+
+  //   selectedFile.forEach((file) => {
+  //     const fileData = file;
+  //     console.log("file", fileData);
+  //     uploadImageToCloudinary(fileData);
+  //   })
+
+  //   }
+  
+  const handleImageFileChange = async (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setImageFile(selectedFiles);
+
+    setImageLoadingState(true);
+    const uploadedURLs = await Promise.all(
+      selectedFiles.map((file) => uploadImageToCloudinary(file))
+    );
+    setImageLoadingState(false);
+
+    const validURLs = uploadedURLs.filter((url) => url !== null);
+    setUploadedImageURL(validURLs);
+
+    // Send the array of URLs to your backend
+    await axios.post("http://localhost:5000/api/admin/products/upload-image", {
+      imageUrls: validURLs,
+    });
   };
+
+  
+  
+
 
   // Function to handle drag over events
   const handleDragOver = (e) => {
@@ -53,14 +89,11 @@ const ProductImageUpload = ({
   };
 
   // This is the  Function to upload the image to Cloudinary
-  const uploadImageToCloudinary = async () => {
-    // Set the loading state to true
+  const uploadImageToCloudinary = async (imageFile) => {
     setImageLoadingState(true);
-    // Create a new FormData object
     const dataImage = new FormData();
-    // Append the image file to the FormData object
     dataImage.append("my_file", imageFile);
-    // Send a POST request to the server to upload the image
+    console.log("imageFile", imageFile);
     const response = await axios.post(
       "http://localhost:5000/api/admin/products/upload-image",
       dataImage,
@@ -84,9 +117,38 @@ const ProductImageUpload = ({
     // setUploadedImageURL(data.result.secure_url);
   };
 
+
+  // const uploadImageToCloudinary = async (imageFile) => {
+  //   try {
+  //     setImageLoadingState(true);
+  //     const dataImage = new FormData();
+  //     dataImage.append("my_file", imageFile);
+  
+  //     const response = await axios.post(
+  //       "http://localhost:5000/api/admin/products/upload-image",
+  //       dataImage,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  
+  //     if (response?.data?.success) {
+  //       setUploadedImageURL(response.data.result.url);
+  //     } else {
+  //       console.error("Image upload failed:", response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading image:", error);
+  //   } finally {
+  //     setImageLoadingState(false);
+  //   }
+  // };
+
   useEffect(() => {
     if (imageFile !== null) {
-      uploadImageToCloudinary();
+      uploadImageToCloudinary(imageFile);
     }
   }, [imageFile]);
 
@@ -108,6 +170,7 @@ const ProductImageUpload = ({
           id="image-upload" // Unique identifier for the input element
           type="file" // Specifies the input type as file
           className="hidden" //  this to hide the input element visually
+          multiple
           ref={inputRef} // Reference to the file input element
           onChange={handleImageFileChange} // Event handler for file selection changes
           disabled={isEditMode} // Disables the input element if the component is in edit mode

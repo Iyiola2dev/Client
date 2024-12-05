@@ -28,7 +28,7 @@ async function imageUploadUtil(file) {
 
 //here i will be using the multer instances
 const upload = multer({ storage });
-
+// const upload = multer({ storage: multer.memoryStorage() }).array('my_files', 10); // Adjust the field name and limit as needed
 
 /// Export the multer instance and upload utility
 export { upload, imageUploadUtil };

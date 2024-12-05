@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -11,9 +11,11 @@ import {
 } from "../ui/dropdown-menu";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sortOptions } from "@/config/Index";
+import { useNavigate } from "react-router-dom";
 
 const ForCouples = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { productList } = useSelector((state) => state.shopProducts);
 
   const [sort, setSort] = useState("price-low-high"); // Set default sort option
@@ -23,8 +25,12 @@ const ForCouples = () => {
     setSort(value);
   };
 
-  function handleGetProductDetails (getCurrentProductId){
-    console.log(getCurrentProductId);
+ 
+
+    function handleGetProductDetails(getCurrentProductId) {
+      dispatch(fetchProductDetails(getCurrentProductId));
+      navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
+      console.log(`Navigating to: /product/${getCurrentProductId}`);
     }
 
   // Fetch products for the "couples" category on initial load and on sort change

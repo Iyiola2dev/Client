@@ -6,8 +6,12 @@ const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (!isAuthenticated) {
-    // Save the intended route in localStorage
-    localStorage.setItem("intendedRoute", window.location.pathname);
+
+    // Save the last route
+    const currentRoute = window.location.pathname;
+    localStorage.setItem("lastAttemptedURL", currentRoute);
+  
+
     return <Navigate to="/auth/login" replace />;
   }
 

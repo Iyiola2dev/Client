@@ -6,7 +6,7 @@ const navigate = useNavigate()
 
 
 const handleEnter = () => {
-  navigate("/shop/home")
+  navigate("/auth/login")
 }
  
   return (
