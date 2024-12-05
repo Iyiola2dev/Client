@@ -1,10 +1,9 @@
-// Login.jsx
 import CommonForm from "@/components/common/Form";
 import { loginFormControls } from "@/config/index";
 import { useToast } from "@/hooks/use-toast";
 import { loginUser } from "@/store/auth-slice"; // Import the clearIntendedRoute action
 import { ArrowLeft } from "lucide-react";
-import  { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux"; // Import useSelector
 import { Link, useNavigate } from "react-router-dom";
 
@@ -18,18 +17,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-  
   const { toast } = useToast();
 
-  
   //I commented this codes out because it is not used in the Login component
 
-  const onSumbit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     dispatch(loginUser(formData)).then((data) => {
-     
       if (data?.payload?.success) {
         toast({ title: data?.payload?.message });
 
@@ -52,7 +47,8 @@ const Login = () => {
         });
       }
     });
-  
+
+    // console.log(formData);
   };
 
   return (
@@ -78,7 +74,7 @@ const Login = () => {
                 formControls={loginFormControls}
                 formData={formData}
                 setFormData={setFormData}
-                onSubmit={onSumbit}
+                onSubmit={onSubmit}
                 buttonText="Login"
                 borderRadius="rounded-full"
               />
