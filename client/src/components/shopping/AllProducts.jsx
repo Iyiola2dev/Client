@@ -15,62 +15,50 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sortOptions } from "@/config/Index";
 import { useNavigate } from "react-router-dom";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cardsPerPage = 16;
-
-  // The shopProducts is coming from my redux store
+  
 
   const { productList } = useSelector((state) => state.shopProducts);
-
-  // Track current page
-  const [currentPage, setCurrentPage] = useState(1);
-
-  // calculate total page
-  // Limit total pages to 3
-  const totalPages = Math.min(3, Math.ceil(productList.length / cardsPerPage));
-
-
-  // Get the cards to display based on the current page
-  const startIndex = (currentPage - 1) * cardsPerPage;
-  const currentCard = productList.slice(startIndex, startIndex + cardsPerPage);
-
+  const { user } = useSelector((state) => state.auth);
   const [sort, setSort] = useState("price-low-high"); // Default sort value
   const [category, setCategory] = useState(""); // Optional: Set initial category if needed
+  const  {toast} = useToast();
+
 
   // Handle sort option changes and fetch sorted products
   const handleSort = (value) => {
     setSort(value);
-    dispatch(fetchAllFilteredProducts({ category, sort: value })); // Fetch products with the new sort
+    dispatch(fetchAllFilteredProducts({ category, sort: value }));
   };
 
-  // Handle page change
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
-
-const handleNextPage = ()=>{
-  if(currentPage < totalPages){
-    setCurrentPage(currentPage + 1)
-  }
-}
-
-const  handlePreviousPage = ()=>{
-  if(currentPage > totalPages){
-    setCurrentPage(currentPage - 1)
-  }
-}
-
-
+  
 
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
     navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
     console.log(`Navigating to: /product/${getCurrentProductId}`);
+  }
+
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title : "Product is added to cart",
+        })
+      }
+    });
   }
 
   // Fetch products on initial load with default sort and category
@@ -107,10 +95,9 @@ const  handlePreviousPage = ()=>{
         </div>
 
         {/* Product Count */}
-        <div className="flex gap-2 justify-center items-center">
-       
-         {/* Page Numbers */}
-                 <div className="flex gap-4 text-sm font-bold text-[#ffdb8a]">
+        {/* <div className="flex gap-2 justify-center items-center">
+        
+          <div className="flex gap-4 text-sm font-bold text-[#ffdb8a]">
             {Array.from({ length: totalPages }, (_, i) => (
               <p
                 key={i + 1}
@@ -124,10 +111,8 @@ const  handlePreviousPage = ()=>{
             ))}
           </div>
 
-        <div>{productList.length} Products</div>
-        </div>
-       
-
+          <div>{productList.length} Products</div>
+        </div> */}
       </div>
 
       {/* Product Grid */}
@@ -138,6 +123,7 @@ const  handlePreviousPage = ()=>{
                 key={index}
                 product={productItem}
                 handleGetProductDetails={handleGetProductDetails}
+                handleAddtoCart={handleAddtoCart}
               />
             ))
           : null}

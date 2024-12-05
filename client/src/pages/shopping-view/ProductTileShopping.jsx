@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React from "react";
 
-const ShoppingProductTile = ({ product, handleGetProductDetails }) => {
+const ShoppingProductTile = ({ product, handleGetProductDetails, handleAddtoCart }) => {
  
   return (
     <div>
@@ -49,15 +49,16 @@ const ShoppingProductTile = ({ product, handleGetProductDetails }) => {
               ) : null}
             </div>
           </CardContent>
-          <CardFooter>
+        
+        </div>
+        <CardFooter>
             {/* <Button className="w-full rounded-full border-2 border-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)]"> Add to Cart</Button> */}
-            <button className="p-[2px] w-full rounded-full bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5]">
-              <span className="block w-full p-3 rounded-full bg-[#333333] hover:bg-transparent">
+            <button onClick={()=>handleAddtoCart(product?._id)} className="p-[2px] w-full rounded-full bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5]">
+              <span className="block w-full p-3 rounded-full bg-[rgb(51,51,51)] hover:bg-transparent">
                 Add to Cart
               </span>
             </button>
           </CardFooter>
-        </div>
       </Card>
     </div>
   );
