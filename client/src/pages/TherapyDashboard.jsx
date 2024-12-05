@@ -9,11 +9,14 @@ import ProtectedRoute from "@/auth/ProtectedRoute";
 import TherapistDetails from "./therapy/TherapistDetails";
 import TherapistInfo from "./therapy/Test";
 import TeenPage from "./therapy/teen/TeenPage";
-import TherapistCreation from "./admin-view/TherapistCreation";
+import TherapistCreation from "./admin-view/therapycreation/TherapistView";
 // import ModalComponent from "./therapy/ModalComponent";
 // import Scheduling from "./therapy/Scheduling";
 import Current from "./therapy/bookings/Current";
 import ScrollToTop from "./ScrollToTop";
+// import TherapistCard from "./admin-view/therapycreation/TherapistCard";
+import Therapists from "./admin-view/therapycreation/Therapists";
+import TherapistEdit from "./admin-view/therapycreation/TherapistEdit";
 
 const TherapyDashboard = () => {
   return (
@@ -59,7 +62,9 @@ const TherapyDashboard = () => {
             <Route path="/upload" element={<TherapistCreation />} />
             {/* <Route path="/bookings" element={<ModalComponent />} /> */}
             <Route path="/scheduling/*" element={<Current />} />
-            <Route path="/edit" element={<TherapistCreation />} />
+            <Route path="/edit" element={<Therapists />} />
+            <Route path="/edit/:id" element={<TherapistCreation />} />
+            <Route path="/editTherapist/:id" element={<TherapistEdit />} />
           </Routes>
         </div>
         <Footer />
