@@ -65,7 +65,7 @@ const Login = () => {
                 <h2 className="border-b">Home</h2>
               </Link>
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground text-white mx-10 mt-5">
+            <h1 className="list-item-text-3 text-3xl font-bold tracking-tight text-foreground text-white mx-10 mt-5">
               Welcome Back!
             </h1>
             {/* Login Form Component */}
@@ -91,7 +91,7 @@ const Login = () => {
                 </Link>
               </p>
               <p className="mx-2 text-sm">
-                <span>Forgot your password?</span>{" "}
+                <span className="list-item-text-3">Forgot your password?</span>{" "}
                 <Link className="text-blue-600 ml-2" to="/auth/forgot-password">
                   Reset it
                 </Link>

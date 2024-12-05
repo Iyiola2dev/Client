@@ -6,6 +6,12 @@ import AdminProducts from "./Products";
 import AdminOrder from "./Order";
 import AdminFeatures from "./Features";
 
+import TherapistEdit from "./therapycreation/TherapistEdit";
+import TherapistCreate from "./therapycreation/TherapistCreate";
+import Therapists from "./therapycreation/Therapists";
+import TherapistCreation from "./therapycreation/TherapistView";
+
+
 const Admin = () => {
   return (
     <div>
@@ -16,6 +22,10 @@ const Admin = () => {
           <Route path="/products" element={<AdminProducts />} />
           <Route path="/orders" element={<AdminOrder />} />
           <Route path="/features" element={<AdminFeatures />} />
+           <Route path="/edit" element={<Therapists />} />
+            <Route path="/edit/:id" element={<TherapistCreation />} />
+            <Route path="/editTherapist/:id" element={<TherapistEdit />} />
+            <Route path="/add-therapist/" element={<TherapistCreate />} />
         </Routes>
       </AdminLayout>
     </div>

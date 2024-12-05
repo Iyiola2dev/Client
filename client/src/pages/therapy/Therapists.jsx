@@ -14,9 +14,18 @@ const Therapists = () => {
     dispatch(getAllTherapists());
   }, [dispatch]);
 
-  if (loading) return <p className="text-center font-bold mt-12">Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+   if (loading)
+     return (
+       <div className="h-[80vh] flex flex-col items-center justify-center">
+         <p className="text-center font-bold text-3xl">Loading...</p>
+         <div className="mt-4 border-t-4 border-blue-500 border-solid rounded-full w-12 h-12 animate-spin"></div>
+       </div>
+     );
 
+   if (error) {
+     return <p>Error: {typeof error === "string" ? error : error.message}</p>;
+   }
+   
   // Check if therapists is an array before mapping
   return (
     <div className="flex flex-wrap gap-5 my-10 justify-center">

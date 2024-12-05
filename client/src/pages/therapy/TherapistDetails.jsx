@@ -67,17 +67,14 @@ const TherapistDetails = () => {
 
   if (loading)
     return (
-      <p className="text-center font-bold text-xl pt-14 pb-8">
-        Loading Therapist details...
-      </p>
+      <div className="h-[80vh] flex flex-col items-center justify-center">
+        <p className="text-center font-bold text-3xl">Loading...</p>
+        <div className="mt-4 border-t-4 border-blue-500 border-solid rounded-full w-12 h-12 animate-spin"></div>
+      </div>
     );
+
   if (error) {
-    console.log("Error message:", error.message);
-    return (
-      <p className="text-center font-bold text-2xl py-10">
-        {error.message || "An error occurred"}
-      </p>
-    );
+    return <p>Error: {typeof error === "string" ? error : error.message}</p>;
   }
 
   const handleScheduling = () => {
@@ -107,9 +104,9 @@ const TherapistDetails = () => {
           <div className="lg:flex justify-start gap-3">
             <div>
               <img
-                src={therapist?.imageUrl || "https://via.placeholder.com/150"}
+                src={therapist?.imageUrl || "default-image.jpg"}
                 alt="therapist"
-                className="w-50 h-50 m-auto rounded-full lg:w-64 lg:h-64"
+                className="w-[250px] h-[250px] md:w-36 md:h-36 lg:w-[200px] lg:h-[200px] mb-4 rounded-full border-4 border-gray-300 object-cover mx-auto"
               />
             </div>
 

@@ -1,94 +1,115 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { IoCameraReverseOutline } from "react-icons/io5";
 import { updateTherapist } from "@/store/therapy/therapist-slice";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "react-router-dom";
+import useImageUpload from "../image-upload/UseImage";
 
+const TherapistEdit = ({ therapistData: propTherapistData }) => {
+  const location = useLocation();
+  const locationTherapistData = location.state?.therapistData;
 
-const TherapistEdit = ({ therapistData }) => {
-  const [therapist, setTherapist] = useState(therapistData || {});
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(
-    therapistData?.imageUrl || ""
+  const [therapist, setTherapist] = useState(
+    locationTherapistData || propTherapistData || {}
   );
-  const [isLoading, setIsLoading] = useState(false); // State for loading
+
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
-  const { toast } = useToast(); // Initialize the useToast hook
+  const {
+    imageFile,
+    uploadedImageURL,
+    isLoading: isImageUploading,
+    handleImageChange,
+    uploadImage,
+    setImageFile,
+    setUploadedImageURL,
+  } = useImageUpload("http://localhost:5000/api/admin/products/upload-image");
 
-  // Handle input changes
+  useEffect(() => {
+    if (imageFile) {
+      uploadImage();
+    }
+  }, [imageFile]);
+
+  useEffect(() => {
+    if (uploadedImageURL) {
+      setTherapist((prev) => ({ ...prev, imageUrl: uploadedImageURL }));
+    }
+  }, [uploadedImageURL]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTherapist({ ...therapist, [name]: value });
   };
 
-  // Handle image selection
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedImage(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  // Handle image deletion
-  const handleDeleteImage = () => {
-    setSelectedImage(null);
-    setImagePreview("");
-    setTherapist({ ...therapist, imageUrl: "" }); // Remove image URL from data
-  };
+  try {
+    // Retrieve the token from localStorage
+    const token = localStorage.getItem("token");
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true); // Show loading state
-
-    // Prepare form data if there's a new image
-    const formData = new FormData();
-    if (selectedImage) {
-      formData.append("image", selectedImage);
+    if (!token) {
+      throw new Error("Authentication token not found. Please log in again.");
     }
 
-    // Add therapist data to the form
-    Object.keys(therapist).forEach((key) => {
-      formData.append(key, therapist[key]);
-    });
+    const updatedData = { ...therapist, imageUrl: uploadedImageURL };
 
-    try {
-      // Dispatch the updateTherapist thunk
-      dispatch(updateTherapist(formData));
+    // Dispatch the thunk with the token and data
+    const updateResponse = await dispatch(
+      updateTherapist({ data: updatedData, token })
+    ).unwrap();
 
-      // Show success toast
+    if (updateResponse.success) {
       toast({
         title: "Success!",
         description: "Changes saved successfully!",
-        status: "success", // 'success' status
+        status: "success",
         duration: 5000,
-        isClosable: true,
       });
 
       window.history.back();
-    } catch (error) {
-      // Show error toast
-      toast({
-        title: "Error!",
-        description: "Failed to save changes.",
-        status: "error", // 'error' status
-        duration: 5000,
-        isClosable: true,
-      });
-    } finally {
-      setIsLoading(false); // Hide loading state
+    } else {
+      throw new Error(updateResponse.message || "Failed to save changes.");
     }
+  } catch (error) {
+    let errorMessage = "Failed to save changes.";
+    if (error.response) {
+      console.error("Server Error:", error.response.data);
+      errorMessage =
+        error.response.data?.message ||
+        `Server Error: ${error.response.statusText} (${error.response.status})`;
+    } else if (error.request) {
+      console.error("No Response Received:", error.request);
+      errorMessage = "No response from the server. Please try again later.";
+    } else {
+      console.error("Error:", error.message);
+      errorMessage = error.message || "An unexpected error occurred.";
+    }
+
+    toast({
+      title: "Error!",
+      description: errorMessage,
+      status: "error",
+      duration: 5000,
+    });
+  }
+};
+
+
+  const handleDeleteImage = () => {
+    setImageFile(null);
+    setUploadedImageURL("");
+    setTherapist((prev) => ({ ...prev, imageUrl: "" }));
   };
 
-  const goBack = () => {
-    window.history.back();
-  };
+  const goBack = () => window.history.back();
 
   return (
-    <div className="py-20">
+    <div className="py-10">
       {/* Back Button */}
       <div className="block mb-8 lg:ml-14 ">
         <button onClick={goBack}>
@@ -99,35 +120,51 @@ const TherapistEdit = ({ therapistData }) => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-[90vw] lg:w-1/2 bg-white p-10 rounded-lg shadow-md">
           {/* Image and Upload/Delete Buttons */}
-          <div className="flex flex-col lg:flex-row justify-between items-center mb-6">
-            <div className="relative h-[180px] w-[180px] bg-slate-200 rounded-full border-4 border-slate-200 overflow-hidden">
+          <div className="flex flex-col items-center mb-6">
+            <div className="relative h-32 w-32 lg:w-44 lg:h-44 rounded-full border-2 border-gray-300 overflow-hidden">
+              {/* Display the image */}
               <img
-                src={imagePreview || "https://via.placeholder.com/180"}
-                alt="therapist"
+                src={
+                  uploadedImageURL ||
+                  therapist.imageUrl ||
+                  "https://via.placeholder.com/180"
+                }
+                alt="Therapist Avatar"
                 className="object-cover w-full h-full"
               />
-              <label
-                htmlFor="upload"
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 text-white p-2 rounded-full cursor-pointer"
+
+              {/* Camera icon overlay, visible only when no image is uploaded */}
+              {!(uploadedImageURL || therapist.imageUrl) && (
+                <label
+                  htmlFor="upload"
+                  className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 text-white text-sm cursor-pointer"
+                >
+                  <IoCameraReverseOutline className="w-8 h-8 p-1 rounded-full bg-blue-500 " />
+                </label>
+              )}
+            </div>
+
+            <div className="flex items-center justify-center gap-8">
+              {/* Button for Uploading New Image */}
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                onClick={() => document.getElementById("upload").click()}
+                type="button"
               >
-                <IoCameraReverseOutline className="w-8 h-8" />
-              </label>
+                Upload New
+              </button>
+
+              {/* Hidden input field for file selection */}
               <input
                 type="file"
                 id="upload"
                 className="hidden"
-                onChange={handleImageUpload}
+                onChange={(e) => handleImageChange(e.target.files[0])}
               />
-            </div>
-            <div className="flex gap-4 mt-4 lg:mt-0">
-              <label
-                htmlFor="upload"
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md cursor-pointer"
-              >
-                Upload New
-              </label>
+
+              {/* Button for Deleting the Image */}
               <button
-                className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md"
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"
                 onClick={handleDeleteImage}
                 type="button"
               >
@@ -190,7 +227,7 @@ const TherapistEdit = ({ therapistData }) => {
                 <input
                   type="text"
                   name="phone"
-                  value={therapist.phone || ""}
+                  value={therapist.mobile || ""}
                   onChange={handleInputChange}
                   placeholder="+234"
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -283,10 +320,11 @@ const TherapistEdit = ({ therapistData }) => {
                   onChange={handleInputChange}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option>18-25</option>
-                  <option>26-35</option>
-                  <option>36-45</option>
-                  <option>46-55</option>
+                  <option>18-28</option>
+                  <option>28-38</option>
+                  <option>38-48</option>
+                  <option>48-58</option>
+                  <option>59+</option>
                 </select>
               </div>
             </div>
@@ -322,14 +360,17 @@ const TherapistEdit = ({ therapistData }) => {
             </div>
 
             {/* Submit Button */}
-            <div className="text-center mt-6">
-              <button
-                type="submit"
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
-              >
-                {isLoading ? "Saving Changes..." : "Save Changes"}
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={isImageUploading}
+              className={`w-full px-4 py-2 text-white rounded-md ${
+                isImageUploading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500"
+              }`}
+            >
+              {isImageUploading ? "Uploading Image..." : "Save Changes"}
+            </button>
           </form>
         </div>
       </div>

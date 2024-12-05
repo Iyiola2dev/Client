@@ -144,7 +144,7 @@ export const TherapyCards = ({ therapist }) => {
 
               <div className="text-center md:text-left block md:hidden lg:hidden">
                 <a
-                  onClick={handleViewAvailabilityClick} // Handle the click to navigate to the modal
+                  onClick={handleViewAvailabilityClick}
                   className="text-sm lg:text-md text-blue-600 underline cursor-pointer"
                 >
                   View Availability
@@ -159,11 +159,14 @@ export const TherapyCards = ({ therapist }) => {
           <Calendar
             onChange={handleDateChange}
             value={selectedDate}
+            className="rounded-lg shadow-md bg-white p-4"
             tileClassName={({ date }) => {
               const isSelectedDate =
                 selectedDate &&
                 date.toDateString() === selectedDate.toDateString();
-              return isSelectedDate ? "highlight-selected" : "";
+              return isSelectedDate
+                ? "bg-blue-500 text-white font-semibold"
+                : "hover:bg-gray-100 text-gray-700";
             }}
           />
 
@@ -181,9 +184,9 @@ export const TherapyCards = ({ therapist }) => {
             </a>
           </div>
 
-          <div className="text-center md:text-left ">
+          <div className="text-center md:text-left">
             <a
-              onClick={handleViewAvailabilityClick} // Handle the click to navigate to the modal
+              onClick={handleViewAvailabilityClick}
               className="text-sm lg:text-md text-blue-600 underline cursor-pointer"
             >
               View Availability
