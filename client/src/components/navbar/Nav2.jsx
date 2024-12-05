@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,27 +19,35 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { FaUserCog } from "react-icons/fa";
 import { LogOut, UserCog } from "lucide-react";
 import { logoutUser } from "@/store/auth-slice";
+import { fetchCartItems } from "@/store/shop/cart-slice";
 
 function HeaderRightContent() {
   const { user } = useSelector((state) => state.auth);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logoutUser());
   };
+
+  useEffect(() => {
+    dispatch(fetchCartItems(user?.id));
+  }, [dispatch]);
+
+ 
   return (
     <div>
       <div className="flex justify-end items-center gap-3 text-2xl text-white">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Avatar className="bg-white">
+            <Avatar className="bg-white cursor-pointer">
               <AvatarFallback className="bg-white text-lg bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5]  p-2 border border-white">
                 {user?.userName[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" className="w-56">
+          <DropdownMenuContent side="bottom" className="w-56">
             <DropdownMenuLabel>Logged In as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate("/shop/account")}>
@@ -47,7 +55,7 @@ function HeaderRightContent() {
               Account
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </DropdownMenuItem>
@@ -61,8 +69,12 @@ function HeaderRightContent() {
 const Nav2 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const { cartItems } = useSelector((state) => state.shopCart);
+  const navigate = useNavigate();
 
-  
+  const handleCartNavigate = () => {
+    navigate("/shop/cart");
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -74,6 +86,8 @@ const Nav2 = () => {
 
   //This is for if the use user is authenticated
   const { isAuthenticated } = useSelector((state) => state.auth);
+
+  // console.log(cartItems, "cartItems");
 
   return (
     <div>
@@ -91,8 +105,11 @@ const Nav2 = () => {
           <div className="flex justify-end items-center gap-3 text-2xl text-white">
             <IoLogoWhatsapp />
             <FaRegHeart />
-            <div> <MdOutlineShoppingCart /></div>
-           
+            <div className="cursor-pointer" onClick={handleCartNavigate}>
+              <MdOutlineShoppingCart
+                
+              />
+            </div>
           </div>
         </div>
 
@@ -174,6 +191,7 @@ const Nav2 = () => {
                 </Button>
               </div>
               <div className="hidden lg:block">
+                
                 <div>
                   {isAuthenticated ? (
                     <div>
@@ -226,15 +244,26 @@ const Nav2 = () => {
             </button>
 
             <nav className="flex flex-col gap-4">
-
-            <div className="flex justify-start">
-                <div>
+              <div className="flex justify-between items-center">
+                
+                <div className="flex justify-start">
                   {isAuthenticated ? (
                     <div>
                       <HeaderRightContent />
                     </div>
                   ) : null}
                 </div>
+
+
+{/* cart icon */}
+                <div className="flex  items-center gap-3 text-2xl text-white">
+           
+            <div className="cursor-pointer" onClick={handleCartNavigate } >
+              <MdOutlineShoppingCart
+                
+              />
+            </div>
+          </div>
               </div>
               <Link
                 to="/shop/home"
