@@ -14,6 +14,7 @@ import AllProducts from "@/components/shopping/AllProducts";
 import Footer from "@/components/footer/Footer";
 import ProductDetails from "@/components/shopping/productDetails/ProductDetails";
 import Cartview from "@/components/cart/Cartview";
+import ShopAbout from "./ShopAbout";
 
 const Shopping = () => {
   return (
@@ -36,6 +37,7 @@ const Shopping = () => {
           <Route path="/all-products" element={<AllProducts/>} />
           <Route path="/cart" element={<Cartview/>} />
           <Route path = "/product/:id" element={<ProductDetails/>} />
+          <Route path = "/about" element={<ShopAbout/>} />
           <Route />
           <Route />
         </Routes>
