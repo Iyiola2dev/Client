@@ -7,7 +7,7 @@ import { addProduct, deleteProduct, editProduct, fetchAllProduct, handleImageUpl
 
 router.post("/upload-image", upload.single("my_file"), handleImageUpload);
 
-// router.post("/upload-images", upload.array("my_files", 10), handleImageUpload);
+
   
 router.post("/add", addProduct);
 router.get("/get", fetchAllProduct);

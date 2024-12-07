@@ -41,7 +41,7 @@ const AllProducts = () => {
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
     navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
-    console.log(`Navigating to: /product/${getCurrentProductId}`);
+    // console.log(`Navigating to: /product/${getCurrentProductId}`);
   }
 
   function handleAddtoCart(getCurrentProductId) {

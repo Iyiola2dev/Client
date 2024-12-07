@@ -53,7 +53,7 @@ const AdminProducts = () => {
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
   //this is to get the product list and the adminProduct is the reducer name
-  const { productList } = useSelector((state) => state.adminProducts);
+  const { productList, isLoading } = useSelector((state) => state.adminProducts);
   const dispatch = useDispatch();
 
   //this is a loading state
@@ -103,6 +103,7 @@ const AdminProducts = () => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
+
   // Function to handle delete
   const handleDelete = (getCurrentProductId) => {
     console.log(getCurrentProductId, "getCurrentProductId");
@@ -119,7 +120,15 @@ const AdminProducts = () => {
     });
   };
 
-  console.log(productList.data, uploadedImageURL, "productList");
+  if (isLoading)
+    return (
+      <div className="h-[80vh] flex flex-col items-center justify-center">
+        <p className="text-center font-bold text-3xl">Loading...</p>
+        <div className="mt-4 border-t-4 border-blue-500 border-solid rounded-full w-12 h-12 animate-spin"></div>
+      </div>
+    );
+
+  // console.log(productList.data, uploadedImageURL, "productList");
   return (
     <>
       <div className="mb-5 flex w-full justify-end">

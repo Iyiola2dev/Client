@@ -1,23 +1,26 @@
 import { ArrowLeftIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CartContent from "./CartContent";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "@/store/shop/products-slice";
+import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
 
 const Cartview = () => {
   const navigate = useNavigate();
-  const { cartItems } = useSelector((state) => state.shopCart);
+  const dispatch = useDispatch();
 
-  // const totalCartAmount =
-  //   cartItems && cartItems.length > 0
-  //     ? cartItems.reduce(
-  //         (sum, currentItem) =>
-  //           sum +
-  //           (currentItem?.sales > 0 ? currentItem?.sales : currentItem?.price) *
-  //             currentItem?.quantity, 0
-  //       )
-  //     : 0;
-  //     console.log(totalCartAmount);
+  const { productList } = useSelector((state) => state.shopProducts);
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const [sort, setSort] = useState("price-low-high"); // Set default sort option
+
+  // Handle sorting change
+  const handleSort = (value) => {
+    setSort(value);
+  };
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
@@ -37,6 +40,17 @@ const Cartview = () => {
   const handleNavigate = () => {
     navigate("/shop/all-products");
   };
+
+  function handleGetProductDetails(getCurrentProductId) {
+    dispatch(fetchProductDetails(getCurrentProductId));
+    navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
+    console.log(`Navigating to: /product/${getCurrentProductId}`);
+  }
+
+  // Fetch products for the "couples" category on initial load and on sort change
+  useEffect(() => {
+    dispatch(fetchAllFilteredProducts({ category: "", sort, limit: 4 }));
+  }, [dispatch, sort]);
 
   return (
     <div className="p-2 lg:p-7 xl:px-[7rem] bg-[#252525]">
@@ -58,7 +72,7 @@ const Cartview = () => {
             }
           />
         </div>
-        <div className="flex-1 text-white bg-black py-8 px-2">
+        <div className="flex-1 text-white bg-black py-8 px-2 h-fit">
           <div className="py-2">
             <span>Cart Summary</span>
           </div>
@@ -98,6 +112,43 @@ const Cartview = () => {
             <button className="w-full bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] px-5 py-2 rounded-xl">
               Checkout
             </button>
+          </div>
+        </div>
+      </div>
+
+
+{/* This is the second section of the page */}
+      <div className="mt-10 flex flex-col justify-center items-center text-white">
+        <h2>YOU MAY ALSO LIKE</h2>
+        <div>
+          <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 ">
+            {productList && productList.length > 0
+              ? productList.map((productItem, index) => (
+                  <ShoppingProductTile
+                    key={index}
+                    product={productItem}
+                    handleGetProductDetails={handleGetProductDetails}
+                  />
+                ))
+              : null}
+          </div>
+        </div>
+      </div>
+
+      {/* second */}
+      <div className="mt-10 flex flex-col justify-center items-center text-white">
+        <h2>YOU MAY ALSO LIKE</h2>
+        <div>
+          <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 ">
+            {productList && productList.length > 0
+              ? productList.map((productItem, index) => (
+                  <ShoppingProductTile
+                    key={index}
+                    product={productItem}
+                    handleGetProductDetails={handleGetProductDetails}
+                  />
+                ))
+              : null}
           </div>
         </div>
       </div>

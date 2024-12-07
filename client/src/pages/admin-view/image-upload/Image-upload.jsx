@@ -8,62 +8,55 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductImageUpload = ({
   imageFile, // Prop for the selected image file
-  setImageFile, // Function to update the selected image file state
+  setImageFile,
   uploadedImageURL, // Prop for the uploaded image URL
   setUploadedImageURL, // Function to update the uploaded image URL state
-  setImageLoadingState, // Function to update the loading state
-  imageLoadingState, // Prop for the loading state
+  setImageLoadingState,
+  imageLoadingState,
   isEditMode, // This prop is used to determine if the component is in edit mode
 }) => {
   // Creating a reference for the file input element
   const inputRef = useRef(null);
 
   // Function to handle changes in the file input
-  // const handleImageFileChange = (e) => {
-  //   console.log("targetFile", e.target.files);
-  //   const selectedFile = Array.from(e.target.files)
-  //   setImageFile(selectedFile);
-  //   // if (selectedFile) {
-  //   //   //if the file is selected, the setImageFile function is called to update the selected image file state
-  //   //   setImageFile(selectedFile);
-  //   //   //   setuploadedImageURL(URL.createObjectURL(selectefFile));
-  //   // }
+  const handleImageFileChange = (e) => {
+    console.log("targetFile", e.target.files);
+    // const selectedFile = Array.from(e.target.files)
+    const selectedFile = e.target.files?.[0];
+    console.log("selectedFile", selectedFile);
+    // setImageFile(selectedFile);
+    if (selectedFile) {
+      //if the file is selected, the setImageFile function is called to update the selected image file state
+      setImageFile(selectedFile);
+      //   setuploadedImageURL(URL.createObjectURL(selectefFile));
+    }
 
-  //   // for (let file of selectedFile) {
-  //   //   const fileData = file
-  //   //   console.log("file", fileData);
-  //   //   uploadImageToCloudinary(fileData);
-
-  //   selectedFile.forEach((file) => {
-  //     const fileData = file;
-  //     console.log("file", fileData);
-  //     uploadImageToCloudinary(fileData);
-  //   })
-
-  //   }
-  
-  const handleImageFileChange = async (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setImageFile(selectedFiles);
-
-    setImageLoadingState(true);
-    const uploadedURLs = await Promise.all(
-      selectedFiles.map((file) => uploadImageToCloudinary(file))
-    );
-    setImageLoadingState(false);
-
-    const validURLs = uploadedURLs.filter((url) => url !== null);
-    setUploadedImageURL(validURLs);
-
-    // Send the array of URLs to your backend
-    await axios.post("http://localhost:5000/api/admin/products/upload-image", {
-      imageUrls: validURLs,
-    });
+    console.log("selectedFile2", selectedFile);
+    // selectedFile.forEach((file) => {
+    //   const fileData = file;
+    //   console.log("file", fileData);
+    //   uploadImageToCloudinary(fileData);
+    // })
   };
 
-  
-  
+  // const handleImageFileChange = async (e) => {
+  //   const selectedFiles = Array.from(e.target.files);
+  //   setImageFile(selectedFiles);
 
+  //   setImageLoadingState(true);
+  //   const uploadedURLs = await Promise.all(
+  //     selectedFiles.map((file) => uploadImageToCloudinary(file))
+  //   );
+  //   setImageLoadingState(false);
+
+  //   const validURLs = uploadedURLs.filter((url) => url !== null);
+  //   setUploadedImageURL(validURLs);
+
+  //   // Send the array of URLs to your backend
+  //   await axios.post("http://localhost:5000/api/admin/products/upload-image", {
+  //     imageUrls: validURLs,
+  //   });
+  // };
 
   // Function to handle drag over events
   const handleDragOver = (e) => {
@@ -93,7 +86,7 @@ const ProductImageUpload = ({
     setImageLoadingState(true);
     const dataImage = new FormData();
     dataImage.append("my_file", imageFile);
-    console.log("imageFile", imageFile);
+
     const response = await axios.post(
       "http://localhost:5000/api/admin/products/upload-image",
       dataImage,
@@ -108,43 +101,13 @@ const ProductImageUpload = ({
       console.log(response.data);
       setUploadedImageURL(response.data.result.url);
 
+
       // Set the loading state to false
       setImageLoadingState(false);
     }
-    // // Parse the JSON response
-    // const data = await response.json();
-    // // Update the uploaded image URL state with the URL of the uploaded image
-    // setUploadedImageURL(data.result.secure_url);
+
   };
 
-
-  // const uploadImageToCloudinary = async (imageFile) => {
-  //   try {
-  //     setImageLoadingState(true);
-  //     const dataImage = new FormData();
-  //     dataImage.append("my_file", imageFile);
-  
-  //     const response = await axios.post(
-  //       "http://localhost:5000/api/admin/products/upload-image",
-  //       dataImage,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  
-  //     if (response?.data?.success) {
-  //       setUploadedImageURL(response.data.result.url);
-  //     } else {
-  //       console.error("Image upload failed:", response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error uploading image:", error);
-  //   } finally {
-  //     setImageLoadingState(false);
-  //   }
-  // };
 
   useEffect(() => {
     if (imageFile !== null) {
@@ -170,7 +133,7 @@ const ProductImageUpload = ({
           id="image-upload" // Unique identifier for the input element
           type="file" // Specifies the input type as file
           className="hidden" //  this to hide the input element visually
-          multiple
+          // multiple
           ref={inputRef} // Reference to the file input element
           onChange={handleImageFileChange} // Event handler for file selection changes
           disabled={isEditMode} // Disables the input element if the component is in edit mode

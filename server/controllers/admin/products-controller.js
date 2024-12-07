@@ -11,6 +11,21 @@ export const handleImageUpload = async (req, res) => {
         message: "No file uploaded",
       });
     }
+
+    //This to check the file size
+    if (req.file.size > 10 * 1024 * 1024) {
+      return res
+        .status(400)
+        .send({ status: "error", message: "File size exceeds 10 MB" });
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/we"];
+    if (!allowedTypes.includes(req.file.mimetype)) {
+      return res
+        .status(400)
+        .send({ status: "error", message: "Unsupported file type" });
+    }
+
     //This is to convert to a based64
     const b64 = Buffer.from(req.file.buffer).toString("base64");
 
