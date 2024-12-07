@@ -10,6 +10,7 @@ import scheduleRouter from "./routes/therapy/schedule-routes.js";
 import adminProductRouter from "./routes/admin/products-routes.js";
 import shopProductsRouter from "./routes/shop/products-route.js";
 import shopCartRouter from "./routes/shop/cart-routes.js";
+import shopAddressRouter from "./routes/shop/address-route.js";
 import { upload, imageUploadUtil } from "./helpers/cloudinary.js";
 
 dotenv.config();
@@ -47,54 +48,55 @@ app.use("/api/schedule", scheduleRouter);
 app.use("/api/admin/products", adminProductRouter);
 app.use("/api/shop/products", shopProductsRouter);
 app.use("/api/shop/cart", shopCartRouter);
+app.use("/api/shop/address", shopAddressRouter);
 
 // Cloudinary Upload API
-app.post("/api/upload", upload.single("file"), async (req, res) => {
-  if (!req.file) {
-    return res
-      .status(400)
-      .send({ status: "error", message: "No file uploaded" });
-  }
+// app.post("/api/upload", upload.single("file"), async (req, res) => {
+//   if (!req.file) {
+//     return res
+//       .status(400)
+//       .send({ status: "error", message: "No file uploaded" });
+//   }
 
-  try {
-    // Validate file type and size
-    if (req.file.size > 10 * 1024 * 1024) {
-      return res
-        .status(400)
-        .send({ status: "error", message: "File size exceeds 10 MB" });
-    }
+//   try {
+//     // Validate file type and size
+//     if (req.file.size > 10 * 1024 * 1024) {
+//       return res
+//         .status(400)
+//         .send({ status: "error", message: "File size exceeds 10 MB" });
+//     }
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-    if (!allowedTypes.includes(req.file.mimetype)) {
-      return res
-        .status(400)
-        .send({ status: "error", message: "Unsupported file type" });
-    }
+//     const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+//     if (!allowedTypes.includes(req.file.mimetype)) {
+//       return res
+//         .status(400)
+//         .send({ status: "error", message: "Unsupported file type" });
+//     }
 
-    // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(
-      `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
-      { resource_type: "auto" }
-    );
+//     // Upload to Cloudinary
+//     const result = await cloudinary.uploader.upload(
+//       `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+//       { resource_type: "auto" }
+//     );
 
-    res
-      .status(200)
-      .send({
-        status: "success",
-        message: "File uploaded successfully",
-        url: result.secure_url,
-      });
-  } catch (error) {
-    console.error("Cloudinary upload error:", error.stack || error);
-    res
-      .status(500)
-      .send({
-        status: "error",
-        message: "Failed to upload file",
-        error: error.message,
-      });
-  }
-});
+//     res
+//       .status(200)
+//       .send({
+//         status: "success",
+//         message: "File uploaded successfully",
+//         url: result.secure_url,
+//       });
+//   } catch (error) {
+//     console.error("Cloudinary upload error:", error.stack || error);
+//     res
+//       .status(500)
+//       .send({
+//         status: "error",
+//         message: "Failed to upload file",
+//         error: error.message,
+//       });
+//   }
+// });
 
 
 // Start the server
