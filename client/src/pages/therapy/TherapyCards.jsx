@@ -23,16 +23,17 @@ export const TherapyCards = ({ therapist }) => {
 
   // Handle date selection from the calendar
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    // Format the date to ISO format (only the date part) to avoid time issues
+    const formattedDate = date.toISOString().split("T")[0];
+    setSelectedDate(formattedDate); // Store the date without the time part
   };
 
   // Filter the time slots for the selected date
   const getTimeSlots = () => {
     if (selectedDate && therapist.openings) {
-      const formattedSelectedDate = selectedDate.toISOString().split("T")[0];
-
+      // Ensure selectedDate is in YYYY-MM-DD format (it already is)
       const openingForSelectedDate = therapist.openings.find(
-        (opening) => opening.day === formattedSelectedDate
+        (opening) => opening.day === selectedDate // Compare only the date part
       );
 
       if (openingForSelectedDate && openingForSelectedDate.times) {
@@ -163,7 +164,7 @@ export const TherapyCards = ({ therapist }) => {
             tileClassName={({ date }) => {
               const isSelectedDate =
                 selectedDate &&
-                date.toDateString() === selectedDate.toDateString();
+                date.toISOString().split("T")[0] === selectedDate; // Compare only the date part (YYYY-MM-DD)
               return isSelectedDate
                 ? "bg-blue-500 text-white font-semibold"
                 : "hover:bg-gray-100 text-gray-700";
