@@ -178,11 +178,14 @@ export const TherapyCards = ({ therapist }) => {
           )}
 
           <div className="playfair-display-select md:mt-4">
-            <a href="/therapy/testpage">
-              <button className="mt-4 text-black border p-2 rounded-lg border-slate-300 ">
+            
+              <button
+                onClick={handleViewAvailabilityClick}
+                className="mt-4 text-black border p-2 rounded-lg border-slate-300 "
+              >
                 More
               </button>
-            </a>
+         
           </div>
 
           <div className="text-center md:text-left">
