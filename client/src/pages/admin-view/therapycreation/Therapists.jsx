@@ -30,9 +30,9 @@ const Therapists = () => {
       </div>
     );
 
- if (error) {
-   return <p>Error: {typeof error === "string" ? error : error.message}</p>;
- }
+  if (error) {
+    return <p>Error: {typeof error === "string" ? error : error.message}</p>;
+  }
 
   return (
     <div className="relative flex items-center justify-center my-10 lg:my-5">
@@ -45,6 +45,10 @@ const Therapists = () => {
         >
           <IoAdd className="w-6 h-6" />
         </button>
+
+        {/* <p>
+          <a href="/admin/multiple">Multiple</a>
+        </p> */}
       </div>
 
       {/* Therapists Grid */}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewTherapist } from "@/store/therapy/therapist-slice";
-import { FiUser } from "react-icons/fi";
+// import { FiUser } from "react-icons/fi";
 import { useDropzone } from "react-dropzone";
 import useImageUpload from "../image-upload/UseImage";
 import { FaArrowLeftLong } from "react-icons/fa6";
