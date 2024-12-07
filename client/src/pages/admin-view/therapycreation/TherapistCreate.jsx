@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewTherapist } from "@/store/therapy/therapist-slice";
-import { FiUser } from "react-icons/fi";
+// import { FiUser } from "react-icons/fi";
 import { useDropzone } from "react-dropzone";
 import useImageUpload from "../image-upload/UseImage";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -140,25 +140,27 @@ const TherapistCreate = () => {
             <label className="text-lg font-medium">
               Upload Profile Picture
             </label>
-            <div
-              {...getRootProps()}
-              className={`border-2 border-dashed p-4 rounded cursor-pointer text-center ${
-                isDragActive ? "border-blue-500" : "border-gray-300"
-              }`}
-            >
-              <input {...getInputProps()} />
-              {imageFile ? (
-                <div>
-                  <img
-                    src={URL.createObjectURL(imageFile)}
-                    alt="Preview"
-                    className="mx-auto mb-2 h-24 w-24 rounded-full object-cover"
-                  />
-                  <p>Click to change the image</p>
-                </div>
-              ) : (
-                <p>Drag & drop an image here, or click to select</p>
-              )}
+            <div className="flex justify-center items-center ">
+              <div
+                {...getRootProps()}
+                className={`border-2 border-dashed rounded cursor-pointer text-center 
+              ${isDragActive ? "border-blue-500" : "border-gray-300"} 
+              w-48 h-48 p-4 flex justify-center items-center`}
+              >
+                <input {...getInputProps()} />
+                {imageFile ? (
+                  <div>
+                    <img
+                      src={URL.createObjectURL(imageFile)}
+                      alt="Preview"
+                      className="mx-auto mb-2 h-24 w-24 rounded-full object-cover"
+                    />
+                    <p>Click to change the image</p>
+                  </div>
+                ) : (
+                  <p>Drag & drop an image here, or click to select</p>
+                )}
+              </div>
             </div>
           </div>
 

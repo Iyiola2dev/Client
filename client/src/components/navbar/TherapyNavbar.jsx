@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {  IoCloseSharp, IoHome, IoPerson } from "react-icons/io5";
 import {  MdOutlineMenuBook } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Assuming React Router is used for navigation
 
   const [isOpen, setIsOpen] = useState(false);
 
