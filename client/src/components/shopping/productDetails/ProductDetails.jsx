@@ -1,37 +1,52 @@
 import { Button } from "@/components/ui/button";
 import { fetchProductDetails } from "@/store/shop/products-slice";
-import { ArrowLeftIcon, StarIcon } from "lucide-react";
+import { ArrowLeftIcon, StarIcon, MinusIcon, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import {
+  addToCart,
+  fetchCartItems,
+  updateCartQuantity,
+} from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
-  const [isOpen, setIsOpen] = useState(false)
- 
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const { productDetails } = useSelector((state) => state.shopProducts);
-  
+
+  const { user } = useSelector((state) => state.auth);
+  const { toast } = useToast();
+
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title: "Product is added to cart",
+        });
+      }
+    });
+  }
 
   useEffect(() => {
     dispatch(fetchProductDetails(id));
   }, [dispatch, id]);
 
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+  const handleOpenDescription = () => {
+    setIsOpen(!isOpen);
   };
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const handleOpenDescription = ()=>{
-    setIsOpen(!isOpen)
-  }
 
   return (
     <main className="list-item-text-3 bg-[#252525] text-white">
@@ -55,12 +70,8 @@ const ProductDetails = () => {
               alt=""
             />
           </div> */}
-          <div >
-            <img
-              
-              src={productDetails?.image}
-              alt=""
-            />
+          <div>
+            <img src={productDetails?.image} alt="" />
           </div>
         </div>
 
@@ -88,36 +99,31 @@ const ProductDetails = () => {
           {/* Quantity */}
 
           <div className="flex items-center gap-4">
-            {/* Quantity Controls */}
-            <div className="flex  items-center border border-white w-[7rem] h-[3rem]   bg-black">
-              <button onClick={decreaseQuantity} className="border-r px-3">
-                -
-              </button>
-              <span className="px-4 py-1 text-white">{quantity}</span>
-              <button onClick={increaseQuantity} className="border-l px-3">
-                +
-              </button>
-            </div>
-
             {/* Add to Cart Button */}
-            <button className=" w-[7rem] h-[3rem] bg-black text-white border border-pink-500 rounded-md hover:bg-pink-500 hover:text-black">
+            <button
+              onClick={() => handleAddtoCart(productDetails?._id)}
+              className=" w-[7rem] h-[3rem] bg-black text-white border border-pink-500 rounded-md hover:bg-pink-500 hover:text-black"
+            >
               Add to cart
             </button>
           </div>
 
           {/* buy now */}
-          <div className="w-fit">
-            <button className="p-2  rounded bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] w-[10rem] lg:w-[17rem]">
+          <div className="w-full">
+            <button className="p-2 w-full  rounded bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] ">
               Buy Now
             </button>
           </div>
         </div>
       </div>
 
-{/* This div is basically the description div */}
-      <div className="flex gap-2  items-center justify-start md:justify-end p-7 lg:text-3xl " onClick={handleOpenDescription}>
+      {/* This div is basically the description div */}
+      <div
+        className="flex gap-2  items-center justify-start md:justify-end p-7 lg:text-3xl "
+        onClick={handleOpenDescription}
+      >
         <h3>Description</h3>
-        <MdOutlineKeyboardArrowDown/>
+        <MdOutlineKeyboardArrowDown />
       </div>
     </main>
   );

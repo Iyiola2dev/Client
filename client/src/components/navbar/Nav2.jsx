@@ -121,7 +121,7 @@ const Nav2 = () => {
                 <Link to="/shop/home">Home</Link>
               </li>
               <li className="text-white hover:text-[#C42571]">
-                <Link to="/about">About Us</Link>
+                <Link to="/shop/about">About Us</Link>
               </li>
 
               {/* Products Dropdown */}
@@ -273,7 +273,7 @@ const Nav2 = () => {
                 Home
               </Link>
               <Link
-                to="/about"
+                to="/shop/about"
                 className="hover:text-[#C42571]"
                 onClick={toggleMenu}
               >

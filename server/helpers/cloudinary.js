@@ -15,11 +15,7 @@ const storage = new multer.memoryStorage();
 
 //And this is the function that will return the result
 async function imageUploadUtil(file) {
-   //I made a mistake by using the UploadStream.upload method instead of the uploader.upload method i didn't remove the UploadStream.upload method i just commented it out so i don't forget my mistake and i can learn from it. So the correct method is the uploader.upload method and not the UploadStream.upload method
 
-//   const result = await cloudinary.UploadStream.upload(file, {
-//     resource_type: "auto",
-//   });
   const result = await cloudinary.uploader.upload(file, {
     resource_type: "auto",
   });
@@ -28,7 +24,7 @@ async function imageUploadUtil(file) {
 
 //here i will be using the multer instances
 const upload = multer({ storage });
-// const upload = multer({ storage: multer.memoryStorage() }).array('my_files', 10); // Adjust the field name and limit as needed
+
 
 /// Export the multer instance and upload utility
 export { upload, imageUploadUtil };

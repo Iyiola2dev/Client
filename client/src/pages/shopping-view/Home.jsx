@@ -6,23 +6,41 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ShoppingProductTile from "./ProductTileShopping";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const ShoppingHome = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { productList } = useSelector((state) => state.shopProducts);
+  const { user } = useSelector((state) => state.auth);
+  const { toast } = useToast();
 
   const [sort, setSort] = useState("price-low-high"); // Set default sort option
 
   // Handle sorting change
-  const handleSort = (value) => {
-    setSort(value);
-  };
 
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
     navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
-    console.log(`Navigating to: /product/${getCurrentProductId}`);
+    // console.log(`Navigating to: /product/${getCurrentProductId}`);
+  }
+
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title: "Product is added to cart",
+        });
+      }
+    });
   }
 
   // Fetch products for the "couples" category on initial load and on sort change
@@ -75,6 +93,7 @@ const ShoppingHome = () => {
                     key={index}
                     product={productItem}
                     handleGetProductDetails={handleGetProductDetails}
+                    handleAddtoCart={handleAddtoCart}
                   />
                 ))
               : null}

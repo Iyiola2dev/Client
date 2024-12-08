@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
-import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "@/store/shop/products-slice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -12,11 +15,17 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { sortOptions } from "@/config/Index";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 
 const ForWomen = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const { productList, productDetails } = useSelector((state) => state.shopProducts);
+  const navigate = useNavigate();
+  const { productList, productDetails } = useSelector(
+    (state) => state.shopProducts
+  );
+  const { user } = useSelector((state) => state.auth);
+  const { toast } = useToast();
 
   const [sort, setSort] = useState("price-low-high"); // Set default sort option
 
@@ -28,7 +37,24 @@ const ForWomen = () => {
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
     navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
-    console.log(`Navigating to: /product/${getCurrentProductId}`);
+    // console.log(`Navigating to: /product/${getCurrentProductId}`);
+  }
+
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title: "Product is added to cart",
+        });
+      }
+    });
   }
 
   // Fetch products for the "women" category on initial load and on sort change
@@ -36,7 +62,7 @@ const ForWomen = () => {
     dispatch(fetchAllFilteredProducts({ category: "women", sort }));
   }, [dispatch, sort]);
 
-  console.log(productDetails, "productDetails");
+  // console.log(productDetails, "productDetails");
 
   return (
     <div className="bg-black h-auto flex flex-col justify-center w-full">
@@ -82,6 +108,7 @@ const ForWomen = () => {
                 key={index}
                 product={productItem}
                 handleGetProductDetails={handleGetProductDetails}
+                handleAddtoCart={handleAddtoCart}
               />
             ))
           : null}
