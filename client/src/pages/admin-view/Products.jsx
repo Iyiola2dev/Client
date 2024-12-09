@@ -21,6 +21,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
+import MultiImageUpload from "./therapycreation/Multiple";
 
 
 
@@ -172,6 +173,8 @@ const AdminProducts = () => {
           </SheetHeader>
           {/* The image upLoad component */}
           {/* The props is passed to the productimageupload component */}
+
+
           <ProductImageUpload
             imageFile={imageFile}
             setImageFile={setImageFile}
@@ -181,6 +184,9 @@ const AdminProducts = () => {
             imageLoadingState={imageLoadingState}
             isEditMode={currentEditedId !== null}
           />
+
+          {/* <MultiImageUpload/> */}
+
 
         
           {/* This is the commonform component */}

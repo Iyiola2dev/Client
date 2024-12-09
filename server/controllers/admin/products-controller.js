@@ -47,47 +47,83 @@ export const handleImageUpload = async (req, res) => {
   }
 };
 
-// export const handleImageUpload = async (req, res) => {
-//   try {
-//     // Check if there are no files uploaded
-//     if (!req.files || req.files.length === 0) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "No files uploaded",
-//       });
-//     }
+export const handleImageUploads = async (req, res) => {
+  try {
+    // Check if there are no files uploaded
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No files uploaded",
+      });
+    }
 
-//     // Iterate over the array of files and upload each one
-//     const uploadPromises = req.files.map(async (file) => {
-//       const b64 = Buffer.from(file.buffer).toString("base64");
-//       const url = `data:${file.mimetype};base64,${b64}`;
-//       return await imageUploadUtil(url);
-//     });
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+    const results = [];
 
-//     // Wait for all uploads to complete
-//     const results = await Promise.all(uploadPromises);
+    // Handle multiple file uploads
+    const uploadPromises = req.files.map(async (file) => {
+      try {
+        // Validate file size (limit to 10 MB)
+        if (file.size > 10 * 1024 * 1024) {
+          throw new Error(`File size exceeds 10 MB for ${file.originalname}`);
+        }
 
-//     res.status(200).json({
-//       success: true,
-//       message: "Images uploaded successfully",
-//       results,
-//     });
-//   } catch (err) {
-//     console.error("Upload Error:", err);
-//     res.status(500).json({
-//       success: false,
-//       message: "Error occurred",
-//       error: err.message,
-//     });
-//   }
-// };
+        // Validate file type
+        if (!allowedTypes.includes(file.mimetype)) {
+          throw new Error(`Unsupported file type for ${file.originalname}`);
+        }
+
+        // Upload the file directly to Cloudinary (no need for base64 encoding)
+        const result = await imageUploadUtil(file);
+        results.push(result);
+      } catch (err) {
+        // Handle individual file errors, continue with other files
+        results.push({
+          file: file.originalname,
+          error: err.message,
+        });
+      }
+    });
+
+    // Wait for all file uploads to complete
+    await Promise.all(uploadPromises);
+
+    // Send the response with the results
+    res.status(200).json({
+      success: true,
+      message: "Images uploaded successfully",
+      results,
+    });
+  } catch (err) {
+    console.error("Upload Error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error occurred",
+      error: err.message,
+    });
+  }
+};
+
 
 // Add a New Product
 
 export const addProduct = async (req, res) => {
   try {
+    console.log(req.body, "req.body");
     const { image, name, description, category, types, price, stock, sales } =
       req.body;
+
+
+      // Validate required fields
+    if (!image || !name || !description || !category || !price || !stock) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required.",
+      });
+    }
+
+
+
     const newProduct = new Product({
       image,
       name,
