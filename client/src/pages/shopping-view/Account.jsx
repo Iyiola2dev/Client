@@ -31,13 +31,13 @@ const ShoppingAccount = () => {
     <div className="p-2 lg:p-7 xl:px-[5rem] bg-[#252525]">
       <div
         onClick={handleNavigate}
-        className="flex gap-1 py-3  h-fit items-center  text-[#D72B7E] text-sm lg:text-lg lg:font-semibold px-2 mb-4"
+        className="flex gap-1 py-3 w-fit h-fit items-center  text-[#D72B7E] text-sm lg:text-lg lg:font-semibold px-2 mb-4"
       >
         <ArrowLeftIcon className="h-4 w-4  lg:h-6 lg:w-6 " />
         <h3>Continue Shopping</h3>
       </div>
       <div className="flex flex-col  md:flex-row gap-5 justify-between ">
-        <div className="flex-1">
+        <div className="flex-1 ">
           <Address />
         </div>
 
@@ -62,7 +62,7 @@ const ShoppingAccount = () => {
             <span> ₦ {totalCartAmount}</span>
           </div>
 
-          {/*  */}
+        
 
           <div className="relative">
             <span>
@@ -77,7 +77,7 @@ const ShoppingAccount = () => {
             </button>
           </div>
 
-          {/* checkout button */}
+         
           <div className="mt-4">
             <button className="w-full bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] px-5 py-2 rounded-xl">
               Checkout

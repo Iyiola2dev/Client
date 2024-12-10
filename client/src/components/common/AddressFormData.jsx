@@ -10,11 +10,14 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
+
 const AddressFormData = ({
   formControls,
   formData,
   setFormData,
   onSubmit,
+  handleClearForm,
+  currentEditedId,
   
   // isBtnDisable,
 }) => {
@@ -30,9 +33,8 @@ const AddressFormData = ({
       case "input":
         element = (
           <Input
-          className="p-2 border-2 border-gray-100 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500"// Apply border radius class
+            className="p-2 border border-[#797979] rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500" // Apply border radius class
             name={getControlItem.name}
-            
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
             type={getControlItem.type}
@@ -58,7 +60,7 @@ const AddressFormData = ({
             }}
             value={value}
           >
-            <SelectTrigger className="p-2 border rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500">
+            <SelectTrigger className="p-2 border border-[#797979] rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500">
               <SelectValue placeholder={getControlItem.placeholder} />
             </SelectTrigger>
             <SelectContent>
@@ -86,15 +88,15 @@ const AddressFormData = ({
                 [getControlItem.name]: e.target.value,
               });
             }}
-            className="resize-none h-32 p-2 border rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
-             // Adjust height and disable resizing
+            className="resize-none h-32 p-2 border border-[#797979] rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
+            // Adjust height and disable resizing
           />
         );
         break;
       default:
         element = (
           <Input
-          className="p-2 border border-gray-100 rounded-lg bg-black text-white focus:outline-none focus:ring-2 focus:ring-gray-500" // Apply border radius class
+            className="p-2 border border-[#797979] rounded-lg bg-black text-white  " // Apply border radius class
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
@@ -125,22 +127,23 @@ const AddressFormData = ({
         ))}
       </div>
       <div className="flex justify-end gap-2 mt-2">
-      <Button
-        // disabled={isBtnDisable}
-        type="submit"
-        className=" w-[30%] p-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded"
-      >
-        Save
-      </Button>
-      <Button
-        // disabled={isBtnDisable}
-        type="submit"
-        className=" w-[30%] p-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded"
-      >
-        Cancel
-      </Button>
+        <Button
+          // disabled={isBtnDisable}
+       
+          type="submit"
+          className=" w-[30%] p-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded"
+        >
+          
+          {currentEditedId !== null ? "Edit " : "Save"}
+        </Button>
+        <Button
+          type="button"
+          onClick={handleClearForm}
+          className=" w-[30%] p-3 bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] rounded"
+        >
+          Cancel
+        </Button>
       </div>
-     
     </form>
   );
 };
