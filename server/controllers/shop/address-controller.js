@@ -31,9 +31,9 @@ export const addAddress = async (req, res) => {
       });
     }
 
-    const addressExist = await Address.findOne({ address, city})
-   
-    if(addressExist){
+    const addressExist = await Address.findOne({ address, city });
+
+    if (addressExist) {
       return res.status(400).json({
         success: false,
         message: "Address already exists .",
@@ -71,6 +71,7 @@ export const addAddress = async (req, res) => {
 
 export const fetchAllAddress = async (req, res) => {
   try {
+    // console.log("Request received. Params:", req.params); // Debug log
     const { userId } = req.params;
     if (!userId) {
       return res.status(400).json({
@@ -80,6 +81,7 @@ export const fetchAllAddress = async (req, res) => {
     }
 
     const addressList = await Address.find({ userId });
+    // console.log("Fetched addresses:", addressList); // Debug log
     res.status(200).json({
       success: true,
       data: addressList,
@@ -106,7 +108,7 @@ export const editAddress = async (req, res) => {
       });
     }
 
-    const updatedAddress = await Address.finsOneAndUpdate(
+    const updatedAddress = await Address.findOneAndUpdate(
       { _id: addressId, userId },
       formData,
       { new: true }
