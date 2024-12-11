@@ -138,7 +138,7 @@ const AdminProducts = () => {
         </Button>
       </div>
       {/* This is the product tile card */}
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 ">
+      <div className="grid gap-4 md:grid-cols-3  ">
         {productList?.data?.length > 0 ? (
           productList.data.map((productItem, i) => (
             <AdminProductTile
