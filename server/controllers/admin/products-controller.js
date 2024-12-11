@@ -57,7 +57,7 @@ export const handleImageUploads = async (req, res) => {
       });
     }
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     const results = [];
 
     // Handle multiple file uploads
