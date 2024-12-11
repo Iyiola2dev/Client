@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ShoppingProductTile from "./ProductTileShopping";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
+import ProductTileShop from "./ProductTileShop";
 
 const ShoppingHome = () => {
   const dispatch = useDispatch();
@@ -86,15 +87,22 @@ const ShoppingHome = () => {
         </h1>
 
         <div>
-          <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-4">
+          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-4">
             {productList && productList.length > 0
               ? productList.map((productItem, index) => (
-                  <ShoppingProductTile
-                    key={index}
-                    product={productItem}
-                    handleGetProductDetails={handleGetProductDetails}
-                    handleAddtoCart={handleAddtoCart}
-                  />
+                  // <ShoppingProductTile
+                  //   key={index}
+                  //   product={productItem}
+                  //   handleGetProductDetails={handleGetProductDetails}
+                  //   handleAddtoCart={handleAddtoCart}
+                  // />
+
+                  <ProductTileShop
+                  key={index}
+                  product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
+                  handleAddtoCart={handleAddtoCart}
+                />
                 ))
               : null}
           </div>
