@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React from "react";
@@ -21,6 +22,12 @@ const AdminProductTile = ({
               alt={product?.name}
               className="w-full h-[300px] object-cover rounded-t-lg"
             />
+
+            {product?.sales > 0 ? (
+              <Badge className="absolute top-1 left-2 bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5]">
+                Sale
+              </Badge>
+            ) : null}
           </div>
           {/* This is where all the card content will be stored */}
           <CardContent>
@@ -52,7 +59,7 @@ const AdminProductTile = ({
             >
               Edit
             </Button>
-            <Button onClick={()=>handleDelete(product._id)} >Delete</Button>
+            <Button onClick={() => handleDelete(product._id)}>Delete</Button>
           </CardFooter>
         </div>
       </Card>

@@ -8,14 +8,18 @@ import {
   fetchProductDetails,
 } from "@/store/shop/products-slice";
 import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
+import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 const Cartview = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+const {user} = useSelector((state)=> state.auth)
   const { productList } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector((state) => state.shopCart);
   const [sort, setSort] = useState("price-low-high"); // Set default sort option
+  const {toast} = useToast();
 
   // Handle sorting change
   const handleSort = (value) => {
@@ -41,10 +45,31 @@ const Cartview = () => {
     navigate("/shop/all-products");
   };
 
+  const handleCheckoutNavigate = () => {
+    navigate("/shop/checkout");
+  };
+
   function handleGetProductDetails(getCurrentProductId) {
     dispatch(fetchProductDetails(getCurrentProductId));
     navigate(`/shop/product/${getCurrentProductId}`); // Navigate to the product detail page
     console.log(`Navigating to: /product/${getCurrentProductId}`);
+  }
+
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title : "Product is added to cart",
+        })
+      }
+    });
   }
 
   // Fetch products for the "couples" category on initial load and on sort change
@@ -109,26 +134,35 @@ const Cartview = () => {
 
           {/* checkout button */}
           <div className="mt-4">
-            <button className="w-full bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] px-5 py-2 rounded-xl">
+            <button
+              onClick={handleCheckoutNavigate}
+              className="w-full bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] px-5 py-2 rounded-xl"
+            >
               Checkout
             </button>
           </div>
         </div>
       </div>
 
-
-{/* This is the second section of the page */}
+      {/* This is the second section of the page */}
       <div className="mt-10 flex flex-col justify-center items-center text-white">
         <h2>YOU MAY ALSO LIKE</h2>
         <div>
-          <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 ">
+          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 ">
             {productList && productList.length > 0
               ? productList.map((productItem, index) => (
-                  <ShoppingProductTile
-                    key={index}
-                    product={productItem}
-                    handleGetProductDetails={handleGetProductDetails}
-                  />
+                  // <ShoppingProductTile
+                  //   key={index}
+                  //   product={productItem}
+                  //   handleGetProductDetails={handleGetProductDetails}
+                  // />
+
+                  <ProductTileShop
+                  key={index}
+                  product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
+                  handleAddtoCart={handleAddtoCart}
+                />
                 ))
               : null}
           </div>
@@ -139,14 +173,21 @@ const Cartview = () => {
       <div className="mt-10 flex flex-col justify-center items-center text-white">
         <h2>YOU MAY ALSO LIKE</h2>
         <div>
-          <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 ">
+          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 ">
             {productList && productList.length > 0
               ? productList.map((productItem, index) => (
-                  <ShoppingProductTile
-                    key={index}
-                    product={productItem}
-                    handleGetProductDetails={handleGetProductDetails}
-                  />
+                     // <ShoppingProductTile
+                  //   key={index}
+                  //   product={productItem}
+                  //   handleGetProductDetails={handleGetProductDetails}
+                  // />
+
+                  <ProductTileShop
+                  key={index}
+                  product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
+                  handleAddtoCart={handleAddtoCart}
+                />
                 ))
               : null}
           </div>

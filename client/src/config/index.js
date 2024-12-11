@@ -131,5 +131,82 @@ export const registerFormControls = [
     {id: "title-z-a",  label: "Price:  Z - A"},
   ]
   
+
+
+  //The form control configuration for address form
+
+  export const addressFormControls = [
+    {
+      id: "address", 
+      name: "address",
+      label: "Address",
+      placeholder: "Enter your address",
+      componentType: "input",
+      type: "text",
+    },
+    {
+      id: "fullName",
+      name: "fullName",
+      label: "FullName",
+      placeholder: "Enter your name",
+      componentType: "input",
+      type: "text",
+    },
+    {
+      id: "email",
+      name: "email",
+      label: "Email",
+      placeholder: "Enter your email",
+      componentType: "input",
+      type: "text",
+    },
+    {
+      id: "city",
+      name: "city",
+      label: "City",
+      placeholder: "Enter your city",
+      componentType: "input",
+      type: "text",
+    },
+    {
+      id: "phoneNumber",
+      name: "phoneNumber",
+      label: "Phone Number",
+      placeholder: "Enter your phone number",
+      componentType: "input",
+      type: "text",
+    },
+    {
+      id: "additionalNumber",
+      name: "additionalNumber",
+      label: "Additional Number",
+      placeholder: "Enter an additional number",
+      componentType: "input",
+      type: "text",
+    },
+    {
+      id: "notesInformation",
+      name: "notesInformation",
+      label: "Notes Information",
+      placeholder: "Enter any additional notes",
+      componentType: "textarea",
+    },
+    {
+      id: "region",
+      name: "region",
+      label: "Region",
+      componentType: "select",
+      options: [
+        { id: "SelectRegion", value: "placeholder", label: "Select a region" },
+        { id: "north", value: "north", label: "North" },
+        { id: "south", value: "south", label: "South" },
+        { id: "east", value: "east", label: "East" },
+        { id: "west", value: "west", label: "West" },
+      ],
+    },
+  ];
+  
+  
+  
   
   

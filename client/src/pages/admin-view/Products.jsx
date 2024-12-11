@@ -21,6 +21,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
+import MultiImageUpload from "./therapycreation/Multiple";
 
 
 
@@ -137,7 +138,7 @@ const AdminProducts = () => {
         </Button>
       </div>
       {/* This is the product tile card */}
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 ">
+      <div className="grid gap-4 md:grid-cols-3  ">
         {productList?.data?.length > 0 ? (
           productList.data.map((productItem, i) => (
             <AdminProductTile
@@ -172,6 +173,8 @@ const AdminProducts = () => {
           </SheetHeader>
           {/* The image upLoad component */}
           {/* The props is passed to the productimageupload component */}
+
+
           <ProductImageUpload
             imageFile={imageFile}
             setImageFile={setImageFile}
@@ -181,6 +184,9 @@ const AdminProducts = () => {
             imageLoadingState={imageLoadingState}
             isEditMode={currentEditedId !== null}
           />
+
+          {/* <MultiImageUpload/> */}
+
 
         
           {/* This is the commonform component */}
