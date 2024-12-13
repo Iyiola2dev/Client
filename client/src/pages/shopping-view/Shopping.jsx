@@ -17,6 +17,9 @@ import Cartview from "@/components/cart/Cartview";
 import ShopAbout from "./ShopAbout";
 import AddressAccount from "@/components/shopping/address/Address-account";
 
+import AdminOrders from "../admin-view/Orders";
+import ShoppingOrder from "./ShoppingOrder";
+
 const Shopping = () => {
   return (
     <div>
@@ -40,6 +43,7 @@ const Shopping = () => {
           <Route path = "/product/:id" element={<ProductDetails/>} />
           <Route path = "/about" element={<ShopAbout/>} />
           <Route path = "/account/address" element={<AddressAccount/>} />
+          <Route path ="/shopping-order" element={<ShoppingOrder/>}/>
           
           <Route />
           <Route />
