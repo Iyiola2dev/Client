@@ -11,6 +11,7 @@ import adminProductRouter from "./routes/admin/products-routes.js";
 import shopProductsRouter from "./routes/shop/products-route.js";
 import shopCartRouter from "./routes/shop/cart-routes.js";
 import shopAddressRouter from "./routes/shop/address-route.js";
+import shopOrderRouter from "./routes/paystack/paystack.js"
 import { upload, imageUploadUtil } from "./helpers/cloudinary.js";
 
 dotenv.config();
@@ -49,6 +50,12 @@ app.use("/api/admin/products", adminProductRouter);
 app.use("/api/shop/products", shopProductsRouter);
 app.use("/api/shop/cart", shopCartRouter);
 app.use("/api/shop/address", shopAddressRouter);
+app.use('/api/shop/order', shopOrderRouter);
+
+// Base route
+app.get('/', (req, res) => {
+  res.send('Paystack Integration API is running');
+});
 
 // Cloudinary Upload API
 // app.post("/api/upload", upload.single("file"), async (req, res) => {
