@@ -25,7 +25,7 @@ const initialAddressFormData = {
   region: "",
 };
 
-const Address = () => {
+const Address = ({currentSelectedAddress,setCurrentSelectedAddress}) => {
   const [formData, setFormData] = useState(initialAddressFormData);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const dispatch = useDispatch();
@@ -109,7 +109,9 @@ const Address = () => {
 
 
 
-  //This to clear the formdata
+  // This to clear the formdata
+  
+  
   const handleClearForm = (e) => {
     e.preventDefault();
     setFormData(initialAddressFormData);
@@ -129,8 +131,8 @@ const Address = () => {
     dispatch(fetchAllAddress(user?.id));
   }, [dispatch]);
 
-  console.log(addressList, "addressList"); //debugging
-
+//   console.log(addressList, "addressList"); //debugging
+// console.log(currentSelectedAddress, "currentSelectedAddress"); //debugging
   return (
     <div>
       <Card className="text-white bg-black">
@@ -142,6 +144,8 @@ const Address = () => {
                   addressInfo={singleAddressItem}
                   handleDeleteAddress={handleDeleteAddress}
                   handleEditAddress={handleEditAddress}
+                  setCurrentSelectedAddress = {setCurrentSelectedAddress}
+                
                 />
               ))
             : null}
@@ -159,6 +163,7 @@ const Address = () => {
             onSubmit={handleManageAddress}
             handleClearForm={handleClearForm}
             currentEditedId={currentEditedId}
+           
             
             // isBtnDisable={isFormValid()}
           />

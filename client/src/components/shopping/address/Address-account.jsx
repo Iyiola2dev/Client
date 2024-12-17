@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { deleteAddress, fetchAllAddress } from '@/store/shop/address-slice';
+import { addNewAddress, deleteAddress, editAddress, fetchAllAddress } from '@/store/shop/address-slice';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import AddressCard from './AddressCard';
@@ -25,6 +25,7 @@ const AddressAccount = () => {
     const { toast } = useToast();
     const user = useSelector((state) => state.auth.user);
     const { addressList } = useSelector((state) => state.shopAddress);
+
 
     const handleEditAddress = (getCurrentAddress) => {
       
