@@ -8,8 +8,8 @@ import scheduleReducer from "./therapy/schedule-slice";
 
 import adminProductsSlice from "./admin/products-slice";
 import shopProductsSlice from "./shop/products-slice";
-import shopCartSlice from "./shop/cart-slice/index"
-
+import shopCartSlice from "./shop/cart-slice/index";
+import shopAddressSlice from "./shop/address-slice/index";
 
 // This store will be created on global reducer and it will hold all the application state
 // And I will be using redux toolkit to create the store and all the slices which will entail a lot of slices e.g AuthSlice, AdminSlice, ShoppingSlice, etc
@@ -26,8 +26,8 @@ const store = configureStore({
 
     adminProducts: adminProductsSlice,
     shopProducts: shopProductsSlice,
-    shopCart : shopCartSlice
-
+    shopCart: shopCartSlice,
+    shopAddress: shopAddressSlice,
   },
 });
 

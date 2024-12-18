@@ -20,6 +20,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
+import MultiImageUpload from "./therapycreation/Multiple";
 
 const initialFormData = {
   image: null,
@@ -105,7 +106,10 @@ const AdminProducts = () => {
           Add New Product
         </Button>
       </div>
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 ">
+
+      {/* This is the product tile card */}
+      <div className="grid gap-4 md:grid-cols-3  ">
+
         {productList?.data?.length > 0 ? (
           productList.data.map((productItem, i) => (
             <AdminProductTile
@@ -137,6 +141,7 @@ const AdminProducts = () => {
             </SheetTitle>
           </SheetHeader>
 
+
           <ProductImageUpload
             imageFile={imageFile}
             setImageFile={setImageFile}
@@ -150,23 +155,33 @@ const AdminProducts = () => {
             multiple={true} // Enable multiple uploads
           />
 
-          <div>
-            <h3 className="font-semibold my-2">Uploaded Image URLs:</h3>
-            {uploadedImageURLs.length > 0 ? (
-              uploadedImageURLs.map((url, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <img
-                    src={url}
-                    alt={`Uploaded ${index}`}
-                    className="h-16 w-16 object-cover"
-                  />
-                  <span className="text-sm">{url}</span>
-                </div>
-              ))
-            ) : (
-              <p className="text-sm text-gray-500">No images uploaded yet.</p>
-            )}
-          </div>
+
+
+// ADA
+//           <div>
+//             <h3 className="font-semibold my-2">Uploaded Image URLs:</h3>
+//             {uploadedImageURLs.length > 0 ? (
+//               uploadedImageURLs.map((url, index) => (
+//                 <div key={index} className="flex items-center space-x-2">
+//                   <img
+//                     src={url}
+//                     alt={`Uploaded ${index}`}
+//                     className="h-16 w-16 object-cover"
+//                   />
+//                   <span className="text-sm">{url}</span>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="text-sm text-gray-500">No images uploaded yet.</p>
+//             )}
+//           </div>
+
+
+          {/* <MultiImageUpload/> */}
+
+
+        
+          {/* This is the commonform component */}
 
           <div className="py-6">
             <CommonForm

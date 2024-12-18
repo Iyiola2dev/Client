@@ -6,6 +6,7 @@ import {
   IoLogoYoutube,
 } from "react-icons/io5";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -67,17 +68,12 @@ const Footer = () => {
 
           {/* category */}
           <div className="mt-8 flex gap-12  lg:w-1/2 lg:gap-[5rem] md:gap-[5rem]">
-            <div className="space-y-2">
+            <div className="space-y-2 flex flex-col">
               <h4 className="font-bold text-xl mb-6">Categories</h4>
-              <p>Vibrators</p>
-              <p>Dildos</p>
-              <p>Anal toys</p>
-              <p>Penis Rings</p>
-              <p>Pumps</p>
-              <p>Packers</p>
-              <p>Hannesses</p>
-              <p>Ben wa balls</p>
-              <p>Others</p>
+              <Link to="/shop/all-products">All Products</Link>
+              <Link to="/shop/for-couple">For Couples</Link>
+              <Link to="/shop/for-men">For Men</Link>
+              <Link to="/shop/for-women">For Women</Link>
             </div>
 
             <div className="lg:flex lg:gap-[4rem] md:flex md:gap-[5rem] ">

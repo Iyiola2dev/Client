@@ -15,6 +15,7 @@ import Footer from "@/components/footer/Footer";
 import ProductDetails from "@/components/shopping/productDetails/ProductDetails";
 import Cartview from "@/components/cart/Cartview";
 import ShopAbout from "./ShopAbout";
+import AddressAccount from "@/components/shopping/address/Address-account";
 
 const Shopping = () => {
   return (
@@ -38,6 +39,8 @@ const Shopping = () => {
           <Route path="/cart" element={<Cartview/>} />
           <Route path = "/product/:id" element={<ProductDetails/>} />
           <Route path = "/about" element={<ShopAbout/>} />
+          <Route path = "/account/address" element={<AddressAccount/>} />
+          
           <Route />
           <Route />
         </Routes>

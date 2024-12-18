@@ -57,7 +57,25 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
     }
   }
 
-  // Render children if no redirects are triggered
+
+  //This is too check if the user is not Admin and is trying to access the admin page
+  if (
+    isAuthenticated &&
+    user?.role !== "admin" &&
+    location.pathname.includes("/admin")
+  ) {
+    // return <Navigate to="/shop/home"/>
+    return <Navigate to="/unauth-page" />;
+  }
+  //This is to check the user is an admi user and trying to access the shopping page
+  if (
+    isAuthenticated &&
+    user?.role === "admin" &&
+    location.pathname.includes("/therapy" )
+  ) {
+    return <Navigate to="/admin/dashboard" />;
+  }
+
   return <div>{children}</div>;
 };
 

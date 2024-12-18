@@ -17,6 +17,7 @@ import { sortOptions } from "@/config/Index";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
 
 const ForWomen = () => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const ForWomen = () => {
   // console.log(productDetails, "productDetails");
 
   return (
-    <div className="bg-black h-auto flex flex-col justify-center w-full">
+    <div className="bg-[#252525] h-auto flex flex-col justify-center w-full">
       <div className="p-7 flex justify-center w-full">
         <img
           src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1730560793/Mern-Ecommerce/ForWomen_ymlkst.png"
@@ -101,15 +102,22 @@ const ForWomen = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
         {productList && productList.length > 0
           ? productList.map((productItem, index) => (
-              <ShoppingProductTile
-                key={index}
-                product={productItem}
-                handleGetProductDetails={handleGetProductDetails}
-                handleAddtoCart={handleAddtoCart}
-              />
+              // <ShoppingProductTile
+              //   key={index}
+              //   product={productItem}
+              //   handleGetProductDetails={handleGetProductDetails}
+              //   handleAddtoCart={handleAddtoCart}
+              // />
+
+              <ProductTileShop
+              key={index}
+              product={productItem}
+              handleGetProductDetails={handleGetProductDetails}
+              handleAddtoCart={handleAddtoCart}
+            />
             ))
           : null}
       </div>

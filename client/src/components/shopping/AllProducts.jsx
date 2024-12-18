@@ -17,6 +17,7 @@ import { sortOptions } from "@/config/Index";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
+import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -68,9 +69,10 @@ const AllProducts = () => {
 
   return (
     // #252525 this is the background color we're meant to use for the background
-    <div className="bg-black h-auto flex flex-col justify-center w-full">
+    <div className="bg-[#252525] h-auto flex flex-col justify-center w-full">
       <div className="p-7 flex justify-center items-center">
-        <h1 className="text-3xl font-bold text-white">All Products</h1>
+        <span className="text-3xl font-bold text-white">All Products</span>
+        <h1 ></h1>
       </div>
       <div className="flex justify-between text-white items-center px-7">
         {/* Sort Dropdown */}
@@ -116,10 +118,16 @@ const AllProducts = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7">
+      <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-7 md:gap-y-10">
         {productList && productList.length > 0
           ? productList.map((productItem, index) => (
-              <ShoppingProductTile
+              // <ShoppingProductTile
+              //   key={index}
+              //   product={productItem}
+              //   handleGetProductDetails={handleGetProductDetails}
+              //   handleAddtoCart={handleAddtoCart}
+              // />
+              <ProductTileShop
                 key={index}
                 product={productItem}
                 handleGetProductDetails={handleGetProductDetails}

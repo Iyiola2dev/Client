@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
-    image: { type: [String] }, // Correct syntax for an array of strings
+
+    image: { type: String },
+    // image: { type: [String], required: true }, //This allow me to store mutiple images
+
     name: { type: String, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },

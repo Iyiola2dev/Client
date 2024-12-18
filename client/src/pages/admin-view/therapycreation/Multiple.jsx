@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useMultiple from "../image-upload/UseMultiple";
 import { useToast } from "@/hooks/use-toast"; // Import your custom useToast hook
+import { Input } from "@/components/ui/input";
 
 const MultiImageUpload = ({ uploadUrl }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -28,7 +29,7 @@ const MultiImageUpload = ({ uploadUrl }) => {
     }
     setIsUploading(false); // Reset upload state
     setSelectedFiles([]); // Clear selected files
-    console.log("Upload canceled. Clearing selected files."); // Debugging
+    // console.log("Upload canceled. Clearing selected files."); // Debugging
   };
 
   // Upload all selected files
@@ -42,11 +43,11 @@ const MultiImageUpload = ({ uploadUrl }) => {
 
     for (const [index, file] of selectedFiles.entries()) {
       if (abortController.signal.aborted) {
-        console.log("Upload aborted."); // Debugging
+        // console.log("Upload aborted."); // Debugging
         break; // Stop the loop if the upload was aborted
       }
 
-      console.log(`Uploading file ${index + 1}/${selectedFiles.length}:`, file); // Debugging
+      // console.log(`Uploading file ${index + 1}/${selectedFiles.length}:`, file); // Debugging
       try {
         setImageFile(file);
         await uploadImage(abortController.signal); // Pass the signal to cancel
@@ -66,7 +67,7 @@ const MultiImageUpload = ({ uploadUrl }) => {
           description: `Failed to upload file ${file.name}.`,
           status: "error",
         });
-        console.error(`Error uploading file ${file.name}:`, error); // Debugging
+        // console.error(`Error uploading file ${file.name}:`, error); // Debugging
       }
     }
 
@@ -88,7 +89,15 @@ const MultiImageUpload = ({ uploadUrl }) => {
       <h2 className="text-lg font-bold mb-4">Upload Multiple Images</h2>
 
       {/* File Input */}
-      <input
+      {/* <input
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleFileChange}
+        className="mb-4"
+      /> */}
+
+      <Input
         type="file"
         accept="image/*"
         multiple
