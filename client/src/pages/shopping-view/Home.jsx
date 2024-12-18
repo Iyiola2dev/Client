@@ -9,6 +9,7 @@ import ShoppingProductTile from "./ProductTileShopping";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductTileShop from "./ProductTileShop";
+import { Button } from "@/components/ui/button";
 
 const ShoppingHome = () => {
   const dispatch = useDispatch();
@@ -56,17 +57,17 @@ const ShoppingHome = () => {
           alt=""
         />
       </div>
-      <div className="flex gap-4 justify-center items-center mx-auto mt-5 px-2 md:px-7 xl:px-[40px]">
+      <div className="flex gap-4 justify-center items-center mx-auto mt-5 px-2 py-5  md:px-7 xl:px-[40px]">
         <Link
           to="/shop/all-products "
           className="flex-1 xl:w-fit flex justify-end"
         >
-          <button className="w-full lg:w-[60%] bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] text-white px-4 py-2 md:px-1 rounded-full text-xs md:text-lg xl:py-4 xl:text-2xl">
+          <button className="w-full lg:w-[60%] bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] text-white px-4 py-2 md:px-1 rounded-full text-xs md:text-lg xl:py-4 xl:text-2xl hover:scale-105 transition-transform">
             ALL PRODUCT
           </button>
         </Link>
         <Link className="flex-1 xl:w-fit flex justify-start">
-          <button className="w-full lg:w-[60%] bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] text-white px-4 py-2 md:px-1 rounded-full text-xs md:text-lg xl:py-4 xl:text-2xl">
+          <button className="w-full lg:w-[60%] bg-gradient-to-b from-[#C42571] to-[#004DB5] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] text-white px-4 py-2 md:px-1 rounded-full text-xs md:text-lg xl:py-4 xl:text-2xl hover:scale-105 transition-transform">
             SELL A PRODUCT
           </button>
         </Link>
@@ -81,41 +82,91 @@ const ShoppingHome = () => {
       </div>
 
       {/* popular products */}
-      <div className="flex justify-center items-center flex-col mt-4">
-        <h1 className="text-white text-center p-5 md:w-[75%] lg:w-[60%] lg:text-2xl xl:text-3xl">
+      <div className="py-5">
+        <h2 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-white">
           Popular Products
-        </h1>
-
-        <div>
-          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4 py-4 px-4">
-            {productList && productList.length > 0
-              ? productList.map((productItem, index) => (
-                  // <ShoppingProductTile
-                  //   key={index}
-                  //   product={productItem}
-                  //   handleGetProductDetails={handleGetProductDetails}
-                  //   handleAddtoCart={handleAddtoCart}
-                  // />
-
-                  <ProductTileShop
-                  key={index}
-                  product={productItem}
-                  handleGetProductDetails={handleGetProductDetails}
-                  handleAddtoCart={handleAddtoCart}
-                />
-                ))
-              : null}
-          </div>
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-5 h-full">
+          {productList?.length > 0 ? (
+            productList.map((productItem, index) => (
+              <ProductTileShop
+                key={index}
+                product={productItem}
+                handleGetProductDetails={handleGetProductDetails}
+                handleAddtoCart={handleAddtoCart}
+              />
+            ))
+          ) : (
+            <p className="col-span-full text-center">No products available</p>
+          )}
         </div>
       </div>
 
+      {/*  */}
+      <section className="p-5 mt-5 flex flex-col justify-center items-center  ">
+        {/* first div */}
+        <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl xl:p-10">
+          <span>
+            <img
+              className="w-full h-auto xl:max-h-[700px] rounded-xl"
+              src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1731327526/Mern-Ecommerce/image_18_ff0jwm.png"
+              alt=""
+            />
+          </span>
+          <span className="flex flex-col gap-4 lg:w-[90%] justify-center items-center">
+            <h2 className="font-bold text-xl lg:text-3xl text-center">
+              Secret Spark
+            </h2>
+            <p className="text-center  lg:text-xl xl:w-[70%]">
+              This is a G-Spot Vibrator for Women with Rabbit Tapping Vibrator 3
+              in 1 Couple Vibrator Personal Massager,
+            </p>
+            <p className="text-center  lg:text-xl xl:w-[70%]">
+              【Unique Tapping Design】:The unique tapping design provides you
+              with the ultimate experience. This innovative vibrator not only
+              has a strong sense of design, but also allows you to experience
+              the best functions.
+            </p>
+
+            <button className="border border-[#C42571] hover:bg-gradient-to-b hover:from-[#C42571] hover:to-[#004DB5] py-3 lg:mt-9 rounded-full w-full xl:w-[50%]">
+              Shop Now
+            </button>
+          </span>
+        </div>
+
+        {/* third div */}
+        {/* <div className="flex flex-col-reverse md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl mt-5">
+                <span className="flex flex-col gap-4 ">
+                  <h2 className="font-bold text-xl lg:text-3xl text-center">
+                    Are you feeling overwhelmed by life’s challenges and struggling to
+                    find clarity?
+                  </h2>
+                  <p className="text-center  lg:text-xl">
+                    Life can sometimes feel confusing, and even exhausting. Whether
+                    it’s career stress, relationship struggles, or simply navigating
+                    the uncertainty of everyday life, it’s normal to feel stuck or
+                    down. If you’re feeling lost or weighed down, our therapy sessions
+                    are here to help you make sense of it all and regain control.
+                  </p>
+                </span>
+                <span>
+                  <img
+                    className="w-full h-auto"
+                    src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729790289/Mern-Ecommerce/Rectangle_25_m2t0k1.png"
+                    alt="image"
+                  />
+                </span>
+              </div>
+       */}
+      </section>
+
       {/* Second to the last section of the page */}
       <section className="flex flex-col justify-center items-center">
-        <div className="flex flex-col p-6 justify-center items-center text-center text-white md:w-[60%]">
-          <h2 className="lg:text-2xl">
+        <div className="flex flex-col p-6 xl:p-10 justify-center items-center text-center text-white md:w-[60%]">
+          <h2 className="lg:text-2xl xl:text-3xl">
             World Class Pleasure: Adult Sex Toy Store
           </h2>
-          <p className="lg:text-xl">
+          <p className="lg:text-xl xl:text-2xl xl:w-[70%]">
             Shop adult toys and discover world leading couples and solo pleasure
             products. We’re working hard to spread the joy of body-safe and
             eco-friendly [Company name] pleasure products around the globe. Our

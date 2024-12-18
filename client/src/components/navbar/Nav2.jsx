@@ -6,6 +6,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io5";
+import { FaFirstOrderAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -23,7 +24,7 @@ import { fetchCartItems } from "@/store/shop/cart-slice";
 
 function HeaderRightContent() {
   const { user } = useSelector((state) => state.auth);
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,7 +36,6 @@ function HeaderRightContent() {
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
 
- 
   return (
     <div>
       <div className="flex justify-end items-center gap-3 text-2xl text-white">
@@ -50,11 +50,19 @@ function HeaderRightContent() {
           <DropdownMenuContent side="bottom" className="w-56">
             <DropdownMenuLabel>Logged In as {user?.userName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
+            {/* Account */}
             <DropdownMenuItem onClick={() => navigate("/shop/account")}>
               <UserCog className="mr-2 h-4 w-4" />
               Account
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            {/* Order */}
+            <DropdownMenuItem onClick={() => navigate("/shop/shopping-order")}>
+              <FaFirstOrderAlt className="mr-2 h-4 w-4" />
+              Orders
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            {/* Log out */}
             <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               Logout
@@ -106,9 +114,7 @@ const Nav2 = () => {
             <IoLogoWhatsapp />
             <FaRegHeart />
             <div className="cursor-pointer" onClick={handleCartNavigate}>
-              <MdOutlineShoppingCart
-                
-              />
+              <MdOutlineShoppingCart />
             </div>
           </div>
         </div>
@@ -191,7 +197,6 @@ const Nav2 = () => {
                 </Button>
               </div>
               <div className="hidden lg:block">
-                
                 <div>
                   {isAuthenticated ? (
                     <div>
@@ -245,7 +250,6 @@ const Nav2 = () => {
 
             <nav className="flex flex-col gap-4">
               <div className="flex justify-between items-center">
-                
                 <div className="flex justify-start">
                   {isAuthenticated ? (
                     <div>
@@ -254,16 +258,12 @@ const Nav2 = () => {
                   ) : null}
                 </div>
 
-
-{/* cart icon */}
+                {/* cart icon */}
                 <div className="flex  items-center gap-3 text-2xl text-white">
-           
-            <div className="cursor-pointer" onClick={handleCartNavigate } >
-              <MdOutlineShoppingCart
-                
-              />
-            </div>
-          </div>
+                  <div className="cursor-pointer" onClick={handleCartNavigate}>
+                    <MdOutlineShoppingCart />
+                  </div>
+                </div>
               </div>
               <Link
                 to="/shop/home"

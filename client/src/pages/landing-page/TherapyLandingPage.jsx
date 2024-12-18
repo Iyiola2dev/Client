@@ -240,7 +240,7 @@ const LandingPage = () => {
               alt=""
             />
           </span>
-          <span className="flex flex-col gap-4 p-5">
+          <span className="flex flex-col gap-4 ">
             <h2 className="font-bold text-xl lg:text-3xl text-center">
               Are you a teen feeling sad and confused about life?
             </h2>
@@ -269,7 +269,7 @@ const LandingPage = () => {
 
         {/* third div */}
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl mt-5">
-          <span className="flex flex-col gap-4 p-5">
+          <span className="flex flex-col gap-4 ">
             <h2 className="font-bold text-xl lg:text-3xl text-center">
               Are you feeling overwhelmed by life’s challenges and struggling to
               find clarity?
