@@ -10,7 +10,7 @@ import TherapistEdit from "./therapycreation/TherapistEdit";
 import TherapistCreate from "./therapycreation/TherapistCreate";
 import Therapists from "./therapycreation/Therapists";
 import TherapistCreation from "./therapycreation/TherapistView";
-// import MultiImageUploader from "./therapycreation/Multiple";
+import MultiImageUploader from "./therapycreation/Multiple";
 
 const Admin = () => {
   return (
@@ -22,11 +22,13 @@ const Admin = () => {
           <Route path="/products" element={<AdminProducts />} />
           <Route path="/orders" element={<AdminOrder />} />
           <Route path="/features" element={<AdminFeatures />} />
-          <Route path="/edit" element={<Therapists />} />
-          <Route path="/edit/:id" element={<TherapistCreation />} />
-          <Route path="/editTherapist/:id" element={<TherapistEdit />} />
-          <Route path="/add-therapist/" element={<TherapistCreate />} />
-          {/* <Route path="/multiple" element={<MultiImageUploader />} /> */}
+
+           <Route path="/edit" element={<Therapists />} />
+            <Route path="/edit/:id" element={<TherapistCreation />} />
+            <Route path="/editTherapist/:id" element={<TherapistEdit />} />
+            <Route path="/add-therapist/" element={<TherapistCreate />} />
+            <Route path="/multiple" element={<MultiImageUploader />} />
+
         </Routes>
       </AdminLayout>
     </div>

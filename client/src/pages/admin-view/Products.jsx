@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config/index";
 
-
 import { useEffect, useState } from "react";
 import ProductImageUpload from "./image-upload/Image-upload";
 
@@ -23,11 +22,6 @@ import {
 import AdminProductTile from "./admin-view2/Product-tile";
 import MultiImageUpload from "./therapycreation/Multiple";
 
-
-
-
-
-//
 const initialFormData = {
   image: null,
   name: "",
@@ -41,79 +35,55 @@ const initialFormData = {
 };
 
 const AdminProducts = () => {
-  //this is the state to open the create product form
   const [openCreateProduct, setOpenCreateProduct] = useState(false);
-  //this is the state to store the form data
   const [formData, setFormData] = useState(initialFormData);
-  //this is the state to store the image file
   const [imageFile, setImageFile] = useState(null);
-  //this is the state to store the uploaded image url
   const [uploadedImageURL, setUploadedImageURL] = useState("");
+  const [uploadedImageURLs, setUploadedImageURLs] = useState([]); // New state for multiple images
   const { toast } = useToast();
-  //This is for the edit of product this state is to store the current id before it is edited
   const [currentEditedId, setCurrentEditedId] = useState(null);
 
-  //this is to get the product list and the adminProduct is the reducer name
-  const { productList, isLoading } = useSelector((state) => state.adminProducts);
+  const { productList, isLoading } = useSelector(
+    (state) => state.adminProducts
+  );
   const dispatch = useDispatch();
 
-  //this is a loading state
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
-  //this is to submit the form
   function onSumbit(e) {
     e.preventDefault();
-    //this is to check if the currentEditedId is true and i pass in the edited product Api from my async thunk
-    currentEditedId !== null
-      ? dispatch(editProduct({ id: currentEditedId, formData })).then(
-          (data) => {
-            // console.log(data, "edit");
-            if (data?.payload?.success) {
-              dispatch(fetchAllProducts());
-              setFormData(initialFormData);
-              setOpenCreateProduct(false);
-              setCurrentEditedId(null);
-            }
-          }
-        )
-      : dispatch(addNewProduct({ ...formData, image: uploadedImageURL })).then(
-          (data) => {
-            // console.log(data);
-            if (data?.payload?.success) {
-              //this if the sucess is true, the image file is set to null, the form data is set to the initial form data and the open create product is set to false basically to reset the form
-              dispatch(fetchAllProducts());
-              setImageFile(null);
-              setFormData(initialFormData);
-              setOpenCreateProduct(false);
-              toast({
-                title: "Product added successfully",
-              });
-            }
-          }
-        );
+    dispatch(
+      addNewProduct({
+        ...formData,
+        images: uploadedImageURLs, // Pass all uploaded image URLs
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchAllProducts());
+        setImageFiles([]);
+        setUploadedImageURLs([]);
+        setFormData(initialFormData);
+        setOpenCreateProduct(false);
+        toast({ title: "Product added successfully" });
+      }
+    });
   }
 
-  //This is to check if the form is valid if not the button will be disabled
+
   function isFormValid() {
     return Object.keys(formData)
       .map((key) => formData[key] !== "")
       .every((item) => item);
-  } //This function is to check if the form is vaild if not the form button will be disabled
+  }
 
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
-
-  // Function to handle delete
   const handleDelete = (getCurrentProductId) => {
-    console.log(getCurrentProductId, "getCurrentProductId");
-
     dispatch(deleteProduct(getCurrentProductId)).then((data) => {
       if (data?.payload?.success) {
-        //This will get all the recent product
         dispatch(fetchAllProducts());
-        // Display the success message
         toast({
           title: "Product deleted successfully",
         });
@@ -129,7 +99,6 @@ const AdminProducts = () => {
       </div>
     );
 
-  // console.log(productList.data, uploadedImageURL, "productList");
   return (
     <>
       <div className="mb-5 flex w-full justify-end">
@@ -137,8 +106,10 @@ const AdminProducts = () => {
           Add New Product
         </Button>
       </div>
+
       {/* This is the product tile card */}
       <div className="grid gap-4 md:grid-cols-3  ">
+
         {productList?.data?.length > 0 ? (
           productList.data.map((productItem, i) => (
             <AdminProductTile
@@ -159,7 +130,6 @@ const AdminProducts = () => {
         open={openCreateProduct}
         onOpenChange={() => {
           setOpenCreateProduct(false);
-          //This is to make the dialog box to close and reset the form
           setCurrentEditedId(null);
           setFormData(initialFormData);
         }}
@@ -167,12 +137,9 @@ const AdminProducts = () => {
         <SheetContent side="right" className="overflow-auto">
           <SheetHeader>
             <SheetTitle>
-              {/* This is to check if the currentEditedId is true The title shows true and if it's not  */}
               {currentEditedId !== null ? "Edit Product" : "Add New Product"}
             </SheetTitle>
           </SheetHeader>
-          {/* The image upLoad component */}
-          {/* The props is passed to the productimageupload component */}
 
 
           <ProductImageUpload
@@ -180,16 +147,42 @@ const AdminProducts = () => {
             setImageFile={setImageFile}
             uploadedImageURL={uploadedImageURL}
             setUploadedImageURL={setUploadedImageURL}
+            uploadedImageURLs={uploadedImageURLs}
+            setUploadedImageURLs={setUploadedImageURLs}
             setImageLoadingState={setImageLoadingState}
             imageLoadingState={imageLoadingState}
             isEditMode={currentEditedId !== null}
+            multiple={true} // Enable multiple uploads
           />
+
+
+
+// ADA
+//           <div>
+//             <h3 className="font-semibold my-2">Uploaded Image URLs:</h3>
+//             {uploadedImageURLs.length > 0 ? (
+//               uploadedImageURLs.map((url, index) => (
+//                 <div key={index} className="flex items-center space-x-2">
+//                   <img
+//                     src={url}
+//                     alt={`Uploaded ${index}`}
+//                     className="h-16 w-16 object-cover"
+//                   />
+//                   <span className="text-sm">{url}</span>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="text-sm text-gray-500">No images uploaded yet.</p>
+//             )}
+//           </div>
+
 
           {/* <MultiImageUpload/> */}
 
 
         
           {/* This is the commonform component */}
+
           <div className="py-6">
             <CommonForm
               formData={formData}

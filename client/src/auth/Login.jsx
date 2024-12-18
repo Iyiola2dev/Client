@@ -52,19 +52,16 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-shadowTherapy bg-cover bg-center h-screen flex justify-center items-center">
-      <div className="shadow-lg backdrop-blur-lg bg-white/30 rounded-2xl lg:max-w-xl lg:h-[70%] flex justify-center items-center">
-        <div className="mx-auto w-full max-w-md space-y-6 flex justify-center px-7 py-10 lg:py-[10rem] items-center">
-          <div className="text-center text-white rounded-xl py-7 flex flex-col">
-            <div>
-              <Link
-                to="/"
-                className="flex justify-start items-center ml-5 gap-1 text-xs"
-              >
-                <ArrowLeft className="text-xs" />
-                <h2 className="border-b">Home</h2>
-              </Link>
-            </div>
+    <div className="bg-shadowTherapy bg-cover bg-center min-h-screen flex justify-center items-center px-4 sm:px-8">
+      <div className="shadow-lg backdrop-blur bg-black/30 rounded-2xl w-full max-w-lg lg:max-w-2xl flex flex-col justify-center items-center py-8 px-6 sm:py-10 sm:px-12">
+        <div className="text-center text-white flex flex-col items-center w-full">
+          {/* Back to Home */}
+          <div className="self-start mb-4">
+            <Link to="/" className="flex items-center gap-1 text-xs sm:text-sm">
+              <ArrowLeft className="text-xs" />
+              <span className="border-b">Home</span>
+            </Link>
+          </div>
             <h1 className="list-item-text-3 text-3xl font-bold tracking-tight text-foreground text-white mx-10 mt-5">
               Welcome Back!
             </h1>
@@ -92,7 +89,11 @@ const Login = () => {
               </p>
               <p className="mx-2 text-sm">
                 <span className="list-item-text-3">Forgot your password?</span>{" "}
-                <Link className="text-blue-600 ml-2" to="/auth/forgot-password">
+                <Link
+                  className="text-blue-600 ml-2"
+                  to="/auth/forgot-password"
+                  onClick={() => console.log("Forgot Password clicked")}
+                >
                   Reset it
                 </Link>
                 .
@@ -101,7 +102,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </div>
+   
   );
 };
 

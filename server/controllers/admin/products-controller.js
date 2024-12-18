@@ -4,48 +4,103 @@ import Product from "../../models/productModel.js";
 // Image Upload
 export const handleImageUpload = async (req, res) => {
   try {
-    //This is to check if there is no file uploaded
-    if (!req.file) {
+    
+    // Check if files were uploaded
+    if (!req.files || req.files.length === 0) {
       return res.status(400).json({
         success: false,
-        message: "No file uploaded",
+        message: "No files uploaded",
       });
     }
 
-    //This to check the file size
-    if (req.file.size > 10 * 1024 * 1024) {
-      return res
-        .status(400)
-        .send({ status: "error", message: "File size exceeds 10 MB" });
+    // Validate files and upload
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    const maxSize = 10 * 1024 * 1024; // 10 MB
+
+    const uploadResults = [];
+    for (const file of req.files) {
+      // Check file size
+      if (file.size > maxSize) {
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: `File ${file.originalname} exceeds 10 MB`,
+          });
+      }
+
+      // Check file type
+      if (!allowedTypes.includes(file.mimetype)) {
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: `File ${file.originalname} is an unsupported type`,
+          });
+      }
+
+      // Convert to base64
+      const b64 = Buffer.from(file.buffer).toString("base64");
+      const url = `data:${file.mimetype};base64,${b64}`;
+
+      // Upload to your utility function
+      const result = await imageUploadUtil(url);
+      uploadResults.push({ fileName: file.originalname, result });
     }
-
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/we"];
-    if (!allowedTypes.includes(req.file.mimetype)) {
-      return res
-        .status(400)
-        .send({ status: "error", message: "Unsupported file type" });
-    }
-
-    //This is to convert to a based64
-    const b64 = Buffer.from(req.file.buffer).toString("base64");
-
-    const url = `data:${req.file.mimetype};base64,${b64}`;
-    const result = await imageUploadUtil(url);
 
     res.status(200).json({
       success: true,
-      message: "Image uploaded successfully",
-      result,
+      message: "Images uploaded successfully",
+      results: uploadResults,
     });
   } catch (err) {
     console.error("Upload Error:", err);
     res.status(500).json({
       success: false,
-      message: "Error occured",
+      message: "Error occurred during upload",
       error: err.message,
     });
   }
 };
+
+
+
+
+//Pls left this, incase you still want to use it
+// export const handleImageUpload = async (req, res) => {
+//   try {
+//     // Check if there are no files uploaded
+//     if (!req.files || req.files.length === 0) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "No files uploaded",
+//       });
+//     }
+
+//     // Iterate over the array of files and upload each one
+//     const uploadPromises = req.files.map(async (file) => {
+//       const b64 = Buffer.from(file.buffer).toString("base64");
+//       const url = `data:${file.mimetype};base64,${b64}`;
+//       return await imageUploadUtil(url);
+//     });
+
+//     // Wait for all uploads to complete
+//     const results = await Promise.all(uploadPromises);
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Images uploaded successfully",
+//       results,
+//     });
+//   } catch (err) {
+//     console.error("Upload Error:", err);
+//     res.status(500).json({
+//       success: false,
+//       message: "Error occurred",
+//       error: err.message,
+//     });
+//   }
+// };
 
 export const handleImageUploads = async (req, res) => {
   try {
@@ -103,6 +158,7 @@ export const handleImageUploads = async (req, res) => {
     });
   }
 };
+
 
 
 // Add a New Product
