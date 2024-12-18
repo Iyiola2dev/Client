@@ -21,9 +21,10 @@ const App = () => {
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(checkAuth());
-  }, [dispatch]);
+ useEffect(() => {
+   dispatch(checkAuth());
+ }, [dispatch]);
+
 
   if (isLoading) {
     return <Skeleton className="max-w-md h-auto rounded-full" />;

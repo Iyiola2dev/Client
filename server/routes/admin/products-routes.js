@@ -5,7 +5,7 @@ import { addProduct, deleteProduct, editProduct, fetchAllProduct, handleImageUpl
 
  const router = express.Router();
 
-router.post("/upload-image", upload.single("my_file"), handleImageUpload);
+router.post("/upload-images", upload.array("my_file"), handleImageUpload);
 
 
   

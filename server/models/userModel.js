@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "therapist", "admin"], // Add roles as needed
     default: "user",
   },
+  resetPasswordOtp: { type: Number },
+  resetPasswordExpiry: { type: Date },
 });
 
 const User = mongoose.model("User", userSchema);
