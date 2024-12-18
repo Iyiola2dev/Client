@@ -5,6 +5,9 @@ import {
   registerUser,
   registerTherapist,
   loginTherapist,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
 } from "../../controllers/auth/auth-controller.js";
 import { authMiddleware } from "../../middleware/auth-middleware.js";
 
@@ -18,6 +21,18 @@ router.post("/logout", logoutUser);
 // Therapist routes
 router.post("/therapist/register", registerTherapist);
 router.post("/therapist/login", loginTherapist);
+
+// Forgot password route
+router.post("/forgot-password", forgotPassword);
+
+// OTP verification route
+router.post("/verify-otp", verifyOtp);
+
+
+// Reset password route
+router.post("/reset-password", resetPassword);
+
+
 
 // Check authentication route
 router.get("/check-auth", authMiddleware, (req, res) => {
