@@ -11,7 +11,8 @@ router.post("/upload-images", upload.array("my_file"), handleImageUpload);
 router.post("/uploads", upload.array("my_file"), handleImageUpload);
 
 router.post("/upload-image", upload.single("my_file"), handleImageUpload);
-// router.post("/upload-images", upload.array("my_file", 10), handleImageUploads); // Allow up to 10 files
+
+router.post("/upload-images", upload.array("my_file", 10), handleImageUploads); // Allow up to 10 files
 
 
 
