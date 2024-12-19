@@ -46,9 +46,9 @@ const Therapists = () => {
           <IoAdd className="w-6 h-6" />
         </button>
 
-        {/* <p>
+        <p>
           <a href="/admin/multiple">Multiple</a>
-        </p> */}
+        </p>
       </div>
 
       {/* Therapists Grid */}

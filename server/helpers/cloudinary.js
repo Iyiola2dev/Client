@@ -14,12 +14,18 @@ cloudinary.config({
 const storage = new multer.memoryStorage();
 
 //And this is the function that will return the result
-async function imageUploadUtil(file) {
+async function imageUploadUtil(buffers) {
+  const uploadPromises = buffers.map((buffer) =>
+    cloudinary.uploader
+      .upload_stream({ resource_type: "auto" }, (error, result) => {
+        if (error) throw new Error("Upload to Cloudinary failed");
+        return result;
+      })
+      .end(buffer)
+  );
 
-  const result = await cloudinary.uploader.upload(file, {
-    resource_type: "auto",
-  });
-  return result;
+  const results = await Promise.all(uploadPromises);
+  return results; // Array of uploaded image objects
 }
 
 

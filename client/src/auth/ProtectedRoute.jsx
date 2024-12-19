@@ -4,18 +4,25 @@ import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
-  if (!isAuthenticated) {
+  // Wait until the auth state is loaded
+  if (isLoading) return null; // or a loading spinner
 
-    // Save the last route
-    const currentRoute = window.location.pathname;
+  // Redirect to login if not authenticated and not on a public route
+  const publicRoutes = [
+    "/auth/login",
+    "/auth/register",
+    "/auth/forgot-password",
+  ];
+  const currentRoute = window.location.pathname;
+
+  if (isAuthenticated === false && !publicRoutes.includes(currentRoute)) {
     localStorage.setItem("lastAttemptedURL", currentRoute);
-  
-
     return <Navigate to="/auth/login" replace />;
   }
 
-  return children; // Render the child components if authenticated
+  return children;
 };
 
 export default ProtectedRoute;

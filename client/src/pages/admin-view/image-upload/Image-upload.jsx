@@ -1,36 +1,35 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+
 import axios from "axios";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductImageUpload = ({
-  imageFile, // Prop for the selected image file
-  setImageFile,
-  uploadedImageURL, // Prop for the uploaded image URL
-  setUploadedImageURL, // Function to update the uploaded image URL state
+  uploadedImageURLs,
+  setUploadedImageURLs,
   setImageLoadingState,
-  imageLoadingState,
-  isEditMode, // This prop is used to determine if the component is in edit mode
 }) => {
+
+  
+//   ADA
+//   const [previewURLs, setPreviewURLs] = useState([]);
+
   // Creating a reference for the file input element
   const inputRef = useRef(null);
   const [primaryImage, setPrimaryImage] = useState(null);
 
-  // Function to handle changes in the file input
-  const handleImageFileChange = (e) => {
-    console.log("targetFile", e.target.files);
-    // const selectedFile = Array.from(e.target.files)
-    const selectedFile = e.target.files?.[0];
-    console.log("selectedFile", selectedFile);
-    // setImageFile(selectedFile);
-    if (selectedFile) {
-      //if the file is selected, the setImageFile function is called to update the selected image file state
-      setImageFile(selectedFile);
-      //   setuploadedImageURL(URL.createObjectURL(selectefFile));
-    }
+
+  const handleImageFileChange = async (e) => {
+    const selectedFiles = Array.from(e.target.files);
+
+
+    
+    //ADA
+    // Generate previews for the selected images
+//     const previews = selectedFiles.map((file) => URL.createObjectURL(file));
 
     console.log("selectedFile2", selectedFile);
     // selectedFile.forEach((file) => {
@@ -83,34 +82,42 @@ const ProductImageUpload = ({
     }
   };
 
-  // Function to remove the selected image file
-  const handleRemoveImage = () => {
-    setImageFile(null);
-    //this is to clear the input field if there is something inside the inpur field
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-  };
 
-  // This is the  Function to upload the image to Cloudinary
-  const uploadImageToCloudinary = async (imageFile) => {
+    setPreviewURLs(previews);
+
     setImageLoadingState(true);
-    const dataImage = new FormData();
-    dataImage.append("my_file", imageFile);
 
-    const response = await axios.post(
-      "http://localhost:5000/api/admin/products/upload-image",
-      dataImage,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    // Upload each file to the backend
+    const uploadPromises = selectedFiles.map(async (file) => {
+      const data = new FormData();
+      data.append("my_file", file);
 
-    if (response?.data?.success) {
-      console.log(response.data);
-      setUploadedImageURL(response.data.result.url);
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/products/upload-images",
+        data,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+// ADA
+//       console.log("Uploaded Image URL:", response.data?.images?.[0]?.url);
+//       return response.data?.images?.[0]?.url; // Get the URL of the uploaded image
+//     });
+
+//     const uploadedURLs = await Promise.all(uploadPromises);
+//     console.log("All Uploaded URLs:", uploadedURLs); // Check the resolved URLs
+//     setUploadedImageURLs((prev) => [...prev, ...uploadedURLs]);
+
+//     setImageLoadingState(false);
+
+//     // Revoke the created object URLs to free memory
+//     previews.forEach((url) => URL.revokeObjectURL(url));
+//   };
+
+//   const handleRemoveImage = (index) => {
+//     setPreviewURLs((prev) => prev.filter((_, i) => i !== index));
+//     setUploadedImageURLs((prev) => prev.filter((_, i) => i !== index));
+//   };
+
 
       // Set the loading state to false
       setImageLoadingState(false);
@@ -173,19 +180,39 @@ const ProductImageUpload = ({
   // }, [imageFile]);
 
   // Return the image upload component
-  return (
-    <div className="w-full max-w-md mx-auto">
-      {/* Container for the image upload component */}
-      <Label className="text-lg font-semibold my-2 block">Upload Image</Label>
 
-      {/* // Container for the image upload component */}
-      <div
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        className={` ${
-          isEditMode ? "opacity-60" : ""
-        }border-2 border-dashed rounded-md p-4 mt-4`}
+  return (
+    <div>
+      <Label className="text-lg font-semibold my-2 block">Upload Images</Label>
+      <Input
+        type="file"
+        className="hidden"
+        id="image-upload"
+        name="my_file"
+        multiple
+        onChange={handleImageFileChange}
+      />
+      <Label
+        htmlFor="image-upload"
+        className="flex flex-col justify-center items-center h-32 cursor-pointer border-2 border-dashed rounded-md p-4"
       >
+
+
+// ADA
+//         <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2 " />
+//         <span>Drag and drop or click to upload images</span>
+//       </Label>
+
+//       {/* Preview Section */}
+//       <div className="grid grid-cols-3 gap-4 mt-4">
+//         {previewURLs.map((url, index) => (
+//           <div key={index} className="relative">
+//             <img
+//               src={url}
+//               alt={`Preview ${index}`}
+//               className="h-20 w-20 object-cover rounded"
+//             />
+
         <Input
           id="image-upload" // Unique identifier for the input element
           type="file" // Specifies the input type as file
@@ -217,17 +244,17 @@ const ProductImageUpload = ({
             <p className="text-sm font-medium">{imageFile.name}</p>
 
             {/* This is to remove the file */}
+
             <Button
               variant="ghost"
               size="icon"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={handleRemoveImage}
+              className="absolute top-1 right-1"
+              onClick={() => handleRemoveImage(index)}
             >
               <XIcon className="w-4 h-4" />
-              <span className="sr-only">Remove File</span>
             </Button>
           </div>
-        )}
+        ))}
       </div>
     </div>
 
