@@ -1,8 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteTherapist } from "@/store/therapy/therapist-slice";
+import { MdDelete } from "react-icons/md";
+
 
 const TherapistCard = ({ therapist }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   if (!therapist || !therapist._id) {
     return (
@@ -12,6 +17,19 @@ const TherapistCard = ({ therapist }) => {
 
   const handleCardClick = () => {
     navigate(`/admin/edit/${therapist._id}`);
+  };
+
+  const handleDeleteClick = async (e) => {
+    e.stopPropagation(); // Prevent triggering the card click event
+    if (window.confirm("Are you sure you want to delete this therapist?")) {
+      try {
+        await dispatch(deleteTherapist(therapist._id)).unwrap();
+        alert("Therapist deleted successfully.");
+      } catch (error) {
+        console.error("Failed to delete therapist:", error);
+        alert("Failed to delete therapist.");
+      }
+    }
   };
 
   return (
@@ -36,6 +54,14 @@ const TherapistCard = ({ therapist }) => {
           {therapist.specialty || "Specialty not available"}
         </p>
       </div>
+
+      <button
+        onClick={handleDeleteClick}
+        className="text-red-500 hover:text-red-700"
+        title="Delete Therapist"
+      >
+        <MdDelete className="w-8 h-8" />
+      </button>
     </div>
   );
 };

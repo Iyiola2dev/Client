@@ -110,6 +110,28 @@ export const updateTherapist = createAsyncThunk(
 );
 
 
+// Async thunk to delete a therapist by ID
+export const deleteTherapist = createAsyncThunk(
+  "/therapists/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/therapists/${id}`,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response && error.response.data
+          ? error.response.data
+          : "An error occurred"
+      );
+    }
+  }
+);
+
+
+
 
 const therapistsSlice = createSlice({
   name: "therapists",
@@ -162,6 +184,21 @@ const therapistsSlice = createSlice({
         state.therapist = action.payload.therapist; // Store the single therapist details
       })
       .addCase(updateTherapist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteTherapist.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteTherapist.fulfilled, (state, action) => {
+        state.loading = false;
+        // Remove the deleted therapist from the list
+        state.therapists = state.therapists.filter(
+          (therapist) => therapist._id !== action.meta.arg // Assuming `id` was passed as the argument
+        );
+      })
+      .addCase(deleteTherapist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
