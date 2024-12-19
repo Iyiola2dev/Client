@@ -50,26 +50,35 @@ const AdminProducts = () => {
 
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
-  function onSumbit(e) {
+  function onSubmit(e) {
     e.preventDefault();
+
+    // Determine the primary image
+    const primaryImage = uploadedImageURL || uploadedImageURLs[0] || null;
+
+    // Add the single image URL to the images array if not already included
+    const allImageURLs = uploadedImageURLs.includes(uploadedImageURL)
+      ? uploadedImageURLs
+      : [...uploadedImageURLs, uploadedImageURL].filter(Boolean);
+
+    // Dispatch the payload with both image and images fields
     dispatch(
       addNewProduct({
         ...formData,
-        images: uploadedImageURLs, // Pass all uploaded image URLs
+        image: primaryImage, // Set the primary image
+        images: allImageURLs, // Pass all uploaded image URLs
       })
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllProducts());
-        // setImageFiles([]);
         setUploadedImageURLs([]);
+        setUploadedImageURL(""); // Reset the single URL
         setFormData(initialFormData);
         setOpenCreateProduct(false);
         toast({ title: "Product added successfully" });
       }
     });
   }
-
-
   console.log("FormData on Submit:", formData);
 
 
@@ -160,9 +169,34 @@ const AdminProducts = () => {
           />
 
 
+        
+          {/* This is the commonform component */}
+
+          <div className="py-6">
+            <CommonForm
+              formData={formData}
+              setFormData={setFormData}
+              formControls={addProductFormElements}
+              buttonText={currentEditedId !== null ? "Update" : "Add Product"}
+              borderRadius="rounded-md"
+              onSubmit={onSubmit}
+              isBtnDisable={!isFormValid}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+};
+
+export default AdminProducts;
 
 
-{/* //           <div>
+
+
+
+{
+  /* //           <div>
 //             <h3 className="font-semibold my-2">Uploaded Image URLs:</h3>
 //             {uploadedImageURLs.length > 0 ? (
 //               uploadedImageURLs.map((url, index) => (
@@ -178,30 +212,9 @@ const AdminProducts = () => {
 //             ) : (
 //               <p className="text-sm text-gray-500">No images uploaded yet.</p>
 //             )}
-//           </div> */}
+//           </div> */
+}
 
-
-          {/* <MultiImageUpload/> */}
-
-
-        
-          {/* This is the commonform component */}
-
-          <div className="py-6">
-            <CommonForm
-              formData={formData}
-              setFormData={setFormData}
-              formControls={addProductFormElements}
-              buttonText={currentEditedId !== null ? "Update" : "Add Product"}
-              borderRadius="rounded-md"
-              onSubmit={onSumbit}
-              isBtnDisable={!isFormValid}
-            />
-          </div>
-        </SheetContent>
-      </Sheet>
-    </>
-  );
-};
-
-export default AdminProducts;
+{
+  /* <MultiImageUpload/> */
+}
