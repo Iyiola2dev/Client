@@ -22,29 +22,29 @@ const AddressCard = ({
         }
         className="bg-black border-[#797979]"
       >
-        <CardContent className="grid gap-4 p-4 border-[#797979] text-white">
-          <Label className="border-b border-[#797979] py-2">
+        <CardContent className="grid  gap-4 p-4 border-[#797979] text-white">
+          <Label className=" py-2">
             Address: {addressInfo?.address}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             City: {addressInfo?.city}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             Phone: {addressInfo?.phoneNumber}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             Fullname: {addressInfo?.fullName}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             Email: {addressInfo?.email}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             Addtional-Number: {addressInfo?.additionalNumber}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             Information: {addressInfo?.notesInformation}
           </Label>
-          <Label className="border-b border-[#797979] py-2">
+          <Label className=" py-2">
             Region: {addressInfo?.region}
           </Label>
         </CardContent>
