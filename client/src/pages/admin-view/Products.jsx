@@ -157,8 +157,8 @@ const AdminProducts = () => {
 
 
 
-// ADA
-//           <div>
+
+{/* //           <div>
 //             <h3 className="font-semibold my-2">Uploaded Image URLs:</h3>
 //             {uploadedImageURLs.length > 0 ? (
 //               uploadedImageURLs.map((url, index) => (
@@ -174,7 +174,7 @@ const AdminProducts = () => {
 //             ) : (
 //               <p className="text-sm text-gray-500">No images uploaded yet.</p>
 //             )}
-//           </div>
+//           </div> */}
 
 
           {/* <MultiImageUpload/> */}

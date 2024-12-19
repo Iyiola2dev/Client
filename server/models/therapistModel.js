@@ -32,7 +32,7 @@ const therapistSchema = new mongoose.Schema(
     mobile: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
@@ -85,7 +85,10 @@ const therapistSchema = new mongoose.Schema(
       type: String,
       enum: ["Male", "Female", "Non-binary", "Other"],
       required: true,
+      set: (value) =>
+        value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(), // Normalize input
     },
+
     ageRange: {
       type: String,
       enum: ["18-28", "28-38", "38-48", "48-58", "59+"], // Options to choose from
@@ -125,7 +128,7 @@ const therapistSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {

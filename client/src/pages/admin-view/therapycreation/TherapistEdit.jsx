@@ -26,7 +26,7 @@ const TherapistEdit = ({ therapistData: propTherapistData }) => {
     uploadImage,
     setImageFile,
     setUploadedImageURL,
-  } = useImageUpload("http://localhost:5000/api/admin/products/upload-image");
+  } = useImageUpload("http://localhost:5000/api/admin/products/uploads");
 
   useEffect(() => {
     if (imageFile) {
@@ -227,7 +227,7 @@ const handleSubmit = async (e) => {
                 <input
                   type="text"
                   name="phone"
-                  value={therapist.mobile || ""}
+                  value={therapist.phone || ""}
                   onChange={handleInputChange}
                   placeholder="+234"
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"

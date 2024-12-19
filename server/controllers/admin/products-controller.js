@@ -4,9 +4,10 @@ import Product from "../../models/productModel.js";
 // Image Upload
 export const handleImageUpload = async (req, res) => {
   try {
-    
+    const files = req.files || []; // Handle both `single` and `array`
+
     // Check if files were uploaded
-    if (!req.files || req.files.length === 0) {
+    if (!files.length) {
       return res.status(400).json({
         success: false,
         message: "No files uploaded",
@@ -16,35 +17,27 @@ export const handleImageUpload = async (req, res) => {
     // Validate files and upload
     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     const maxSize = 10 * 1024 * 1024; // 10 MB
-
     const uploadResults = [];
-    for (const file of req.files) {
+
+    for (const file of files) {
       // Check file size
       if (file.size > maxSize) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: `File ${file.originalname} exceeds 10 MB`,
-          });
+        return res.status(400).json({
+          success: false,
+          message: `File ${file.originalname} exceeds 10 MB`,
+        });
       }
 
       // Check file type
       if (!allowedTypes.includes(file.mimetype)) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: `File ${file.originalname} is an unsupported type`,
-          });
+        return res.status(400).json({
+          success: false,
+          message: `File ${file.originalname} is an unsupported type`,
+        });
       }
 
-      // Convert to base64
-      const b64 = Buffer.from(file.buffer).toString("base64");
-      const url = `data:${file.mimetype};base64,${b64}`;
-
-      // Upload to your utility function
-      const result = await imageUploadUtil(url);
+      // Upload the file buffer directly to Cloudinary
+      const result = await imageUploadUtil(file.buffer);
       uploadResults.push({ fileName: file.originalname, result });
     }
 
@@ -62,6 +55,7 @@ export const handleImageUpload = async (req, res) => {
     });
   }
 };
+
 
 
 
