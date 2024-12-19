@@ -3,7 +3,7 @@ import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
-import OrderSummary from "./orderSummary";
+import OrderSummary from "./orderSummary.jsx";
 import { useSelector } from "react-redux";
 
 const ShoppingOrderDetailsView = ({ orderDetails }) => {
