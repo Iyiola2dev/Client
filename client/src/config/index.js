@@ -75,7 +75,7 @@ export const registerFormControls = [
       label: "Product Price",
       placeholder: "Enter product price",
       componentType: "input",
-      type: "string",
+      type: "number",
     },
     {
       id: "product-description",
@@ -91,7 +91,7 @@ export const registerFormControls = [
       label: "Stock Quantity",
       placeholder: "Enter stock quantity",
       componentType: "input",
-      type: "string",
+      type: "number",
     },
     {
       id: "product-type",
@@ -118,7 +118,7 @@ export const registerFormControls = [
       label: "Sales (Optional)",
       placeholder: "Enter sales quantity (optional)",
       componentType: "input",
-      type: "string",
+      type: "number",
     },
   ];
   

@@ -6,7 +6,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createNewOrder } from "@/store/shop/order";
 
 const ShoppingCheckout = () => {
@@ -17,76 +17,37 @@ const ShoppingCheckout = () => {
   const { paymentUrl } = useSelector((state) => state.shopOrder);
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
+  
 
   const dispatch = useDispatch();
 
   const totalCartAmount =
     cartItems && cartItems.items && cartItems.items.length > 0
-      ? cartItems.items
-          .reduce(
-            (sum, currentItem) =>
-              sum +
-              (currentItem?.sales > 0
-                ? currentItem?.sales
-                : currentItem?.price) *
-                currentItem?.quantity,
-            0
-          )
-          .toLocaleString()
-      : 0;
+      ? cartItems.items.reduce(
+          (sum, currentItem) =>
+            sum +
+            (currentItem?.sales > 0 ? currentItem?.sales : currentItem?.price) *
+              currentItem?.quantity,
+          0
+        )
+      : // .toLocaleString()
+        0;
 
   const handleNavigate = () => {
     navigate("/shop/all-products");
   };
 
-  // const handlePaystackPayment = async () => {
-  //   try {
-  //     // Validate cart items and total amount
-  //     if (!cartItems || !cartItems.items || cartItems.items.length === 0) {
-  //       toast({
-  //         title: "Your cart is empty.",
-  //       });
-  //       return;
-  //     }
-
-  //     if (totalCartAmount <= 0) {
-  //       toast({
-  //         title: "Invalid total amount.",
-  //       });
-
-  //       return;
-  //     }
-
-  //     // Prepare data for the backend
-  //     const orderData = {
-  //       cartItems: cartItems.items,
-  //       addressInfo: {
-  //         email: "user@example.com", // Replace with dynamic user email
-  //       },
-  //       totalAmount: parseInt(totalCartAmount.replace(/,/g, ""), 10), // Convert to number
-  //     };
-
-  //     // Make the API call to initialize payment
-  //     const { data } = await axios.post(
-  //       "http://localhost:5000/api/paystack/initialize", // Backend endpoint
-  //       orderData
-  //     );
-
-  //     // Redirect user to Paystack payment page if successful
-  //     if (data.status === "success") {
-  //       window.location.href = data.paymentUrl;
-  //     } else {
-  //       alert("Failed to initialize payment: " + data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error initializing payment:", error);
-  //     alert("An error occurred while initializing payment. Please try again.");
-  //   }
-  // };
-
   const handlePaystackPayment = async () => {
+    if (currentSelectedAddress === null) {
+      toast({
+        title: "Please select an address to proceed",
+        variant: "destructive",
+      });
+      return;
+    }
     const orderData = {
       userId: user?.id,
+      cartId: cartItems?._id,
       cartItems: cartItems.items.map((singleCartItem) => ({
         productId: singleCartItem?.id,
         name: singleCartItem.name,
@@ -121,21 +82,15 @@ const ShoppingCheckout = () => {
     console.log("orderData", orderData);
     dispatch(createNewOrder(orderData)).then((data) => {
       console.log(data, "datalexicon");
-      if (data?.payload?.success) {
-        setIsPaymentLoading(true);
-        // toast({
-        //   title: "Order created successfully",
-        // });
-        // navigate("/shop/all-products");
-      } else {
-        setIsPaymentLoading(false);
-        // toast({
-        //   title: "Failed to create order",
-        // });
+      console.log("Payment URL:", data?.payload?.paymentUrl);
+      const paymentsUrl = data?.payload?.paymentUrl;
+
+      if (paymentsUrl) {
+        setIsPaymentLoading((window.location.href = paymentsUrl));
       }
     });
   };
- 
+
   return (
     <div className="p-2 lg:p-7 xl:px-[7rem] bg-[#252525]">
       <div

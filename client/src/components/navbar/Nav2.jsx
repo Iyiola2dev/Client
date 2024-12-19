@@ -100,7 +100,7 @@ const Nav2 = () => {
   return (
     <div>
       {/* Desktop View */}
-      <div className="hidden lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full">
+      <div className="hidden  lg:flex flex-col bg-[linear-gradient(180deg,#C42571_18%,#004DB5_80%)] w-full">
         <div className="flex w-full items-center justify-between gap-[5rem] px-10 py-3">
           <img
             className="h-[4rem]"
@@ -120,7 +120,7 @@ const Nav2 = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="bg-black w-full">
+        <div className="bg-[#252525] w-full">
           <nav className="pl-[4rem] w-full pr-10 py-3 flex items-center shadow-custom justify-between">
             <ul className="flex gap-5 w-full p-3">
               <li className="text-white hover:text-[#C42571]">
@@ -212,7 +212,7 @@ const Nav2 = () => {
 
       {/* Mobile Navbar */}
       <div className="lg:hidden ">
-        <div className="flex items-center justify-between bg-black shadow-2xl p-4">
+        <div className="flex items-center justify-between bg-[#252525] shadow-3xl p-4">
           <button onClick={toggleMenu} className="text-white">
             <svg
               className="w-6 h-6"

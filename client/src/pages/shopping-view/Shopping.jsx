@@ -19,6 +19,8 @@ import AddressAccount from "@/components/shopping/address/Address-account";
 
 import AdminOrders from "../admin-view/Orders";
 import ShoppingOrder from "./ShoppingOrder";
+import PaystackReturnPage from "@/components/shopping/paystack/PaystackReturnPage";
+import PaymentSuccess from "@/components/shopping/paystack/PaymentSuccess";
 
 const Shopping = () => {
   return (
@@ -44,7 +46,8 @@ const Shopping = () => {
           <Route path = "/about" element={<ShopAbout/>} />
           <Route path = "/account/address" element={<AddressAccount/>} />
           <Route path ="/shopping-order" element={<ShoppingOrder/>}/>
-          
+          <Route path ="/paystack-confirmation" element={<PaystackReturnPage/>}/>
+          <Route path ="/payment-success" element={<PaymentSuccess/>}/>
           <Route />
           <Route />
         </Routes>

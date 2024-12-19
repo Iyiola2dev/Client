@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema({
+  // id: String,
   userId: String,
+  cartId: String,
   cartItems: [
     {
       productId: String,
