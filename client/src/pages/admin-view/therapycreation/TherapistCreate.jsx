@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const TherapistCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toast = useToast();
+const { toast } = useToast();
 
   // Use the custom image upload hook
   const {
@@ -87,6 +87,8 @@ const TherapistCreate = () => {
     return { ...prev, [field]: updatedFields };
   });
 };
+
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -149,6 +151,8 @@ const handleSubmit = async (e) => {
     // Dispatch the createNewTherapist action
     const response = await dispatch(createNewTherapist(payload)).unwrap();
 
+    console.log("Response:", response); // Debugging line
+
     if (response?.success) {
       toast({
         title: "Success",
@@ -174,6 +178,7 @@ const handleSubmit = async (e) => {
     });
   }
 };
+
 
 // Use the Dropzone hook to handle file uploads
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

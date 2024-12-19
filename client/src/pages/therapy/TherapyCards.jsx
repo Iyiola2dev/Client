@@ -85,7 +85,7 @@ export const TherapyCards = ({ therapist }) => {
               <div className="lg:flex gap-8">
                 <div className="text-left ml-5 mb-4">
                   <h2 className="text-2xl font-semibold text-gray-900">
-                    {therapist.name}
+                    {therapist.firstName} {therapist.lastName}
                   </h2>
                   <p className="text-md text-black">{therapist.specialty}</p>
                 </div>
