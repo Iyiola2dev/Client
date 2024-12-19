@@ -12,6 +12,7 @@ import shopProductsRouter from "./routes/shop/products-route.js";
 import shopCartRouter from "./routes/shop/cart-routes.js";
 import shopAddressRouter from "./routes/shop/address-route.js";
 import shopOrderRouter from "./routes/paystack/paystack.js"
+import adminOrderRouter from "./routes/admin/order-routes.js"
 import { upload, imageUploadUtil } from "./helpers/cloudinary.js";
 
 dotenv.config();
@@ -47,10 +48,11 @@ app.use("/api/therapists", therapistRouter);
 app.use("/api/question", questionnaireRouter);
 app.use("/api/schedule", scheduleRouter);
 app.use("/api/admin/products", adminProductRouter);
+app.use("/api/admin/orders", adminOrderRouter);
 app.use("/api/shop/products", shopProductsRouter);
 app.use("/api/shop/cart", shopCartRouter);
 app.use("/api/shop/address", shopAddressRouter);
-app.use('/api/shop/order', shopOrderRouter);
+app.use('/api/shop/orders', shopOrderRouter);
 
 // Base route
 app.get('/', (req, res) => {
