@@ -148,33 +148,33 @@ import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const ProductImageUpload = ({
-  uploadedImageURL, // Single uploaded image URL
-  setUploadedImageURL, // Function to update uploaded image URL state
+  uploadedImageURLs, // Array of uploaded image URLs
+  setUploadedImageURLs, // Function to update uploaded image URLs state
   setImageLoadingState, // Function to update loading state
   imageLoadingState, // Loading state
   isEditMode, // Edit mode flag
 }) => {
   const inputRef = useRef(null);
-  const [imageFile, setImageFile] = useState(null); // Track single image file
+  const [imageFiles, setImageFiles] = useState([]); // Track selected image files
 
   // Handle file selection
   const handleImageFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setImageFile(selectedFile); // Update the selected file
-      uploadImageToServer(selectedFile); // Automatically upload the image
+    const selectedFiles = Array.from(e.target.files);
+    if (selectedFiles.length > 0) {
+      setImageFiles([...imageFiles, ...selectedFiles]); // Update the selected files
+      uploadImagesToServer(selectedFiles); // Automatically upload the images
     }
   };
 
-  // Upload image to the server
-  const uploadImageToServer = async (file) => {
+  // Upload images to the server
+  const uploadImagesToServer = async (files) => {
     setImageLoadingState(true);
     const data = new FormData();
-    data.append("my_file", file);
+    files.forEach((file) => data.append("my_file", file));
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/products/uploads",
+        "http://localhost:5000/api/admin/products/upload-images", // API for multiple uploads
         data,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -182,31 +182,31 @@ const ProductImageUpload = ({
       );
 
       if (response?.data?.success) {
-        const uploadedURL = response.data.results[0]?.result?.secure_url;
-        if (uploadedURL) {
-          setUploadedImageURL(uploadedURL); // Update the uploaded image URL
-        } else {
-          console.error("Image URL not found in the response");
-        }
+        const uploadedURLs = response.data.results.map(
+          (result) => result.result.secure_url
+        );
+        setUploadedImageURLs((prevURLs) => [...prevURLs, ...uploadedURLs]); // Update the uploaded image URLs
+      } else {
+        console.error("Image upload failed:", response.data.message);
       }
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading images:", error);
     } finally {
       setImageLoadingState(false);
     }
   };
 
-  // Remove the uploaded image
-  const handleRemoveImage = () => {
-    setImageFile(null);
-    setUploadedImageURL("");
+  // Remove an uploaded image
+  const handleRemoveImage = (url) => {
+    setUploadedImageURLs(uploadedImageURLs.filter((image) => image !== url));
+    setImageFiles([]);
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <Label className="text-lg font-semibold my-2 block">Upload Image</Label>
+      <Label className="text-lg font-semibold my-2 block">Upload Images</Label>
       <div
-        className={` ${
+        className={`${
           isEditMode ? "opacity-60" : ""
         } border-2 border-dashed rounded-md p-4 mt-4`}
       >
@@ -216,9 +216,10 @@ const ProductImageUpload = ({
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
+          multiple // Allow multiple file selection
           disabled={isEditMode}
         />
-        {!imageFile ? (
+        {!uploadedImageURLs.length && !imageLoadingState ? (
           <Label
             htmlFor="image-upload"
             className={`${
@@ -226,25 +227,36 @@ const ProductImageUpload = ({
             } flex flex-col justify-center items-center h-32 cursor-pointer`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2 " />
-            <span>Drag and drop or click to upload an image</span>
+            <span>Drag and drop or click to upload images</span>
           </Label>
         ) : imageLoadingState ? (
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
-          <div className="flex items-center justify-between border p-2 rounded-md">
-            <div className="flex items-center">
-              <FileIcon className="w-8 text-primary mr-2 h-8" />
-              <p className="text-sm font-medium">{imageFile.name}</p>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-foreground"
-              onClick={handleRemoveImage}
-            >
-              <XIcon className="w-4 h-4" />
-              <span className="sr-only">Remove File</span>
-            </Button>
+          <div>
+            {uploadedImageURLs.map((url, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between border p-2 rounded-md mb-2"
+              >
+                <div className="flex items-center">
+                  <FileIcon className="w-8 text-primary mr-2 h-8" />
+                  <img
+                    src={url}
+                    alt={`Uploaded ${index + 1}`}
+                    className="w-12 h-12 rounded-md"
+                  />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-muted-foreground hover:text-foreground"
+                  onClick={() => handleRemoveImage(url)}
+                >
+                  <XIcon className="w-4 h-4" />
+                  <span className="sr-only">Remove File</span>
+                </Button>
+              </div>
+            ))}
           </div>
         )}
       </div>

@@ -20,7 +20,7 @@ import {
   fetchAllProducts,
 } from "@/store/admin/products-slice";
 import AdminProductTile from "./admin-view2/Product-tile";
-import MultiImageUpload from "./therapycreation/Multiple";
+
 
 const initialFormData = {
   image: null,
