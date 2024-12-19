@@ -30,7 +30,7 @@ const initialFormData = {
   category: "",
   stock: "",
   types: "",
-  productType: "",
+  // productType: "",
   sales: "",
 };
 
@@ -60,7 +60,7 @@ const AdminProducts = () => {
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllProducts());
-        setImageFiles([]);
+        // setImageFiles([]);
         setUploadedImageURLs([]);
         setFormData(initialFormData);
         setOpenCreateProduct(false);
@@ -68,6 +68,10 @@ const AdminProducts = () => {
       }
     });
   }
+
+
+  console.log("FormData on Submit:", formData);
+
 
 
   function isFormValid() {

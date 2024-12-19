@@ -56,10 +56,6 @@ export const handleImageUpload = async (req, res) => {
   }
 };
 
-
-
-
-
 //Pls left this, incase you still want to use it
 // export const handleImageUpload = async (req, res) => {
 //   try {
@@ -107,6 +103,13 @@ export const handleImageUploads = async (req, res) => {
     }
 
     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    if (!allowedTypes) {
+      return res.status(400).json({
+        success: false,
+        message: "Unsupported file uploaded",
+      });
+    }
+
     const results = [];
 
     // Handle multiple file uploads
@@ -153,8 +156,6 @@ export const handleImageUploads = async (req, res) => {
   }
 };
 
-
-
 // Add a New Product
 
 export const addProduct = async (req, res) => {
@@ -163,16 +164,27 @@ export const addProduct = async (req, res) => {
     const { image, name, description, category, types, price, stock, sales } =
       req.body;
 
-
-      // Validate required fields
-    if (!image || !name || !description || !category || !price || !stock) {
+    if (!image) {
+      return res.status(400).json({
+        success: false,
+        message: "image upload required.",
+      });
+    }
+    // Validate required fields
+    if (
+      !name ||
+      !description ||
+      !category ||
+      !types ||
+      !price ||
+      !stock ||
+      !sales
+    ) {
       return res.status(400).json({
         success: false,
         message: "All fields are required.",
       });
     }
-
-
 
     const newProduct = new Product({
       image,
