@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import axios from "axios";
 
@@ -12,7 +11,7 @@ const useImageUpload = (uploadUrl) => {
   };
 
   const uploadImage = async () => {
-    if (!imageFile) return;
+    if (!imageFile) return null; // Explicitly return null if no file is provided.
 
     setIsLoading(true);
     const formData = new FormData();
@@ -22,15 +21,23 @@ const useImageUpload = (uploadUrl) => {
       const response = await axios.post(uploadUrl, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       if (response?.data?.success) {
-        setUploadedImageURL(response.data.result.url);
-      } else {
-        console.error("Image upload failed:", response.data.message);
+        const imageUrl =
+          response.data.results[0]?.result?.secure_url ||
+          response.data.results[0]?.result?.url;
+        if (imageUrl) {
+          setUploadedImageURL(imageUrl); // Save the uploaded image URL to state
+          return imageUrl; // Return the URL
+        }
       }
+
+      throw new Error("Image upload failed or URL not found.");
     } catch (error) {
       console.error("Error uploading image:", error);
+      return null;
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state once the upload is complete.
     }
   };
 

@@ -13,24 +13,23 @@ export const createNewTherapist = createAsyncThunk(
   "/therapists/create",
   async (therapistData, { rejectWithValue }) => {
     try {
-      const formData = new FormData();
-      Object.keys(therapistData).forEach((key) => {
-        formData.append(key, therapistData[key]);
-      });
+      console.log("Therapist data received in thunk:", therapistData);
 
       const response = await axios.post(
         "http://localhost:5000/api/therapists",
-        formData,
+        therapistData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
           withCredentials: true,
         }
       );
 
+      console.log("Therapist API response:", response.data);
       return response.data;
     } catch (error) {
+      console.error("Error in createNewTherapist thunk:", error);
       return rejectWithValue(
         error.response && error.response.data
           ? error.response.data
@@ -39,6 +38,7 @@ export const createNewTherapist = createAsyncThunk(
     }
   }
 );
+
 
 // Async thunk to get all therapists
 export const getAllTherapists = createAsyncThunk(
