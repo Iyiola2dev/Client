@@ -79,7 +79,7 @@ const AdminProducts = () => {
       }
     });
   }
-  console.log("FormData on Submit:", formData);
+  // console.log("FormData on Submit:", formData);
 
 
 
