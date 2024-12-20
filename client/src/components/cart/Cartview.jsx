@@ -1,14 +1,14 @@
 import { ArrowLeftIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import CartContent from "./CartContent.jsx";
+import CartContent from "./CartContent";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
-} from "@/store/shop/products-slice,js";
-
-import ProductTileShop from "@/pages/shopping-view/ProductTileShop.jsx";
+} from "@/store/shop/products-slice";
+import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
+import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewTherapist } from "@/store/therapy/therapist-slice";
 import { useDropzone } from "react-dropzone";
-import useImageUpload from "../image-upload/UseImage.jsx";
+import useImageUpload from "../image-upload/UseImage";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useToast } from "@/hooks/use-toast"; 
 import { useNavigate } from "react-router-dom";

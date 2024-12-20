@@ -5,7 +5,7 @@ import AppointmentButton from "@/components/ui/appointmentButton";
 import TeenButton from "@/components/ui/teenButton";
 import "../../index.css";
 import  { useState } from "react";
-import RestrictionModal from "./RestrictionModal.jsx";
+import RestrictionModal from "./RestrictionModal";
 import { motion, AnimatePresence } from "framer-motion";
 
 const LandingPage = () => {

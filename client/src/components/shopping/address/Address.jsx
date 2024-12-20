@@ -10,9 +10,9 @@ import {
   fetchAllAddress,
 } from "@/store/shop/address-slice";
 import CommonForm from "@/components/common/Form";
-import AddressFormData from "@/components/common/AddressFormData.jsx";
+import AddressFormData from "@/components/common/AddressFormData";
 import { useToast } from "@/hooks/use-toast";
-import AddressCard from "./AddressCard.jsx";
+import AddressCard from "./AddressCard";
 
 const initialAddressFormData = {
   address: "",

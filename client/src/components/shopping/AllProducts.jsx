@@ -1,4 +1,4 @@
-// import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
+import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
@@ -17,7 +17,7 @@ import { sortOptions } from "@/config/Index";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
-import ProductTileShop from "@/pages/shopping-view/ProductTileShop.jsx";
+import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
 
 const AllProducts = () => {
   const dispatch = useDispatch();

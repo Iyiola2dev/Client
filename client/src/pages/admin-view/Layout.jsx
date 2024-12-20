@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import AdminSideBar from "./SideBar.jsx";
-import AdminHeader from "./Header.jsx";
+import AdminSideBar from "./SideBar";
+import AdminHeader from "./Header";
 
 const AdminLayout = ({ children }) => {
   //this is the admin dashboard sidebar

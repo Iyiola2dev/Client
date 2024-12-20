@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllTherapists } from "@/store/therapy/therapist-slice";
 import { useNavigate } from "react-router-dom"; // Assuming React Router is used for navigation
 import { IoAdd } from "react-icons/io5"; // Plus icon
-import TherapistCard from "./TherapistCard.jsx";
+import TherapistCard from "./TherapistCard";
 
 const Therapists = () => {
   const dispatch = useDispatch();
