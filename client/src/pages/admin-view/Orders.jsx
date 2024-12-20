@@ -1,6 +1,6 @@
 import React from "react";
 
-import AdminOrderView from "./admin-view2/AdminOrderView";
+import AdminOrderView from "./admin-view2/AdminOrderView.jsx";
 import {  useSelector } from "react-redux";
 
 const AdminOrders = () => {

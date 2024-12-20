@@ -5,7 +5,7 @@ import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@radix-ui/react-label";
 import  { useState } from "react";
-import AdminOrderSummarys from "./AdminOrderSummarys";
+import AdminOrderSummarys from "./AdminOrderSummarys.jsx";
 
 const initialFormData = {
   status: "",

@@ -3,7 +3,7 @@ import { useToast } from '@/hooks/use-toast';
 import { addNewAddress, deleteAddress, editAddress, fetchAllAddress } from '@/store/shop/address-slice';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import AddressCard from './AddressCard';
+import AddressCard from './AddressCard.jsx';
 
 const initialAddressFormData = {
     address: "",

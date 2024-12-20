@@ -10,7 +10,7 @@ import {
 import { addProductFormElements } from "@/config/index";
 
 import { useEffect, useState } from "react";
-import ProductImageUpload from "./image-upload/Image-upload";
+import ProductImageUpload from "./image-upload/Image-upload.jsx";
 
 import { useDispatch, useSelector } from "react-redux";
 import {

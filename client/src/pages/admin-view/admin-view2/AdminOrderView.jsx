@@ -15,7 +15,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersForAdmin, getOrderDetailsForAdmin, resetOrderDetails } from "@/store/admin/order-slice";
 import { Badge } from "@/components/ui/badge";
-import AdminOrderDetailsView from "./OrderDetails";
+import AdminOrderDetailsView from "./OrderDetails.jsx";
 
 const AdminOrderView = () => {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);

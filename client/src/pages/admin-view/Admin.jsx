@@ -1,16 +1,16 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import AdminLayout from "./Layout";
-import AdminDashboard from "./Dashboard";
-import AdminProducts from "./Products";
-import AdminOrder from "./admin-view2/AdminOrderView";
-import AdminFeatures from "./Features";
+import AdminLayout from "./Layout.jsx";
+import AdminDashboard from "./Dashboard.jsx";
+import AdminProducts from "./Products.jsx";
+import AdminOrder from "./admin-view2/AdminOrderView.jsx";
+import AdminFeatures from "./Features.jsx";
 
-import TherapistEdit from "./therapycreation/TherapistEdit";
-import TherapistCreate from "./therapycreation/TherapistCreate";
-import Therapists from "./therapycreation/Therapists";
-import TherapistCreation from "./therapycreation/TherapistView";
-import MultiImageUploader from "./therapycreation/Multiple";
+import TherapistEdit from "./therapycreation/TherapistEdit.jsx";
+import TherapistCreate from "./therapycreation/TherapistCreate.jsx";
+import Therapists from "./therapycreation/Therapists.jsx";
+import TherapistCreation from "./therapycreation/TherapistView.jsx";
+import MultiImageUploader from "./therapycreation/Multiple.jsx";
 
 const Admin = () => {
   return (

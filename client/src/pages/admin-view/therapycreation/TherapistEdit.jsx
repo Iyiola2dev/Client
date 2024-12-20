@@ -5,7 +5,7 @@ import { updateTherapist } from "@/store/therapy/therapist-slice";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "react-router-dom";
-import useImageUpload from "../image-upload/UseImage";
+import useImageUpload from "../image-upload/UseImage.jsx";
 
 const TherapistEdit = ({ therapistData: propTherapistData }) => {
   const location = useLocation();

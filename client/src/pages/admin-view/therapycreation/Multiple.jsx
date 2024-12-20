@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useMultiple from "../image-upload/UseMultiple";
+import useMultiple from "../image-upload/UseMultiple.jsx";
 import { useToast } from "@/hooks/use-toast"; // Import your custom useToast hook
 import { Input } from "@/components/ui/input";
 
