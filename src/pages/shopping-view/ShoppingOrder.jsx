@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import ShoppingOrderDetailsView from "@/components/shopping/orders/orderDetails,jsx";
+import ShoppingOrderDetailsView from "@/components/shopping/orders/orderDetails.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersByUserId,
