@@ -6,21 +6,21 @@ import ShoppingHome from "./Home";
 import ShoppingListing from "./Listing";
 import ShoppingCheckout from "./Checkout";
 import ShoppingAccount from "./Account";
-import Nav2 from "@/components/navbar/Nav2.jsx";
-import ForMen from "@/components/shopping/ForMen.jsx";
-import ForWomen from "@/components/shopping/ForWomen.jsx";
-import ForCouples from "@/components/shopping/ForCouples.jsx";
-import AllProducts from "@/components/shopping/AllProducts.jsx";
+import Nav2 from "@/components/navbar/Nav2";
+import ForMen from "@/components/shopping/ForMen";
+import ForWomen from "@/components/shopping/ForWomen";
+import ForCouples from "@/components/shopping/ForCouples";
+import AllProducts from "@/components/shopping/AllProducts";
 import Footer from "@/components/footer/Footer";
-import ProductDetails from "@/components/shopping/productDetails/ProductDetails.jsx";
-import Cartview from "@/components/cart/Cartview.jsx";
-import ShopAbout from "./ShopAbout.jsx";
-import AddressAccount from "@/components/shopping/address/Address-account.jsx";
+import ProductDetails from "@/components/shopping/productDetails/ProductDetails";
+import Cartview from "@/components/cart/Cartview";
+import ShopAbout from "./ShopAbout";
+import AddressAccount from "@/components/shopping/address/Address-account";
 
-
-import ShoppingOrder from "./ShoppingOrder.jsx";
-import PaystackReturnPage from "@/components/shopping/paystack/PaystackReturnPage.jsx";
-import PaymentSuccess from "@/components/shopping/paystack/PaymentSuccess.jsx";
+import AdminOrders from "../admin-view/Orders";
+import ShoppingOrder from "./ShoppingOrder";
+import PaystackReturnPage from "@/components/shopping/paystack/PaystackReturnPage";
+import PaymentSuccess from "@/components/shopping/paystack/PaymentSuccess";
 
 const Shopping = () => {
   return (
