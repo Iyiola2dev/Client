@@ -33,8 +33,8 @@ const Scheduling = ({ onComplete, onDataChange }) => {
     const userId = user?.id; // Access user ID
     const therapistId = therapist?._id; // Access therapist ID
 
-    console.log("Therapist ID:", therapistId); // Debug log
-    console.log("User ID:", userId); // Debug log
+    // console.log("Therapist ID:", therapistId); // Debug log
+    // console.log("User ID:", userId); // Debug log
 
     // Check if therapistId and userId are available
     if (therapistId && userId) {
@@ -116,7 +116,7 @@ const Scheduling = ({ onComplete, onDataChange }) => {
       onDataChange(scheduleData); // Send all relevant data to parent
     }
 
-    console.log(scheduleData); // Debugging: log form data with IDs
+    // console.log(scheduleData); // Debugging: log form data with IDs
 
     // Dispatch the action to post the schedule
     dispatch(postSchedule(scheduleData));

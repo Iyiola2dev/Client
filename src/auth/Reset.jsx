@@ -20,11 +20,11 @@ const Reset = () => {
   // Retrieve email and OTP from localStorage
   const email = localStorage.getItem("resetEmail");
   const otp = localStorage.getItem("resetOtp");
-  console.log("Otp Retrieved:", otp); // Debugging
+  // console.log("Otp Retrieved:", otp); // Debugging
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email, "OTP:", otp, "New Password:", newPassword); // Debugging
+    // console.log("Email:", email, "OTP:", otp, "New Password:", newPassword); // Debugging
 
     if (!email || !otp) {
       toast({
@@ -50,7 +50,7 @@ const Reset = () => {
       const response = await dispatch(
         resetPassword({ email, otp, newPassword })
       ).unwrap();
-      console.log("Password Reset Successful:", response); // Add this
+      // console.log("Password Reset Successful:", response); // Add this
       toast({
         title: "Success",
         description: "Password reset successful.",
@@ -58,7 +58,7 @@ const Reset = () => {
       setCurrentStep(4);
       navigate("/auth/confirm-reset");
     } catch (err) {
-      console.error("Password Reset Failed:", err);
+      // console.error("Password Reset Failed:", err);
       toast({
         title: "Error",
         description: err || "Failed to reset password.",

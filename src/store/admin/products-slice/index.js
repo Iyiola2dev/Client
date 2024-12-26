@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../../auth-slice/api"; // Use the custom Axios instance
 
 //This is my redux file for adding products, deleting products, editing products and fetching all products
 const initialState = {
@@ -8,12 +8,13 @@ const initialState = {
   error: null,
 };
 
+
 //This to add a new product
 export const addNewProduct = createAsyncThunk(
   "/products/addNewProduct",
   async (formData) => {
-    const result = await axios.post(
-      "http://localhost:5000/api/admin/products/add",
+    const result = await api.post(
+      `/admin/products/add`,
       formData,
       {
         headers: {
@@ -29,8 +30,8 @@ export const addNewProduct = createAsyncThunk(
 export const fetchAllProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async (formData) => {
-    const result = await axios.get(
-      "http://localhost:5000/api/admin/products/get",
+    const result = await api.get(
+      `/admin/products/get`,
       formData,
       {
         headers: {
@@ -46,8 +47,8 @@ export const fetchAllProducts = createAsyncThunk(
 export const editProduct = createAsyncThunk(
   "/products/editProduct",
   async ({ id, formData }) => {
-    const result = await axios.put(
-      `  http://localhost:5000/api/admin/products/edit/${id}`,
+    const result = await api.put(
+      `/admin/products/edit/${id}`,
       formData,
       {
         headers: {
@@ -63,7 +64,7 @@ export const editProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
   async (id) => {
-    const result = await axios.delete(`http://localhost:5000/api/admin/products/delete/${id}`, {
+    const result = await api.delete(`/admin/products/delete/${id}`, {
       headers: {
         "Content-Type": "application/json",
       },

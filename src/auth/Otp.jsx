@@ -15,7 +15,7 @@ const Otp = () => {
 
   // Retrieve email from localStorage
   const email = localStorage.getItem("resetEmail") || "";
-  console.log("Retrieved Email from localStorage:", email); // Debugging
+  // console.log("Retrieved Email from localStorage:", email); // Debugging
 
   // Check if email is missing
   if (!email) {
@@ -45,8 +45,8 @@ const Otp = () => {
     e.preventDefault();
     const otpCode = otp.join("").trim();
 
-    console.log("Email Sent to Backend:", email);
-    console.log("OTP Sent to Backend:", otpCode);
+    // console.log("Email Sent to Backend:", email);
+    // console.log("OTP Sent to Backend:", otpCode);
 
     if (otpCode.length !== 4) {
       toast({
@@ -60,7 +60,7 @@ const Otp = () => {
     dispatch(verifyOtp({ email, otp: otpCode }))
       .unwrap()
       .then((res) => {
-        console.log("OTP Verification Response:", res);
+        // console.log("OTP Verification Response:", res);
         localStorage.setItem("resetOtp", otpCode);
         toast({
           title: "Success",
@@ -70,7 +70,7 @@ const Otp = () => {
         navigate("/auth/reset-password");
       })
       .catch((error) => {
-        console.error("OTP Verification Error:", error);
+        // console.error("OTP Verification Error:", error);
         toast({
           title: "Error",
           description: error?.message || "Invalid or expired OTP!",

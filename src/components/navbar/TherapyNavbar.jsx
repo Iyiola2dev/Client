@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import {  IoCloseSharp, IoHome, IoPerson } from "react-icons/io5";
-import {  MdOutlineMenuBook } from "react-icons/md";
+import { IoCloseSharp, IoHome, IoPerson } from "react-icons/io5";
+import { MdOutlineMenuBook } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { FaBlog, FaInfoCircle, FaRegQuestionCircle, FaShoppingCart, FaWallet } from "react-icons/fa";
-import { FiMessageSquare } from "react-icons/fi";
+import { FaBlog, FaInfoCircle, FaRegQuestionCircle, FaHome } from "react-icons/fa";
+import { SiGnuprivacyguard } from "react-icons/si";
 import { CiLogout } from "react-icons/ci";
 import { logoutUser } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
@@ -21,24 +21,23 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-   // Toggle the dropdown visibility
-   const toggleDropdown = () => {
-     setIsDropdownOpen(!isDropdownOpen);
-   };
+  // Toggle the dropdown visibility
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
-   // Close dropdown after selecting a course
-   const handleCourseClick = () => {
-     setIsDropdownOpen(false);
-   }; 
+  // Close dropdown after selecting a course
+  const handleCourseClick = () => {
+    setIsDropdownOpen(false);
+  };
 
-   
-const handleLogout = () => {
-  console.log("logging out");
-  dispatch(logoutUser()); // Clears user data 
-  navigate("/auth/login"); // Redirects the user to the login page
-};
+  const handleLogout = () => {
+    // console.log("logging out");
+    dispatch(logoutUser()); // Clears user data
+    navigate("/auth/login"); // Redirects the user to the login page
+  };
 
   return (
     <div>
@@ -81,23 +80,16 @@ const handleLogout = () => {
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/about">About Us</Link>
               </li>
-              <li className="text-white hover:text-[#C42571]">
-                <Link to="/products">Our products (+18 only)</Link>
-              </li>
+
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/courses">Courses</Link>
               </li>
-              <li className="text-white hover:text-[#C42571]">
-                <Link to="/therapy">Therapy</Link>
-              </li>
+
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/blog">Blog</Link>
               </li>
               <li className="text-white hover:text-[#C42571]">
                 <Link to="/contact">Contact Us</Link>
-              </li>
-              <li className="text-white hover:text-[#C42571]">
-                <Link to="/therapy/edit">Edit Therapist</Link>
               </li>
             </ul>
 
@@ -112,6 +104,14 @@ const handleLogout = () => {
               >
                 <Link>Logout</Link>
               </Button>
+
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+                onClick={toggleMenu}
+              >
+                <IoPerson className="w-6 h-6 text-white" />
+              </Link>
             </div>
           </nav>
         </div>
@@ -195,13 +195,23 @@ const handleLogout = () => {
 
             <nav className="flex flex-col gap-1 pl-4 text-md">
               <Link
-                to="/profile"
+                to="/"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
               >
-                <IoPerson className="w-6 h-6" />
-                Profile
+                <FaHome className="w-6 h-6" />
+                Home
               </Link>
+
+              <Link
+                to="/about"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+                onClick={toggleMenu}
+              >
+                <FaInfoCircle className="w-6 h-6" />
+                About Us
+              </Link>
+
               <div>
                 <Link
                   to="#"
@@ -245,30 +255,6 @@ const handleLogout = () => {
               </div>
 
               <Link
-                to="/wallet"
-                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
-                onClick={toggleMenu}
-              >
-                <FaWallet className="w-6 h-6" />
-                Wallet
-              </Link>
-              <Link
-                to="/cart"
-                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
-                onClick={toggleMenu}
-              >
-                <FaShoppingCart className="w-6 h-6" />
-                Cart
-              </Link>
-              <Link
-                to="/messages"
-                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
-                onClick={toggleMenu}
-              >
-                <FiMessageSquare className="w-6 h-6" />
-                Messages
-              </Link>
-              <Link
                 to="/blog"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
@@ -276,31 +262,40 @@ const handleLogout = () => {
                 <FaBlog className="w-6 h-6" />
                 Blog
               </Link>
-              <Link
-                to="/about"
-                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
-                onClick={toggleMenu}
-              >
-                <FaInfoCircle className="w-6 h-6" />
-                About Us
-              </Link>
             </nav>
 
             <div className="flex flex-col pl-4 gap-2 text-sm mt-[50px]">
               <Link
-                to="/help"
+                to="/contact"
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={toggleMenu}
               >
                 <FaRegQuestionCircle className="w-5 h-5" />
-                Help
+                Contact Us
               </Link>
+
+              <Link
+                to="/auth/register"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+              >
+                <SiGnuprivacyguard className="w-5 h-5" />
+                Sign up
+              </Link>
+
               <Link
                 className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
                 onClick={handleLogout} // Calls the logout function
               >
                 <CiLogout className="w-5 h-5 font-bold" />
                 Log out
+              </Link>
+
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 hover:text-[#3525c4] hover:bg-white hover:font-semibold p-2"
+                onClick={toggleMenu}
+              >
+                <IoPerson className="w-6 h-6" /> Profile
               </Link>
             </div>
           </div>

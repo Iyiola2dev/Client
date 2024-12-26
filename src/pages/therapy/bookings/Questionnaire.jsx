@@ -33,8 +33,8 @@ const Questionnaire = ({ onComplete, onDataChange }) => {
     const userId = user?.id; // Access user ID
     const therapistId = therapist?._id; // Access therapist ID
 
-    console.log("Therapist ID:", therapistId); // Debug log
-    console.log("User ID:", userId); // Debug log
+    // console.log("Therapist ID:", therapistId); // Debug log
+    // console.log("User ID:", userId); // Debug log
 
     // Check if therapistId and userId are available
     if (therapistId && userId) {
@@ -93,7 +93,7 @@ const Questionnaire = ({ onComplete, onDataChange }) => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues); // Debugging: log form values
+    // console.log(formValues); // Debugging: log form values
     dispatch(postQuestionnaire(formValues));
   };
 

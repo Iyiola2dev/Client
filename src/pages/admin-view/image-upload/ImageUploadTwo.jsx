@@ -1,5 +1,8 @@
 import React from "react";
-import axios from "axios";
+
+
+
+import api from "../../../store/auth-slice/api"
 
 const ProductImageUpload = ({
   imageFile,
@@ -18,8 +21,8 @@ const ProductImageUpload = ({
     const dataImage = new FormData();
     dataImage.append("my_file", imageFile);
 
-    const response = await axios.post(
-      "http://localhost:5000/api/admin/products/upload-image",
+    const response = await api.post(
+      `/admin/products/upload-image`,
       dataImage,
       {
         headers: {

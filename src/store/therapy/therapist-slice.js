@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../auth-slice/api"; // Use the custom api instance
 
 const initialState = {
   therapists: [], // List of all therapists
@@ -8,6 +8,8 @@ const initialState = {
   error: null,
 };
 
+
+
 // Async thunk to create a new therapist
 export const createNewTherapist = createAsyncThunk(
   "/therapists/create",
@@ -15,8 +17,8 @@ export const createNewTherapist = createAsyncThunk(
     try {
       console.log("Therapist data received in thunk:", therapistData);
 
-      const response = await axios.post(
-        "http://localhost:5000/api/therapists",
+      const response = await api.post(
+        `/therapists`,
         therapistData,
         {
           headers: {
@@ -45,7 +47,7 @@ export const getAllTherapists = createAsyncThunk(
   "/therapists/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/therapists", {
+      const response = await api.get(`/therapists`, {
         withCredentials: true,
       });
       return response.data;
@@ -65,8 +67,8 @@ export const getTherapistById = createAsyncThunk(
   "/therapists/getById",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/therapists/${id}`,
+      const response = await api.get(
+        `/therapists/${id}`,
         {
           withCredentials: true,
         }
@@ -90,8 +92,8 @@ export const updateTherapist = createAsyncThunk(
       console.log("Token being sent:", token); // Log the token
       console.log("Data being sent:", data); // Log the request data
 
-      const response = await axios.put(
-        `http://localhost:5000/api/therapists/${data._id}`,
+      const response = await api.put(
+        `/therapists/${data._id}`,
         data,
         {
           withCredentials: true,
@@ -115,8 +117,8 @@ export const deleteTherapist = createAsyncThunk(
   "/therapists/delete",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/therapists/${id}`,
+      const response = await api.delete(
+        `/therapists/${id}`,
         { withCredentials: true }
       );
       return response.data;

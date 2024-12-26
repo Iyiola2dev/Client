@@ -13,11 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { sortOptions } from "@/config/Index";
+import { sortOptions } from "../../config/index";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
+import ProductTileShop from "../../pages/shopping-view/ProductTileShop";
+
 
 const ForWomen = () => {
   const dispatch = useDispatch();

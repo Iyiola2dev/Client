@@ -47,7 +47,7 @@ const TherapistCreation = () => {
     const fetchTherapist = async () => {
       try {
         if (id) {
-          console.log("Fetching therapist data from the server...");
+          // console.log("Fetching therapist data from the server...");
           const resultAction = await dispatch(getTherapistById(id)).unwrap();
           localStorage.setItem("therapist", JSON.stringify(resultAction));
           setFormData(resultAction);
@@ -59,10 +59,10 @@ const TherapistCreation = () => {
 
     const savedTherapist = localStorage.getItem("therapist");
     if (savedTherapist) {
-      console.log(
-        "Fetching therapist data from localStorage...",
-        savedTherapist
-      );
+      // console.log(
+      //   "Fetching therapist data from localStorage...",
+      //   savedTherapist
+      // );
       setFormData(JSON.parse(savedTherapist));
     } else {
       fetchTherapist();
@@ -106,13 +106,13 @@ const TherapistCreation = () => {
   const handleSaveChanges = async () => {
     setIsSaving(true); // Start loading
     if (id) {
-      console.log("Updating therapist data...Saving changes...");
+      // console.log("Updating therapist data...Saving changes...");
       try {
         await dispatch(updateTherapist({ ...formData, _id: id })).unwrap();
         setIsEditMode(false);
         toast.success("Therapist data updated successfully!");
       } catch (error) {
-        console.log("Failed to update therapist:", error);
+        // console.log("Failed to update therapist:", error);
         toast.error("Failed to update therapist data.");
       } finally {
         setIsSaving(false); // End loading

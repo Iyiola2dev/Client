@@ -10,7 +10,7 @@ const Therapists = () => {
   );
 
   useEffect(() => {
-    console.log(therapists);
+    // console.log(therapists);
     dispatch(getAllTherapists());
   }, [dispatch]);
 

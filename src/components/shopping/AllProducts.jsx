@@ -1,4 +1,4 @@
-import ShoppingProductTile from "@/pages/shopping-view/ProductTileShopping";
+
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
@@ -13,11 +13,11 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { sortOptions } from "@/config/Index";
+import { sortOptions } from "../../config/index";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
-import ProductTileShop from "@/pages/shopping-view/ProductTileShop";
+import ProductTileShop from "../../pages/shopping-view/ProductTileShop";
 
 const AllProducts = () => {
   const dispatch = useDispatch();

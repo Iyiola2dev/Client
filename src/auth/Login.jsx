@@ -19,13 +19,17 @@ const Login = () => {
 
   const { toast } = useToast();
 
-  //I commented this codes out because it is not used in the Login component
-
   const onSubmit = (e) => {
     e.preventDefault();
 
     dispatch(loginUser(formData)).then((data) => {
       if (data?.payload?.success) {
+        // Store the user's ID in localStorage
+        const userId = data.payload.user.id; // Adjust the path if necessary
+        localStorage.setItem("userId", userId);
+        console.log("User ID saved to localStorage:", userId);
+
+        // Show a success toast
         toast({ title: data?.payload?.message });
 
         // Retrieve the last attempted URL
@@ -41,15 +45,16 @@ const Login = () => {
         // Clear the last attempted URL after successful login
         localStorage.removeItem("lastAttemptedURL");
       } else {
+        // Show an error toast
         toast({
           title: data?.payload?.message || "Incorrect email or password",
           variant: "destructive",
         });
       }
     });
-
-    // console.log(formData);
+    // console.log("Form Data:", formData);
   };
+   
 
   return (
     <div className="bg-shadowTherapy bg-cover bg-center min-h-screen flex justify-center items-center px-4 sm:px-8">

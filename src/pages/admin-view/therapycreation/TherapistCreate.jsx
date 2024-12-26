@@ -146,12 +146,12 @@ const handleSubmit = async (e) => {
       imageUrl,
     };
 
-    console.log("Payload:", JSON.stringify(payload, null, 2));
+    // console.log("Payload:", JSON.stringify(payload, null, 2));
 
     // Dispatch the createNewTherapist action
     const response = await dispatch(createNewTherapist(payload)).unwrap();
 
-    console.log("Response:", response); // Debugging line
+    // console.log("Response:", response); // Debugging line
 
     if (response?.success) {
       toast({

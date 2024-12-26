@@ -25,7 +25,7 @@ const TherapistView = () => {
       try {
         setLoading(true);
         const resultAction = await dispatch(getTherapistById(id)).unwrap();
-        console.log("Fetched therapist data:", resultAction); // Log the response to debug
+        // console.log("Fetched therapist data:", resultAction); // Log the response to debug
         setTherapist(resultAction.therapist); // Set therapist data in state
       } catch (error) {
         console.error("Failed to fetch therapist data:", error);
@@ -67,7 +67,7 @@ const TherapistView = () => {
     navigate(`/admin/editTherapist/${therapist._id}`, {
       state: { therapistData },
     });
-    console.log("Edit therapist data:", therapistData);
+    // console.log("Edit therapist data:", therapistData);
   };
 
 

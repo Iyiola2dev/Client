@@ -21,6 +21,9 @@ const {user} = useSelector((state)=> state.auth)
   const [sort, setSort] = useState("price-low-high"); // Set default sort option
   const {toast} = useToast();
 
+
+  console.log(cartItems, "cart");
+
   // Handle sorting change
   const handleSort = (value) => {
     setSort(value);
@@ -46,7 +49,7 @@ const {user} = useSelector((state)=> state.auth)
   };
 
   const handleCheckoutNavigate = () => {
-    if (cartItems.items.length === 0) {
+    if (cartItems.length === 0) {
       toast({
         title: "Your cart is empty, please add items to proceed",
         variant: "destructive",

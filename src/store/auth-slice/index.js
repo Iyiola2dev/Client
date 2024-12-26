@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import api from "./api";
-// import * as jwt_decode from "jwt-decode";
+import api from "../auth-slice/api"; // Use the custom Axios instance
+import * as jwt_decode from "jwt-decode";
 
 // Initial state
 const initialState = {
@@ -9,17 +9,40 @@ const initialState = {
   isLoading: true,
   user: null,
 };
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+console.log("API_BASE_URL", API_BASE_URL);
+
+// Helper function to initialize state
+const initializeAuthState = () => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const decoded = jwt_decode(token); // Decode token to extract user info
+      const isTokenExpired = decoded.exp * 1000 < Date.now(); // Check expiration
+      if (!isTokenExpired) {
+        return {
+          isAuthenticated: true,
+          isLoading: false,
+          user: decoded, // Assume token contains user info like id, email, etc.
+        };
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }
+  return { ...initialState, isLoading: false }; // Default to unauthenticated state
+};
+
 
 // Register user
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData,
-        { withCredentials: true }
-      );
+      const response = await api.post(`/auth/register`, formData, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -34,8 +57,9 @@ export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await api.post("/auth/login", formData);
+      const response = await api.post(`/auth/login`, formData);
       localStorage.setItem("token", response.data.token); // Store token on login
+
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -50,8 +74,8 @@ export const logoutUser = createAsyncThunk(
   "/auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/logout",
+      const response = await api.post(
+        `/auth/logout`,
         {},
         { withCredentials: true }
       );
@@ -70,16 +94,15 @@ export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/auth/check-auth",
-        {
-          withCredentials: true,
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            Expires: 0,
-          },
-        }
-      );
+      const response = await api.get(`/auth/check-auth`,  {
+        withCredentials: true,
+        headers: {
+       
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Expires: 0,
+        },
+      });
+    
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -99,8 +122,8 @@ export const forgotPassword = createAsyncThunk(
   "/auth/forgot-password",
   async (email, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+      const response = await api.post(
+        `/auth/forgot-password`,
         { email },
         { withCredentials: true }
       );
@@ -111,7 +134,6 @@ export const forgotPassword = createAsyncThunk(
           error.message ||
           "An unexpected error occurred"
       );
-
     }
   }
 );
@@ -121,14 +143,11 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async ({ email, otp, newPassword }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/reset-password",
-        {
-          email,
-          otp,
-          newPassword,
-        }
-      );
+      const response = await api.post(`/auth/reset-password`, {
+        email,
+        otp,
+        newPassword,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -138,49 +157,41 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-
 // Verify OTP
 export const verifyOtp = createAsyncThunk(
   "/auth/verify-otp",
   async ({ email, otp }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
+      const response = await api.post(
+        `/auth/verify-otp`,
         { email, otp },
         { withCredentials: true }
       );
       return response.data;
     } catch (error) {
-     return rejectWithValue(
-       error.response?.data?.message ||
-         error.message ||
-         "An unexpected error occurred"
-     );
-
+      return rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "An unexpected error occurred"
+      );
     }
   }
 );
 
-
-
 // Auth slice
 const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: initializeAuthState(),
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload.user;
       state.isAuthenticated = action.payload.isAuthenticated;
     },
-
-    //I don't need this action in the auth slice
-
-    // setIntendedRoute: (state, action) => {
-    //   state.intendedRoute = action.payload;
-    // },
-    // clearIntendedRoute: (state) => {
-    //   state.intendedRoute = "/";
-    // },
+    clearAuthState: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem("token");
+    },
   },
   extraReducers: (builder) => {
     builder

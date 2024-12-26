@@ -13,7 +13,7 @@ const MultiImageUpload = ({ uploadUrl }) => {
   // Handle file selection
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    console.log("Selected files:", files); // Debugging
+    // console.log("Selected files:", files); // Debugging
     setSelectedFiles(files);
   };
 
@@ -34,7 +34,7 @@ const MultiImageUpload = ({ uploadUrl }) => {
 
   // Upload all selected files
   const uploadAllImages = async () => {
-    console.log("Starting upload for selected files:", selectedFiles); // Debugging
+    // console.log("Starting upload for selected files:", selectedFiles); // Debugging
     let successCount = 0;
     const abortController = new AbortController(); // Create an AbortController instance
     setUploadAbortController(abortController); // Save the controller to cancel if needed
@@ -57,7 +57,7 @@ const MultiImageUpload = ({ uploadUrl }) => {
           description: `File ${file.name} uploaded successfully!`,
           status: "success",
         });
-        console.log(`File ${file.name} uploaded successfully.`); // Debugging
+        // console.log(`File ${file.name} uploaded successfully.`); // Debugging
       } catch (error) {
         if (abortController.signal.aborted) {
           break; // Stop the loop if the upload was aborted
@@ -80,7 +80,7 @@ const MultiImageUpload = ({ uploadUrl }) => {
     }
 
     setIsUploading(false); // End the upload process
-    console.log("All files uploaded. Clearing selected files."); // Debugging
+    // console.log("All files uploaded. Clearing selected files."); // Debugging
     setSelectedFiles([]); // Clear after upload
   };
 

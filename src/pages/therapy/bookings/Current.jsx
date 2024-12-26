@@ -36,12 +36,12 @@ const Current = () => {
   const [questionnaireData, setQuestionnaireData] = useState({});
 
   const handleSchedulingDataChange = (data) => {
-    console.log("Received Data in Parent:", data); // Debug log
+    // console.log("Received Data in Parent:", data); // Debug log
     setSchedulingData(data); // Update scheduling data
   };
 
   const handleQuestionDataChange = (data) => {
-    console.log("Received Data in Parent:", data); // Debug log
+    // console.log("Received Data in Parent:", data); // Debug log
     setQuestionnaireData(data);
   };
 
@@ -144,7 +144,7 @@ const Current = () => {
     // }
 
     if (isSchedulingComplete && schedulingData) {
-      console.log("Scheduling Data Before Dispatch:", schedulingData); // Debug log
+      // console.log("Scheduling Data Before Dispatch:", schedulingData); // Debug log
 
       if (!schedulingData.therapistId || !schedulingData.userId) {
         console.error("Missing therapistId or userId in scheduling data.");
@@ -179,7 +179,7 @@ const Current = () => {
 
     // Submit the questionnaire form data if questionnaire is complete
     if (isQuestionnaireComplete && questionnaireData) {
-      console.log("Questionnaire Data Before Dispatch:", questionnaireData); // Debug log
+      // console.log("Questionnaire Data Before Dispatch:", questionnaireData); // Debug log
 
       if (!questionnaireData.therapistId || !questionnaireData.userId) {
         console.error("Missing therapistId or userId in questionnaire data.");
@@ -195,7 +195,7 @@ const Current = () => {
       dispatch(postQuestionnaire(questionnaireData))
         .unwrap()
         .then(() => {
-          console.log("Questionnaire data after dispatch:", questionnaireData); // Debug log
+          // console.log("Questionnaire data after dispatch:", questionnaireData); // Debug log
           toast({
             title: "Success",
             description: "Questionnaire submitted successfully!",

@@ -1,6 +1,7 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../auth-slice/api"; // Use the custom api instance
+
 
 // Async thunk for posting a new schedule
 export const postSchedule = createAsyncThunk(
@@ -8,8 +9,8 @@ export const postSchedule = createAsyncThunk(
   async (scheduleData, { rejectWithValue }) => {
     try {
       console.log("Posting schedule with data:", scheduleData); // Debugging log
-      const response = await axios.post(
-        "http://localhost:5000/api/schedule",
+      const response = await api.post(
+        `/schedule`,
         scheduleData
       );
       return response.data;
@@ -24,7 +25,7 @@ export const getAllSchedules = createAsyncThunk(
   "schedule/getAllSchedules",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/schedules");
+      const response = await api.get(`/schedules"`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -38,8 +39,8 @@ export const getScheduleById = createAsyncThunk(
   "schedule/getScheduleById",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/schedules/${id}`
+      const response = await api.get(
+        `/schedules/${id}`
       );
       return response.data;
     } catch (error) {
@@ -53,8 +54,8 @@ export const updateSchedule = createAsyncThunk(
   "schedule/updateSchedule",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5000//api/schedules/${id}`,
+      const response = await api.put(
+        `/schedules/${id}`,
         updatedData
       );
       return response.data;
@@ -70,8 +71,8 @@ export const deleteSchedule = createAsyncThunk(
   "schedule/deleteSchedule",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/schedules/${id}`
+      const response = await api.delete(
+        `/schedules/${id}`
       );
       return { id }; // Return the ID of the deleted schedule
     } catch (error) {

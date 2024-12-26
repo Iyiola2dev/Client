@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import ShoppingOrderDetailsView from "@/components/shopping/orders/orderDetails";
+import ShoppingOrderDetailsView from "../../components/shopping/orders/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersByUserId,
@@ -70,7 +70,9 @@ const ShoppingOrder = () => {
                         className={`py-1 px-3 ${
                           orderItem?.orderStatus === "confirmed"
                             ? "bg-green-400"
-                            : "bg-black"
+                            : orderDetails?.orderStatus === "rejected"
+                      ? "bg-red-400"
+                      : "bg-black"
                         }`}
                       >
                         {" "}

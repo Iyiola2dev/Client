@@ -4,9 +4,10 @@ import LandingQuestion from "./TherapyLandingQuestion";
 import AppointmentButton from "@/components/ui/appointmentButton";
 import TeenButton from "@/components/ui/teenButton";
 import "../../index.css";
-import  { useState } from "react";
+import { useState } from "react";
 import RestrictionModal from "./RestrictionModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { SlideLeft, SlideUp } from "../../animation/animate";
 
 const LandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,16 +23,18 @@ const LandingPage = () => {
 
   return (
     <div className="bg-[#F5F5DC]">
-      <main className="flex items-center justify-center h-auto flex-wrap">
+      <motion.main variants={SlideUp(0.3)}
+            initial="initial"
+            animate="animate" className="flex items-center justify-center h-auto flex-wrap">
         <div className="flex-1 flex justify-center relative">
           <a href="#category">
-               {/* I made changes to the styling LexiconBigGee*/}
+            {/* I made changes to the styling LexiconBigGee*/}
             {/* <img
               className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
               alt="Smiley Doctor"
             /> */}
-             <img
+            <img
               className="w-full h-auto aspect-square object-cover"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744723/Mern-Ecommerce/side-view-smiley-doctor-work_1_lk12o1.png"
               alt="Smiley Doctor"
@@ -41,7 +44,7 @@ const LandingPage = () => {
             <div className="absolute inset-0 flex flex-col justify-end items-center text-center">
               {/* First Text with Transparent Background */}
 
-            {/* I added text-xs for moblie view LexiconBigGee */}
+              {/* I added text-xs for moblie view LexiconBigGee */}
               <p className="lg:text-blue-700 text-xs md:text-xl lg:text-3xl text-black text-[12px] font-bold mb-2 bg-white bg-opacity-40 p-2 w-full ">
                 TRANSFORM YOUR LIFE WITH TAILORED THERAPY
               </p>
@@ -61,13 +64,6 @@ const LandingPage = () => {
           onClick={handleOpenModal}
         >
           {/* I made changes to the styling LexiconBigGee*/}
-          {/* <img
-            className="w-full max-w-sm lg:max-w-lg xl:max-w-3xl h-[250px] lg:h-auto aspect-square object-cover"
-            src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
-            alt="Animated Image"
-            width={500}
-            height={700}
-          /> */}
           <img
             className="w-full h-auto aspect-square object-cover"
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729744713/Mern-Ecommerce/giphy_1_shxv3d.png"
@@ -97,16 +93,24 @@ const LandingPage = () => {
             </div>
           )}
         </AnimatePresence>
-      </main>
+      </motion.main>
+
+
 
       {/* second section on the landing page */}
       <section className="p-5 mt-5 flex flex-col justify-center items-center text-center">
-        <h2 className="font-bold lg:text-xl">
+        <motion.h2 variants={SlideLeft(0.2)}
+            initial="initial"
+            whileInView="animate" className="font-bold lg:text-xl">
           We make therapy work better for everyone
-        </h2>
+        </motion.h2>
 
-        <div className=" mt-5 flex flex-col md:flex-row gap-3 justify-center  items-center lg:justify-between w-full lg:text-lg ">
-          <div className="flex flex-col justify-center items-center w-[250px] px-4 h-[250px] lg:w-[350px] lg:h-[300px] gap-3 ">
+        <motion.div variants={SlideUp(0.2)}
+            initial="initial"
+            whileInView="animate" className=" mt-5 flex flex-col md:flex-row gap-3 justify-center  items-center lg:justify-between w-full lg:text-lg ">
+          <motion.div variants={SlideLeft(0.2)}
+            initial="initial"
+            whileInView="animate" className="flex flex-col justify-center items-center w-[250px] px-4 h-[250px] lg:w-[350px] lg:h-[300px] gap-3 ">
             <img
               className="h-[150px] w-[150px]"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729775941/Mern-Ecommerce/image_132_bmtsz8.png"
@@ -116,8 +120,10 @@ const LandingPage = () => {
               Work with providers who are supported & empowered to provide the
               very best care.
             </p>
-          </div>
-          <div className="flex flex-col justify-center items-center w-[250px] px-4 h-[250px] lg:w-[350px] lg:h-[300px] gap-3">
+          </motion.div>
+          <motion.div variants={SlideLeft(0.3)}
+            initial="initial"
+            whileInView="animate" className="flex flex-col justify-center items-center w-[250px] px-4 h-[250px] lg:w-[350px] lg:h-[300px] gap-3">
             <img
               className="h-[150px] w-[150px]"
               src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729775940/Mern-Ecommerce/round_the_clock_mfzwar.png"
@@ -127,8 +133,10 @@ const LandingPage = () => {
               Get help when & where you need it — within 7 days of scheduling,
               24/7 live chat booking online
             </p>
-          </div>
-          <div className="flex flex-col justify-center items-center w-[250px] px-4 h-[250px] lg:w-[350px] lg:h-[300px] gap-3">
+          </motion.div>
+          <motion.div variants={SlideLeft(0.4)}
+            initial="initial"
+            whileInView="animate" className="flex flex-col justify-center items-center w-[250px] px-4 h-[250px] lg:w-[350px] lg:h-[300px] gap-3">
             <div className="h-[150px] w-[150px]">
               <img
                 className="h-[150px] w-[150px]"
@@ -141,22 +149,32 @@ const LandingPage = () => {
               Cover the cost of your session with our talk time unit plan,
               Self-pay options are also available.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
+
+
+
       {/* Third section  on the landing page*/}
-      <section
+      <motion.section
+      variants={SlideUp(0.2)}
+      initial="initial"
+     whileInView="animate"
         id="category"
         className="p-4 md:p-7 mt-5 flex flex-col justify-center items-center text-center"
       >
-        <h2 className="font-bold text-xl md:text-xl lg:text-4xl">
+        <motion.h2 variants={SlideLeft(0.3)}
+            initial="initial"
+            whileInView="animate" className="font-bold text-xl md:text-xl lg:text-4xl">
           THERAPY CATEGORY
-        </h2>
+        </motion.h2>
 
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full lg:text-lg p-2">
           {/* Couples Therapy */}
-          <div
+          <motion.div variants={SlideUp(0.5)}
+            initial="initial"
+           whileInView="animate"
             className="flex flex-col justify-center items-center p-4 lg:p-6 border-l-2 border-r-2 shadow-lg rounded-sm lg:border-l-0 lg:border-r-0 lg:shadow-none"
             style={{
               borderLeftColor: "purple", // Set left border color
@@ -182,10 +200,12 @@ const LandingPage = () => {
                 <AppointmentButton text="Book Appointment" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Individual Therapy */}
-          <div
+          <motion.div variants={SlideUp(0.6)}
+            initial="initial"
+          whileInView="animate"
             className="flex flex-col justify-center items-center p-4 lg:p-6 border-l-2 border-r-2 shadow-lg rounded-sm lg:border-l-0 lg:border-r-0 lg:shadow-none"
             style={{
               borderLeftColor: "purple", // Set left border color
@@ -210,10 +230,13 @@ const LandingPage = () => {
                 <AppointmentButton text="Book Appointment" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Teens Therapy */}
-          <div
+          <motion.div
+          variants={SlideUp(0.7)}
+          initial="initial"
+        whileInView="animate"
             className="flex flex-col justify-center items-center p-4 lg:p-6 border-l-2 border-r-2 shadow-lg rounded-sm lg:border-l-0 lg:border-r-0 lg:shadow-none"
             style={{
               borderLeftColor: "purple", // Set left border color
@@ -240,14 +263,18 @@ const LandingPage = () => {
                 <TeenButton text="Book Appointment" />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Fourth section of the page */}
-      <section className="p-5 mt-5 flex flex-col justify-center items-center  ">
+      <motion.section variants={SlideUp(0.2)}
+      initial="initial"
+     whileInView="animate" className="p-5 mt-5 flex flex-col justify-center items-center  ">
         {/* first div */}
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl">
+        <motion.div variants={SlideLeft(0.3)}
+      initial="initial"
+     whileInView="animate" className="flex flex-col md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl">
           <span>
             <img
               className="w-full h-auto"
@@ -268,10 +295,12 @@ const LandingPage = () => {
               own.
             </p>
           </span>
-        </div>
+        </motion.div>
 
         {/* second div */}
-        <div className="flex flex-col justify-center items-center mt-5 p-5 max-w-lg text-center gap-5">
+        <motion.div variants={SlideUp(0.4)}
+      initial="initial"
+     whileInView="animate" className="flex flex-col justify-center items-center mt-5 p-5 max-w-lg text-center gap-5">
           <h3 className="font-bold text-2xl md:text-3xl">
             How to buy our talk time unit plan
           </h3>
@@ -280,10 +309,12 @@ const LandingPage = () => {
             simple and secure Coin Unit Plan, you can purchase more talk time
             and keep the conversation going connecting with our professionals.
           </p>
-        </div>
+        </motion.div>
 
         {/* third div */}
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl mt-5">
+        <motion.div variants={SlideUp(0.5)}
+      initial="initial"
+     whileInView="animate" className="flex flex-col md:flex-row gap-4 justify-center items-center bg-black text-white p-5 rounded-xl mt-5">
           <span className="flex flex-col gap-4 p-5">
             <h2 className="font-bold text-xl lg:text-3xl text-center">
               Are you feeling overwhelmed by life’s challenges and struggling to
@@ -304,10 +335,12 @@ const LandingPage = () => {
               alt="image"
             />
           </span>
-        </div>
+        </motion.div>
 
         {/* fourth div */}
-        <div className="flex flex-col justify-center items-center mt-5 p-5 max-w-xl text-center gap-5">
+        <motion.div variants={SlideUp(0.6)}
+      initial="initial"
+     whileInView="animate" className="flex flex-col justify-center items-center mt-5 p-5 max-w-xl text-center gap-5">
           <h3 className="font-bold text-2xl md:text-3xl">Disclaimer!</h3>
           <p className="text-center text-xl lg:text-xl">
             No live chat for assistance on the site Fill out questionnaire
@@ -316,18 +349,24 @@ const LandingPage = () => {
             divorce, adoption, infertility, infidelity, pregnancy, postpartum
             depression,others (allow a client to put in the reason)
           </p>
-        </div>
-        <div>
+        </motion.div>
+        <motion.div variants={SlideLeft(0.7)}
+      initial="initial"
+     whileInView="animate">
           <Button className="mt-5">
             Meet some of our
             <span className="lg:text-blue-700">THERAPIST</span>
           </Button>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* fifth section */}
-      <section className="flex flex-col md:flex-row gap-4 justify-center items-center mt-5 p-5">
-        <div className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto p-4">
+      <motion.section variants={SlideUp(0.2)}
+      initial="initial"
+     whileInView="animate" className="flex flex-col md:flex-row gap-4 justify-center items-center mt-5 p-5">
+        <motion.div variants={SlideLeft(0.3)}
+      initial="initial"
+     whileInView="animate" className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto p-4">
           <img
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729790293/Mern-Ecommerce/unsplash_5CoDz0mCcXU_ez7aiu.png"
             alt=""
@@ -344,8 +383,10 @@ const LandingPage = () => {
             <IoStarSharp />
             <IoStarSharp />
           </span>
-        </div>
-        <div className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto  p-4">
+        </motion.div>
+        <motion.div variants={SlideLeft(0.4)}
+      initial="initial"
+     whileInView="animate" className="bg-black max-w-[20rem] lg:max-w-lg xl:max-w-xl h-auto  p-4">
           <img
             src="https://res.cloudinary.com/dtlejpoxq/image/upload/v1729840845/Mern-Ecommerce/unsplash_5CoDz0mCcXU_c8wstq.png"
             alt=""
@@ -361,13 +402,15 @@ const LandingPage = () => {
             <IoStarSharp />
             <IoStarSharp />
           </span>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* last section */}
-      <section className="pb-24">
+      <motion.section variants={SlideUp(0.2)}
+      initial="initial"
+     whileInView="animate" className="pb-24">
         <LandingQuestion />
-      </section>
+      </motion.section>
     </div>
   );
 };

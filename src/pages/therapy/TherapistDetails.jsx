@@ -27,7 +27,7 @@ const TherapistDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
-    console.log("modal is to open...");
+    // console.log("modal is to open...");
     setIsModalOpen(true);
   };
 
@@ -52,9 +52,10 @@ const TherapistDetails = () => {
     return words[num] || num.toString(); // Fallback to number if out of bounds
   };
 
+  // Trigger modal open if specified in location state
   useEffect(() => {
     if (location.state?.openModal) {
-      openModal(); // Trigger modal open function
+      openModal();
     }
   }, [location.state]);
 
@@ -64,6 +65,14 @@ const TherapistDetails = () => {
       dispatch(getTherapistById(id));
     }
   }, [dispatch, id]);
+
+  // Save therapist ID to localStorage after fetching
+  useEffect(() => {
+    if (therapist?.id) {
+      localStorage.setItem("selectedTherapistId", therapist.id);
+      // console.log("Therapist ID saved to localStorage:", therapist.id);
+    }
+  }, [therapist]);
 
   if (loading)
     return (
@@ -88,8 +97,7 @@ const TherapistDetails = () => {
     }, 100); // Delay to ensure navigation completes
   };
 
-
-  console.log("Therapist data:", therapist);
+  // console.log("Therapist data:", therapist);
 
   return (
     <div className="block lg:flex lg:justify-between px-12 bg-[#F5F5DC] ">
@@ -113,7 +121,7 @@ const TherapistDetails = () => {
             <div>
               <div className="mt-4">
                 <h2 className="text-3xl font-semibold text-gray-900 lg:text-4xl">
-                  {therapist?.name || "Name not available"}
+                  {therapist?.firstName || "Name not available"} {therapist?.lastName || "Name is not available"}
                 </h2>
               </div>
 

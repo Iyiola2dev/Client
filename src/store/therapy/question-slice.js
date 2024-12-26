@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from "../auth-slice/api"; // Use the custom Axios instance
+
+
+
 
 // Async thunk for posting a new questionnaire
 export const postQuestionnaire = createAsyncThunk(
   "questionnaire/postQuestionnaire",
   async (questionnaireData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/question",
+      const response = await api.post(
+       `/question"`,
         questionnaireData
       );
       return response.data;
@@ -22,7 +25,7 @@ export const getAllQuestionnaires = createAsyncThunk(
   "questionnaire/getAllQuestionnaires",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:5000/api/question");
+      const response = await api.get(`/question`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -35,8 +38,8 @@ export const getQuestionnaireById = createAsyncThunk(
   "questionnaire/getQuestionnaireById",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/question/${id}`
+      const response = await api.get(
+        `/question/${id}`
       );
       return response.data;
     } catch (error) {
@@ -50,8 +53,8 @@ export const updateQuestionnaire = createAsyncThunk(
   "questionnaire/updateQuestionnaire",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5000/api/question/${id}`,
+      const response = await api.put(
+        `/question/${id}`,
         updatedData
       );
       return response.data;
@@ -66,8 +69,8 @@ export const deleteQuestionnaire = createAsyncThunk(
   "questionnaire/deleteQuestionnaire",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/question/${id}`
+      const response = await api.delete(
+        `/question/${id}`
       );
       return { id }; // Return the ID of the deleted questionnaire
     } catch (error) {

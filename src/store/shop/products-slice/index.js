@@ -1,6 +1,6 @@
 // //My shopping slice
 
-import axios from "axios";
+import api from "../../auth-slice/api"; // Use the custom Axios instance
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -9,6 +9,9 @@ const initialState = {
   productDetails: null,
   error: null, // Add error state to track potential errors
 };
+
+
+
 
 // This is to fetch all products or filtered by category
 // export const fetchAllFilteredProducts = createAsyncThunk(
@@ -24,8 +27,8 @@ const initialState = {
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async ({ category = "", sort = "", limit = "" }) => {
-    const result = await axios.get(
-      "http://localhost:5000/api/shop/products/get",
+    const result = await api.get(
+     `/shop/products/get`,
       {
         params: { category, sort, limit }, // Send both category and sort as query parameters
       }
@@ -36,8 +39,8 @@ export const fetchAllFilteredProducts = createAsyncThunk(
 export const fetchProductDetails = createAsyncThunk(
   "/products/fetchProductDetails",
   async (id) => {
-    const result = await axios.get(
-     ` http://localhost:5000/api/shop/products/get/${id}`,
+    const result = await api.get(
+     `/shop/products/get/${id}`,
     );
     return result?.data; // Return the data to be stored in the state
   }
